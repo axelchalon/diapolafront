@@ -5,59 +5,59 @@
   background: pink; }
 
 .one {
-  width: 29.16667px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 1 + 10px * 0); }
 
 .two {
-  width: 68.33333px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 2 + 10px * 1); }
 
 .three {
-  width: 107.5px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 3 + 10px * 2); }
 
 .four {
-  width: 146.66667px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 4 + 10px * 3); }
 
 .five {
-  width: 185.83333px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 5 + 10px * 4); }
 
 .six {
-  width: 225px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 6 + 10px * 5); }
 
 .seven {
-  width: 264.16667px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 7 + 10px * 6); }
 
 .eight {
-  width: 303.33333px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 8 + 10px * 7); }
 
 .nine {
-  width: 342.5px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 9 + 10px * 8); }
 
 .ten {
-  width: 381.66667px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 10 + 10px * 9); }
 
 .eleven {
-  width: 420.83333px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 11 + 10px * 10); }
 
 .twelve {
-  width: 460px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 12 + 10px * 11); }
 
 .a {
   display: inline-block;
-  width: 29.16667px;
-  margin-right: 49.16667px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 1 + 10px * 0);
+  margin-right: calc((((500px - 2 * 20px - 11 * 10px) / 12) + 10px) * 1 + 10px); }
 
 .b {
   display: inline-block;
-  width: 29.16667px;
-  margin-right: 10px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 1 + 10px * 0);
+  margin-right: calc((((500px - 2 * 20px - 11 * 10px) / 12) + 10px) * 0 + 10px); }
 
 .c {
   display: inline-block;
-  width: 107.5px;
-  margin-right: 127.5px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 3 + 10px * 2);
+  margin-right: calc((((500px - 2 * 20px - 11 * 10px) / 12) + 10px) * 3 + 10px); }
 
 .d {
   display: inline-block;
-  width: 107.5px; }
+  width: calc((500px - 2*20px - 11 * 10px) / 12 * 3 + 10px * 2); }
 
 html {
   font-size: 13px;
@@ -78,17 +78,17 @@ html {
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
   position: relative; }
   .topBar .logo {
-    width: 29.16667px;
+    width: calc((500px - 2*20px - 11 * 10px) / 12 * 1 + 10px * 0);
     background: #727272;
     height: 20px; }
   .topBar .search {
     line-height: 3.5rem;
     background: #ececec;
-    width: 185.83333px; }
+    width: calc((500px - 2*20px - 11 * 10px) / 12 * 5 + 10px * 4); }
   .topBar .importPresentation {
     line-height: 2.7rem;
     border-radius: 4px;
-    width: 68.33333px;
+    width: calc((500px - 2*20px - 11 * 10px) / 12 * 2 + 10px * 1);
     border: 1px solid #727272;
     background: #727272;
     color: white; }
@@ -117,17 +117,17 @@ html {
     .page .page_right .page_right_topBar .downloadPresentation {
       line-height: 2.7rem;
       border-radius: 4px;
-      width: 68.33333px;
+      width: calc((500px - 2*20px - 11 * 10px) / 12 * 2 + 10px * 1);
       border: 1px solid #727272; }
     .page .page_right .page_right_topBar .downloadSelectedSlides:not(.downloadSelectedSlides-disabled) {
       line-height: 2.7rem;
       border-radius: 4px;
-      width: 68.33333px;
+      width: calc((500px - 2*20px - 11 * 10px) / 12 * 2 + 10px * 1);
       border: 1px solid #727272; }
     .page .page_right .page_right_topBar .downloadSelectedSlides-disabled {
       line-height: 2.7rem;
       border-radius: 4px;
-      width: 68.33333px;
+      width: calc((500px - 2*20px - 11 * 10px) / 12 * 2 + 10px * 1);
       border: 1px solid #727272;
       color: #c7c7cc;
       border-color: #c7c7cc;
@@ -161,14 +161,14 @@ html {
   .bottomBar .downloadGeneratedPresentation {
     line-height: 2.7rem;
     border-radius: 4px;
-    width: 68.33333px;
+    width: calc((500px - 2*20px - 11 * 10px) / 12 * 2 + 10px * 1);
     border: 1px solid #727272;
     background: #727272;
     color: white; }
   .bottomBar .saveGeneratedPresentation {
     line-height: 2.7rem;
     border-radius: 4px;
-    width: 68.33333px;
+    width: calc((500px - 2*20px - 11 * 10px) / 12 * 2 + 10px * 1);
     border: 1px solid #727272; }
 
 /*# sourceMappingURL=style.css.map */

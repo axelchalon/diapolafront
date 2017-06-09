@@ -18,12 +18,14 @@ $gridoutermargin: 20px;
     // 1 column
     // 1 column = $col_width: calc(100vw - 2*$gridoutermargin - ($gridcols-1)*$gridgutter) / $gridcols
     
+    //
+    //$vw: 500px;
+    //$result: #{($vw - 2 * $gridoutermargin - ($gridcols - 1)*$gridgutter) / $gridcols * $span + $gridgutter * ($span - 1)};
+    //@return $result
+        
+        // @return calc((100vw + #{-2 * $gridoutermargin - ($gridcols - 1)*$gridgutter}) / #{$gridcols * $span} + #{$gridgutter * ($span - 1)});        buggé, revoir
     
-    $vw: 500px;
-    $result: #{($vw - 2 * $gridoutermargin - ($gridcols - 1)*$gridgutter) / $gridcols * $span + $gridgutter * ($span - 1)};
-    @return $result
-    
-    // @return calc((500px - 2*#{$gridoutermargin} - (#{$gridcols}-1)*#{$gridgutter}) / #{$gridcols} * #{$span} + #{$gridgutter} * (#{$span}-1))
+    @return calc((500px - 2*#{$gridoutermargin} - #{$gridcols - 1} * #{$gridgutter}) / #{$gridcols} * #{$span} + #{$gridgutter} * #{$span - 1})
 }
 
 // used for margin
@@ -32,13 +34,15 @@ $gridoutermargin: 20px;
     // 1 column = $col_width: calc(100vw - 2*$gridoutermargin - ($gridcols-1)*$gridgutter) / $gridcols
     
     
-    @if $span == 0 { @return $gridgutter }
+   // @if $span == 0 { @return $gridgutter }
     
-    $vw: 500px;
-    $result: #{((($vw - 2 * $gridoutermargin - ($gridcols - 1)*$gridgutter) / $gridcols) + $gridgutter) * $span + $gridgutter};
-    @return $result
+    // $vw: 500px;
+    // $result: #{((($vw - 2 * $gridoutermargin - ($gridcols - 1)*$gridgutter) / $gridcols) + $gridgutter) * $span + $gridgutter};
+    // @return $result
     
     // @return calc((500px - 2*#{$gridoutermargin} - (#{$gridcols}-1)*#{$gridgutter}) / #{$gridcols} * #{$span} + #{$gridgutter} * (#{$span}))
+    
+    @return calc((((500px - 2 * #{$gridoutermargin} - #{$gridcols - 1} * #{$gridgutter}) / #{$gridcols}) + #{$gridgutter}) * #{$span} + #{$gridgutter});
 }
 
 // @todo mixin grid qui ajoute padding-left et padding-right
