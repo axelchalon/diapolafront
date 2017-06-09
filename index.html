@@ -13,7 +13,7 @@
         <div class="topBar">
             <h1 class="logo"></h1>
 
-            <input class="search" type="search">
+            <input class="search" type="search" placeholder="Rechercher dans vos présentations">
 
             <a class="manageCollaborators" href="#"></a>
             <a class="myProfile" href="#"></a>
@@ -71,8 +71,8 @@
             </div>
         </div>
 
-        <div class="bottomBar">
-            <a class="bottomBar_toggler" href="#">^</a>
+        <div class="bottomBar" :class='{"bottomBar-active": bottomBarActive}'>
+            <a class="bottomBar_toggler" href="#" @click="bottomBarActive = !bottomBarActive">^</a>
             <button class="downloadGeneratedPresentation" href="#">Télécharger</button>
             <button class="saveGeneratedPresentation" href="#">Sauvegarder</button>
             <a class="clearGeneratedPresentation" href="#">Tout effacer</a>
@@ -80,14 +80,14 @@
             <div class="bottomBar_delineator"></div>
             
             <ul class="bottomBar_listOfSlides">
-                <li class="bottomBar_listOfSlides_slide">
-                    <div class="bottomBar_listOfSlides_slide_image" style="background-image: url(https://www.placecage.com/200/130)"></div>
-                    <p class="bottomBar_listOfSlides_slide_title">Nom de la présentation</p>
-                    <a class="bottomBar_listOfSlides_slide_remove" href="#">
+                <li v-for="(generatedPresentationSlide, index) in generatedPresentationSlides" class="bottomBar_listOfSlides_slide">
+                    <div class="bottomBar_listOfSlides_slide_image" :style='{"background-image": "url(" + generatedPresentationSlide.previewUrl + ")"}'></div>
+                    <p class="bottomBar_listOfSlides_slide_title">{{generatedPresentationSlide.title}}</p>
+                    <a class="bottomBar_listOfSlides_slide_remove" href="#" v-on:click="removeGeneratedPresentationSlide(index)">
                         &times;
                     </a>
                 </li>
-                <li class="bottomBar_listOfSlides_slide"></li>
+                
                 <li class="bottomBar_listOfSlides_placeholder"></li>
                 <li class="bottomBar_listOfSlides_placeholder"></li>
                 <li class="bottomBar_listOfSlides_placeholder"></li>
@@ -127,7 +127,14 @@
         var app = new Vue({
             el: '#app',
             data: {
-                message: 'Hello Vue!'
+                message: 'Hello Vue!',
+                bottomBarActive: true,
+                generatedPresentationSlides: [{title: "Nom de la présentation",previewUrl: "https://www.placecage.com/200/130"}]
+            },
+            methods: {
+                removeGeneratedPresentationSlide: function(index) {
+                    this.$delete(this.generatedPresentationSlides, index);
+                }
             }
         })
     </script>

@@ -160,16 +160,24 @@ html {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 250px;
-  overflow: auto;
-  padding-top: calc(13px + 20px); }
+  padding-top: calc(13px + 30px);
+  height: 5px;
+  box-sizing: border-box;
+  transition: height .3s ease-out;
+  overflow: hidden; }
   .bottomBar > * {
     font-size: 1rem; }
+  .bottomBar.bottomBar-active {
+    height: 250px;
+    overflow: auto; }
   .bottomBar .bottomBar_toggler {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
-    top: 5px; }
+    transform: translateX(-50%) rotate(180deg);
+    top: 5px;
+    transition: transform 0.5s; }
+  .bottomBar:not(.bottomBar-active) .bottomBar_toggler {
+    transform: translateX(-50%); }
   .bottomBar .downloadGeneratedPresentation {
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
     line-height: 2.7rem;
@@ -245,12 +253,18 @@ html {
         right: 5px;
         line-height: 30px; }
 
+/* MODULES */
 .module_burger {
   display: block;
   position: relative; }
   .module_burger:not(.module_burger-active) > ul {
-    display: none; }
+    transform: scale(0);
+    pointer-events: none; }
   .module_burger ul {
+    transform-origin: top left;
+    transform: scale(1);
+    transition: .2s ease-out;
+    overflow: hidden;
     font-size: 1rem;
     position: absolute;
     left: 0;
