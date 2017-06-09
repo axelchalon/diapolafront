@@ -52,8 +52,8 @@
                     </div>
                 </div>
                 
-                <div class="page_right_topBar page_right_topBar-search" v-if="page == 'search'">
-                    <h2>{{searchResults.length}} résultats trouvés</h2>
+                <div v-if="page == 'search'" class="page_right_topBar page_right_topBar-search">
+                    <h2>{{searchResults.length}} résultats trouvés pour &ldquo;{{searchQuery}}&rdquo;</h2>
                     
                     <ul>
                         <li :class="{active: searchTab == 'all'}"><a href="#" @click.prevent="searchTab = 'all'">Tout ({{searchResults.length}})</a></li>
@@ -62,7 +62,7 @@
                     </ul>
                 </div>
                 
-                <div class="page_right_page">
+                <div v-if="page == 'search'" class="page_right_page">
                     <div v-for="searchResult in (searchTab == 'all' ? searchResults : searchTab == 'slides' ? searchResultsSlides : searchResultsPresentations)" class="page_right_page_slide">
                     </div>
                 </div>
@@ -126,6 +126,7 @@
                 page: "presentation",
                 generatedPresentationSlides: [{title: "Nom de la présentation",previewUrl: "https://www.placecage.com/200/130"}],
                 searchTab: "all",
+                searchQuery: "",
                 searchResults: []
             },
             computed: {
@@ -143,6 +144,7 @@
                 search: function (q) {
                     this.page = "search";
                     this.searchTab = "all";
+                    this.searchQuery = q;
                     this.searchResults = [
                         {
                             title: "Slide",
