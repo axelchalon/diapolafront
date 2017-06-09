@@ -1,98 +1,67 @@
 @import url(reset.css);
-.gridtest {
-  height: 20px;
-  margin-bottom: 5px;
-  background: pink; }
-
-.one {
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 1 + 20px * 0); }
-
-.two {
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 2 + 20px * 1); }
-
-.three {
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 3 + 20px * 2); }
-
-.four {
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 4 + 20px * 3); }
-
-.five {
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 5 + 20px * 4); }
-
-.six {
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 6 + 20px * 5); }
-
-.seven {
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 7 + 20px * 6); }
-
-.eight {
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 8 + 20px * 7); }
-
-.nine {
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 9 + 20px * 8); }
-
-.ten {
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 10 + 20px * 9); }
-
-.eleven {
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 11 + 20px * 10); }
-
-.twelve {
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 12 + 20px * 11); }
-
-.a {
-  display: inline-block;
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 1 + 20px * 0);
-  margin-right: calc((((100vw - 2 * 20px - 11 * 20px) / 12) + 20px) * 1 + 20px); }
-
-.b {
-  display: inline-block;
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 1 + 20px * 0);
-  margin-right: calc((((100vw - 2 * 20px - 11 * 20px) / 12) + 20px) * 0 + 20px); }
-
-.c {
-  display: inline-block;
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 3 + 20px * 2);
-  margin-right: calc((((100vw - 2 * 20px - 11 * 20px) / 12) + 20px) * 3 + 20px); }
-
-.d {
-  display: inline-block;
-  width: calc((100vw - 2*20px - 11 * 20px) / 12 * 3 + 20px * 2); }
-
-html {
-  font-size: 13px;
-  font-family: "Gotham Book", Gotham-Book, Arial, sans-serif; }
-
+/* This one is different */
+/* This one is also different */
+/* Those are the same */
 /*
  * Guidelines:
  * rule: display float width height margin padding border background colors text
  * (todo plugin? haskell)
  */
+html {
+  font-size: 13px;
+  font-family: "Gotham Book", Gotham-Book, Arial, sans-serif; }
+
 .topBar {
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+  white-space: nowrap;
+  font-size: 0;
   padding-top: 13px;
   padding-bottom: 13px;
+  position: relative;
   background-color: white;
   /* box-shadow: 0px 4px 4px rgba(0,0,0,0.24); */
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
-  position: relative; }
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12); }
+  .topBar > * {
+    font-size: 1rem; }
   .topBar .logo {
-    width: calc((100vw - 2*20px - 11 * 20px) / 12 * 1 + 20px * 0);
+    width: calc((100vw - 2*50px - 11 * 30px) / 12 * 1 + 30px * 0);
     background: #727272;
-    height: 20px; }
+    height: 20px;
+    display: inline-block;
+    margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 1 + 30px); }
   .topBar .search {
     line-height: 3.5rem;
     background: #ececec;
-    width: calc((100vw - 2*20px - 11 * 20px) / 12 * 5 + 20px * 4); }
+    width: calc((100vw - 2*50px - 11 * 30px) / 12 * 5 + 30px * 4);
+    margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 3 + 30px);
+    display: inline-block; }
+  .topBar .manageCollaborators {
+    width: 20px;
+    height: 20px;
+    background: #727272;
+    width: calc((100vw - 2*50px - 11 * 30px) / 12 * 1 + 30px * 0);
+    margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px);
+    display: inline-block; }
+  .topBar .myProfile {
+    width: 20px;
+    height: 20px;
+    background: #727272;
+    width: calc((100vw - 2*50px - 11 * 30px) / 12 * 1 + 30px * 0);
+    display: inline-block; }
+  .topBar .topBar_innerSeparator {
+    height: 30px; }
   .topBar .importPresentation {
-    width: calc((100vw - 2*20px - 11 * 20px) / 12 * 2 + 20px * 1);
+    width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
     line-height: 2.7rem;
     border-radius: 4px;
     border: 1px solid #727272;
     background: #727272;
-    color: white; }
+    color: white;
+    margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 1 + 30px);
+    display: inline-block; }
   .topBar .breadcrumbs {
+    display: inline-block;
     font-size: 1.4rem;
     letter-spacing: -0.5px; }
     .topBar .breadcrumbs .breadcrumbs_breadcrumb {
@@ -104,71 +73,110 @@ html {
       color: #333; }
 
 .page {
-  background: #f8f8f8; }
+  background: #f8f8f8;
+  padding-left: 50px;
+  padding-right: 50px;
+  white-space: nowrap;
+  font-size: 0;
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap; }
+  .page > * {
+    font-size: 1rem; }
   .page .page_left {
-    width: 200px;
+    width: calc((100vw - 2*50px - 11 * 30px) / 12 * 3 + 30px * 2);
     height: 100vh;
-    float: left;
-    background: orange;
-    border-right: 1px solid #ececec; }
-  .page .page_right .page_right_topBar {
-    padding: 20px 0 30px 0;
-    border-bottom: 1px solid #ececec; }
-    .page .page_right .page_right_topBar .downloadPresentation {
-      width: calc((100vw - 2*20px - 11 * 20px) / 12 * 2 + 20px * 1);
-      line-height: 2.7rem;
-      border-radius: 4px;
-      border: 1px solid #727272; }
-    .page .page_right .page_right_topBar .downloadSelectedSlides:not(.downloadSelectedSlides-disabled) {
-      width: calc((100vw - 2*20px - 11 * 20px) / 12 * 2 + 20px * 1);
-      line-height: 2.7rem;
-      border-radius: 4px;
-      border: 1px solid #727272; }
-    .page .page_right .page_right_topBar .downloadSelectedSlides-disabled {
-      width: calc((100vw - 2*20px - 11 * 20px) / 12 * 2 + 20px * 1);
-      line-height: 2.7rem;
-      border-radius: 4px;
-      border: 1px solid #727272;
-      color: #c7c7cc;
-      border-color: #c7c7cc;
-      pointer-events: none; }
-    .page .page_right .page_right_topBar .presentationComment h3 {
-      display: inline;
-      font-weight: bold; }
-    .page .page_right .page_right_topBar .presentationComment .presentationComment-edit {
-      color: #c7c7cc;
-      font-size: 0.85rem; }
-  .page .page_right .page_right_page {
-    padding-top: 20px; }
-    .page .page_right .page_right_page .page_right_page_slide {
-      width: 227px;
-      height: 141px;
-      border-radius: 4px;
-      background-color: #ffffff;
-      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
-      display: inline-block;
-      margin-right: 20px;
-      margin-bottom: 35px; }
+    border-right: 1px solid #ececec;
+    flex-shrink: 0; }
+  .page .page_right {
+    padding-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px);
+    flex-grow: 1; }
+    .page .page_right .page_right_topBar {
+      padding: 20px 0 30px 0;
+      border-bottom: 1px solid #ececec; }
+      .page .page_right .page_right_topBar .downloadPresentation {
+        width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
+        line-height: 2.7rem;
+        border-radius: 4px;
+        border: 1px solid #727272;
+        float: left;
+        margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px); }
+      .page .page_right .page_right_topBar .downloadSelectedSlides {
+        float: left;
+        margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px); }
+        .page .page_right .page_right_topBar .downloadSelectedSlides:not(.downloadSelectedSlides-disabled) {
+          width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
+          line-height: 2.7rem;
+          border-radius: 4px;
+          border: 1px solid #727272; }
+        .page .page_right .page_right_topBar .downloadSelectedSlides.downloadSelectedSlides-disabled {
+          width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
+          line-height: 2.7rem;
+          border-radius: 4px;
+          border: 1px solid #727272;
+          color: #c7c7cc;
+          border-color: #c7c7cc;
+          pointer-events: none; }
+      .page .page_right .page_right_topBar .presentationComment {
+        margin-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 4); }
+        .page .page_right .page_right_topBar .presentationComment h3 {
+          display: inline;
+          font-weight: bold; }
+        .page .page_right .page_right_topBar .presentationComment .presentationComment-edit {
+          color: #c7c7cc;
+          font-size: 0.85rem; }
+        .page .page_right .page_right_topBar .presentationComment p {
+          white-space: normal; }
+    .page .page_right .page_right_page {
+      padding-top: 20px;
+      white-space: normal; }
+      .page .page_right .page_right_page .page_right_page_slide {
+        width: 227px;
+        height: 141px;
+        border-radius: 4px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+        display: inline-block;
+        margin-right: 20px;
+        margin-bottom: 35px; }
 
 .bottomBar {
+  padding-left: 50px;
+  padding-right: 50px;
+  white-space: nowrap;
+  font-size: 0;
   background-color: white;
   position: fixed;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
   bottom: 0;
   left: 0;
   right: 0;
-  height: 200px; }
+  height: 100px;
+  padding-top: 13px; }
+  .bottomBar > * {
+    font-size: 1rem; }
   .bottomBar .downloadGeneratedPresentation {
-    width: calc((100vw - 2*20px - 11 * 20px) / 12 * 2 + 20px * 1);
+    width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
     line-height: 2.7rem;
     border-radius: 4px;
     border: 1px solid #727272;
     background: #727272;
-    color: white; }
+    color: white;
+    float: left;
+    margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px); }
   .bottomBar .saveGeneratedPresentation {
-    width: calc((100vw - 2*20px - 11 * 20px) / 12 * 2 + 20px * 1);
+    width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
     line-height: 2.7rem;
     border-radius: 4px;
-    border: 1px solid #727272; }
+    border: 1px solid #727272;
+    float: left;
+    margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px); }
+  .bottomBar .clearGeneratedPresentation {
+    width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
+    line-height: 2.7rem;
+    border: 1px solid transparent;
+    color: #c7c7cc; }
 
 /*# sourceMappingURL=style.css.map */

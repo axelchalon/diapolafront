@@ -9,49 +9,42 @@ $black: #333;
 $disabled: #c7c7cc;
 $delineator: #ececec;
 
+$smaller: 0.85rem;
+
 $gridcols: 12;
-$gridgutter: 20px;
-$gridoutermargin: 20px;
+$gridgutter: 30px;
+$gridoutermargin: 50px;
 
 // pour pouvoir faire des grilles à la volée, @include width(2,12,10px,20px) et utiliser les %
-
 @mixin grid {
-     padding-left: $gridoutermargin;
-     padding-right: $gridoutermargin;
+    padding-left: $gridoutermargin;
+    padding-right: $gridoutermargin;
+    white-space: nowrap;
+    font-size: 0;
+    > * { font-size: 1rem; }
 }
+
+/* This one is different */
 
 @mixin width-colspan($span) {
     width: calc((100vw - 2*#{$gridoutermargin} - #{$gridcols - 1} * #{$gridgutter}) / #{$gridcols} * #{$span} + #{$gridgutter} * #{$span - 1})
 }
 
-@mixin marginright-colspan($span) {
+/* This one is also different */
+
+@mixin margin-left-colspan($span) {
+    margin-left: calc((((100vw - 2 * #{$gridoutermargin} - #{$gridcols - 1} * #{$gridgutter}) / #{$gridcols}) + #{$gridgutter}) * #{$span});
+}
+
+/* Those are the same */
+
+@mixin margin-right-colspan($span) {
     margin-right: calc((((100vw - 2 * #{$gridoutermargin} - #{$gridcols - 1} * #{$gridgutter}) / #{$gridcols}) + #{$gridgutter}) * #{$span} + #{$gridgutter});
 }
 
-// @todo mixin grid qui ajoute padding-left et padding-right
-// @todo mixin gridwidth(2) et gridmarginright(2)
-
-.gridtest { height: 20px; margin-bottom: 5px; background: pink; }
-.one { @include width-colspan(1); }
-.two { @include width-colspan(2); }
-.three { @include width-colspan(3); }
-.four { @include width-colspan(4); }
-.five { @include width-colspan(5); }
-.six { @include width-colspan(6); }
-.seven { @include width-colspan(7); }
-.eight { @include width-colspan(8); }
-.nine { @include width-colspan(9); }
-.ten { @include width-colspan(10); }
-.eleven { @include width-colspan(11); }
-.twelve { @include width-colspan(12); }
-.a { display: inline-block; @include width-colspan(1); @include marginright-colspan(1); }
-.b { display: inline-block; @include width-colspan(1); @include marginright-colspan(0); }
-.c { display: inline-block; @include width-colspan(3); @include marginright-colspan(3); }
-.d { display: inline-block; @include width-colspan(3); }
-
-$smaller: 0.85rem;
-
-html { font-size: 13px; font-family: "Gotham Book", Gotham-Book, Arial, sans-serif; }
+@mixin padding-left-colspan($span) {
+    padding-left: calc((((100vw - 2 * #{$gridoutermargin} - #{$gridcols - 1} * #{$gridgutter}) / #{$gridcols}) + #{$gridgutter}) * #{$span} + #{$gridgutter});
+}
 
 /*
  * Guidelines:
@@ -59,18 +52,30 @@ html { font-size: 13px; font-family: "Gotham Book", Gotham-Book, Arial, sans-ser
  * (todo plugin? haskell)
  */
 
- @mixin button {
-     @include width-colspan(2);
-     line-height: 2.7rem;
-     border-radius: 4px;
-     border: 1px solid $dark;
- }
+@mixin placeholder {
+    width: 20px;
+    height: 20px;
+    background: $dark;
+}
 
- @mixin button-primary-enabled {
-    @include button; 
+@mixin button {
+    @include width-colspan(2);
+    line-height: 2.7rem;
+    border-radius: 4px;
+    border: 1px solid $dark;
+}
+
+@mixin buttonlike {
+    @include width-colspan(2);
+    line-height: 2.7rem;
+    border: 1px solid transparent;
+}
+
+@mixin button-primary-enabled {
+    @include button;
     background: $dark;
     color: $ondark;
- }
+}
 
 @mixin button-secondary-enabled {
     @include button;
@@ -83,45 +88,74 @@ html { font-size: 13px; font-family: "Gotham Book", Gotham-Book, Arial, sans-ser
     pointer-events: none;
 }
 
+html {
+    font-size: 13px;
+    font-family: "Gotham Book", Gotham-Book, Arial, sans-serif;
+}
+
 .topBar {
-    padding-left: $gridoutermargin;
-    padding-right: $gridoutermargin;
+    @include grid;
     padding-top: 13px;
     padding-bottom: 13px;
-    
+    position: relative;
+
     background-color: $primarybg;
     /* box-shadow: 0px 4px 4px rgba(0,0,0,0.24); */
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
-    position: relative;
-    
+
     .logo {
         @include width-colspan(1);
         background: $dark;
         height: 20px;
+        display: inline-block;
+        @include margin-right-colspan(1);
     }
 
     .search {
         line-height: 3.5rem;
         background: #ececec;
         @include width-colspan(5);
+        @include margin-right-colspan(3);
+        display: inline-block;
     }
 
-    .importPresentation {
-      @include button-primary-enabled;
+    .manageCollaborators {
+        @include placeholder;
+        @include width-colspan(1);
+        @include margin-right-colspan(0);
+        display: inline-block;
     }
     
+    .myProfile {
+        @include placeholder;
+        @include width-colspan(1);
+        display: inline-block;
+    }
+    
+    .topBar_innerSeparator {
+        height: 30px;
+    }
+    
+    .importPresentation {
+        @include button-primary-enabled;
+        @include margin-right-colspan(1);
+        display: inline-block;
+    }
+
     .breadcrumbs {
+        display: inline-block;
+        
         font-size: 1.4rem;
         letter-spacing: -0.5px;
-        
+
         .breadcrumbs_breadcrumb {
             color: $disabled;
         }
-        
+
         .breadcrumbs_separator {
             color: $disabled;
         }
-        
+
         .breadcrumbs_breadcrumb-active {
             font-weight: bold;
             color: $black;
@@ -129,70 +163,106 @@ html { font-size: 13px; font-family: "Gotham Book", Gotham-Book, Arial, sans-ser
     }
 }
 
-.page { 
-    background: $gray; 
+.page {
+    background: $gray;
+    @include grid;
+    display: flex;
+    flex-direction: column;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     
     .page_left {
-        width: 200px; // ?
+        @include width-colspan(3);
         height: 100vh;
-        float: left;
-        background: orange;
         border-right: 1px solid $delineator;
+        flex-shrink: 0;
     }
-    
+
     .page_right {
+        @include padding-left-colspan(0);
+        flex-grow: 1;
         .page_right_topBar {
-            
+
             padding: 20px 0 30px 0; // ?
-            
             border-bottom: 1px solid $delineator;
-            
+
             .downloadPresentation {
-              @include button-secondary-enabled;
+                @include button-secondary-enabled;
+                float: left;
+                @include margin-right-colspan(0);
             }
-
-            .downloadSelectedSlides:not(.downloadSelectedSlides-disabled) {
-              @include button-secondary-enabled;
+            
+            .downloadSelectedSlides {
+                float: left;
+                @include margin-right-colspan(0);
+                &:not(.downloadSelectedSlides-disabled) {
+                    @include button-secondary-enabled;
+                }
+                &.downloadSelectedSlides-disabled {
+                    @include button-secondary-disabled;
+                }
             }
-
-            .downloadSelectedSlides-disabled {
-              @include button-secondary-disabled;
-            }
-
+           
             .presentationComment {
-                h3 { display: inline; font-weight: bold; }
-                .presentationComment-edit { color: $disabled; font-size: $smaller; }
+                @include margin-left-colspan(4);
+                h3 {
+                    display: inline;
+                    font-weight: bold;
+                }
+                .presentationComment-edit {
+                    color: $disabled;
+                    font-size: $smaller;
+                }
+                
+                p { white-space: normal; }
             }
         }
-        
+
         .page_right_page {
-            padding-top: 20px; 
+            padding-top: 20px;
+            white-space: normal; 
             .page_right_page_slide {
-                  width: 227px;
-                  height: 141px;
-                  border-radius: 4px;
-                  background-color: #ffffff;
-                  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
-                display: inline-block; margin-right: 20px; margin-bottom: 35px;
+                width: 227px;
+                height: 141px;
+                border-radius: 4px;
+                background-color: #ffffff;
+                box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+                display: inline-block;
+                margin-right: 20px;
+                margin-bottom: 35px;
             }
         }
     }
-    
 }
 
 .bottomBar {
+    
+    @include grid;
+    
     background-color: $primarybg;
     position: fixed;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
     bottom: 0;
-    left: 0; right: 0;
-    height: 200px;
+    left: 0;
+    right: 0;
+    height: 100px;
+    padding-top: 13px;
     
     .downloadGeneratedPresentation {
-      @include button-primary-enabled;
+        @include button-primary-enabled;
+        float: left;
+        @include margin-right-colspan(0);
+    }
+
+    .saveGeneratedPresentation {
+        @include button-secondary-enabled;
+        float: left;
+        @include margin-right-colspan(0);
     }
     
-    .saveGeneratedPresentation {
-      @include button-secondary-enabled;
+    .clearGeneratedPresentation {
+        @include buttonlike;
+        color: $disabled;
     }
 }
