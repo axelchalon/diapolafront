@@ -67,6 +67,12 @@
                     </div>
                 </div>
                 
+                <div v-if="page == 'presentation'" class="page_right_page">
+                    <div v-for="presentationSlide in presentationSlides" class="page_right_page_slide">
+                    </div>
+                </div>
+                
+                
             </div>
         </div>
 
@@ -96,6 +102,19 @@
                 <li class="bottomBar_listOfSlides_placeholder"></li>
             </ul>
         </div>
+        
+        <div v-show="diaporamaMode" class="diaporama">
+            
+            <a href="#" @click.prevent="diaporamaMode = false" class="diaporama_exit">Fermer le mode lecture</a>
+                
+            <div class="diaporama_previousSlide"></div>
+            <div class="diaporama_nextSlide"></div>
+            
+            <div class="diaporama_banner">
+            Nom de la présentation
+            <small>4/25</small>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -124,6 +143,8 @@
                 message: 'Hello Vue!',
                 bottomBarActive: true,
                 page: "presentation",
+                diaporamaMode: true,
+                presentationSlides: [{},{},{},{},{},{},{}],
                 generatedPresentationSlides: [{title: "Nom de la présentation",previewUrl: "https://www.placecage.com/200/130"}],
                 searchTab: "all",
                 searchQuery: "",
