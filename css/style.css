@@ -48,20 +48,20 @@ html {
     float: left;
     background: orange;
     border-right: 1px solid #ececec; }
-  .page .page_right .page_right_bar {
+  .page .page_right .page_right_topBar {
     padding: 20px 0 30px 0;
     border-bottom: 1px solid #ececec; }
-    .page .page_right .page_right_bar .downloadPresentation {
+    .page .page_right .page_right_topBar .downloadPresentation {
       line-height: 2.7rem;
       border-radius: 4px;
       width: 198px;
       border: 1px solid #727272; }
-    .page .page_right .page_right_bar .downloadSelectedSlides:not(.downloadSelectedSlides-disabled) {
+    .page .page_right .page_right_topBar .downloadSelectedSlides:not(.downloadSelectedSlides-disabled) {
       line-height: 2.7rem;
       border-radius: 4px;
       width: 198px;
       border: 1px solid #727272; }
-    .page .page_right .page_right_bar .downloadSelectedSlides-disabled {
+    .page .page_right .page_right_topBar .downloadSelectedSlides-disabled {
       line-height: 2.7rem;
       border-radius: 4px;
       width: 198px;
@@ -69,12 +69,23 @@ html {
       color: #c7c7cc;
       border-color: #c7c7cc;
       pointer-events: none; }
-    .page .page_right .page_right_bar .presentationComment h3 {
+    .page .page_right .page_right_topBar .presentationComment h3 {
       display: inline;
       font-weight: bold; }
-    .page .page_right .page_right_bar .presentationComment .presentationComment-edit {
+    .page .page_right .page_right_topBar .presentationComment .presentationComment-edit {
       color: #c7c7cc;
       font-size: 0.85rem; }
+  .page .page_right .page_right_page {
+    padding-top: 20px; }
+    .page .page_right .page_right_page .page_right_page_slide {
+      width: 227px;
+      height: 141px;
+      border-radius: 4px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+      display: inline-block;
+      margin-right: 20px;
+      margin-bottom: 35px; }
 
 .bottomBar {
   background-color: white;

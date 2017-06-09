@@ -101,7 +101,7 @@ html { font-size: 13px; font-family: "Gotham Book", Gotham-Book, Arial, sans-ser
     }
     
     .page_right {
-        .page_right_bar {
+        .page_right_topBar {
             
             padding: 20px 0 30px 0; // ?
             
@@ -122,6 +122,18 @@ html { font-size: 13px; font-family: "Gotham Book", Gotham-Book, Arial, sans-ser
             .presentationComment {
                 h3 { display: inline; font-weight: bold; }
                 .presentationComment-edit { color: $disabled; font-size: $smaller; }
+            }
+        }
+        
+        .page_right_page {
+            padding-top: 20px; 
+            .page_right_page_slide {
+                  width: 227px;
+                  height: 141px;
+                  border-radius: 4px;
+                  background-color: #ffffff;
+                  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+                display: inline-block; margin-right: 20px; margin-bottom: 35px;
             }
         }
     }
