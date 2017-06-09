@@ -1,0 +1,17 @@
+{
+  "name": "diapo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scssw": "sass --watch css/style.scss:css/style.css",
+    "scss": "sass css/style.scss:css/style.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "scss": "^0.2.4"
+  }
+}

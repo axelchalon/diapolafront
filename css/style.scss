@@ -1,0 +1,146 @@
+@import "reset.css";
+
+$primarybg: white;
+$secondarybg: #f8f8f8;
+$dark: #727272;
+$gray: #f8f8f8;
+$ondark: white;
+$black: #333;
+$disabled: #c7c7cc;
+$delineator: #ececec;
+
+$colspan1: 113px;
+$colspan2: 198px;
+$colspan5: 539px;
+
+$smaller: 0.85rem;
+
+html { font-size: 13px; font-family: "Gotham Book", Gotham-Book, Arial, sans-serif; }
+
+/*
+ * Guidelines:
+ * rule: display float width height margin padding border background colors text
+ * (todo plugin? haskell)
+ */
+
+ @mixin button {
+     line-height: 2.7rem;
+     border-radius: 4px;
+     width: $colspan2;
+     border: 1px solid $dark;
+ }
+
+ @mixin button-primary-enabled {
+    @include button; 
+    background: $dark;
+    color: $ondark;
+ }
+
+@mixin button-secondary-enabled {
+    @include button;
+}
+
+@mixin button-secondary-disabled {
+    @include button;
+    color: $disabled;
+    border-color: $disabled;
+    pointer-events: none;
+}
+
+.topBar {
+    background-color: $primarybg;
+    /* box-shadow: 0px 4px 4px rgba(0,0,0,0.24); */
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+    position: relative;
+    padding: 13px 0;
+    
+    .logo {
+        width: $colspan1;
+        background: $dark;
+        height: 20px;
+    }
+
+    .search {
+        line-height: 3.5rem;
+        background: #ececec;
+        width: $colspan5;
+    }
+
+    .importPresentation {
+      @include button-primary-enabled;
+    }
+    
+    .breadcrumbs {
+        font-size: 1.4rem;
+        letter-spacing: -0.5px;
+        
+        .breadcrumbs_breadcrumb {
+            color: $disabled;
+        }
+        
+        .breadcrumbs_separator {
+            color: $disabled;
+        }
+        
+        .breadcrumbs_breadcrumb-active {
+            font-weight: bold;
+            color: $black;
+        }
+    }
+}
+
+.page { 
+    background: $gray; 
+    
+    .page_left {
+        width: 200px; // ?
+        height: 100vh;
+        float: left;
+        background: orange;
+        border-right: 1px solid $delineator;
+    }
+    
+    .page_right {
+        .page_right_bar {
+            
+            padding: 20px 0 30px 0; // ?
+            
+            border-bottom: 1px solid $delineator;
+            
+            .downloadPresentation {
+              @include button-secondary-enabled;
+            }
+
+            .downloadSelectedSlides:not(.downloadSelectedSlides-disabled) {
+              @include button-secondary-enabled;
+            }
+
+            .downloadSelectedSlides-disabled {
+              @include button-secondary-disabled;
+            }
+
+            .presentationComment {
+                h3 { display: inline; font-weight: bold; }
+                .presentationComment-edit { color: $disabled; font-size: $smaller; }
+            }
+        }
+    }
+    
+}
+
+.bottomBar {
+    background-color: $primarybg;
+    position: fixed;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+    bottom: 0;
+    left: 0; right: 0;
+    height: 200px;
+    
+    .downloadGeneratedPresentation {
+      @include button-primary-enabled;
+    }
+    
+    .saveGeneratedPresentation {
+      @include button-secondary-enabled;
+    }
+}

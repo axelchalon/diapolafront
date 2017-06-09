@@ -1,0 +1,100 @@
+@import url(reset.css);
+html {
+  font-size: 13px;
+  font-family: "Gotham Book", Gotham-Book, Arial, sans-serif; }
+
+/*
+ * Guidelines:
+ * rule: display float width height margin padding border background colors text
+ * (todo plugin? haskell)
+ */
+.topBar {
+  background-color: white;
+  /* box-shadow: 0px 4px 4px rgba(0,0,0,0.24); */
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+  position: relative;
+  padding: 13px 0; }
+  .topBar .logo {
+    width: 113px;
+    background: #727272;
+    height: 20px; }
+  .topBar .search {
+    line-height: 3.5rem;
+    background: #ececec;
+    width: 539px; }
+  .topBar .importPresentation {
+    line-height: 2.7rem;
+    border-radius: 4px;
+    width: 198px;
+    border: 1px solid #727272;
+    background: #727272;
+    color: white; }
+  .topBar .breadcrumbs {
+    font-size: 1.4rem;
+    letter-spacing: -0.5px; }
+    .topBar .breadcrumbs .breadcrumbs_breadcrumb {
+      color: #c7c7cc; }
+    .topBar .breadcrumbs .breadcrumbs_separator {
+      color: #c7c7cc; }
+    .topBar .breadcrumbs .breadcrumbs_breadcrumb-active {
+      font-weight: bold;
+      color: #333; }
+
+.page {
+  background: #f8f8f8; }
+  .page .page_left {
+    width: 200px;
+    height: 100vh;
+    float: left;
+    background: orange;
+    border-right: 1px solid #ececec; }
+  .page .page_right .page_right_bar {
+    padding: 20px 0 30px 0;
+    border-bottom: 1px solid #ececec; }
+    .page .page_right .page_right_bar .downloadPresentation {
+      line-height: 2.7rem;
+      border-radius: 4px;
+      width: 198px;
+      border: 1px solid #727272; }
+    .page .page_right .page_right_bar .downloadSelectedSlides:not(.downloadSelectedSlides-disabled) {
+      line-height: 2.7rem;
+      border-radius: 4px;
+      width: 198px;
+      border: 1px solid #727272; }
+    .page .page_right .page_right_bar .downloadSelectedSlides-disabled {
+      line-height: 2.7rem;
+      border-radius: 4px;
+      width: 198px;
+      border: 1px solid #727272;
+      color: #c7c7cc;
+      border-color: #c7c7cc;
+      pointer-events: none; }
+    .page .page_right .page_right_bar .presentationComment h3 {
+      display: inline;
+      font-weight: bold; }
+    .page .page_right .page_right_bar .presentationComment .presentationComment-edit {
+      color: #c7c7cc;
+      font-size: 0.85rem; }
+
+.bottomBar {
+  background-color: white;
+  position: fixed;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px; }
+  .bottomBar .downloadGeneratedPresentation {
+    line-height: 2.7rem;
+    border-radius: 4px;
+    width: 198px;
+    border: 1px solid #727272;
+    background: #727272;
+    color: white; }
+  .bottomBar .saveGeneratedPresentation {
+    line-height: 2.7rem;
+    border-radius: 4px;
+    width: 198px;
+    border: 1px solid #727272; }
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="js/prefixfree.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="topBar">
+            <h1 class="logo"></h1>
+
+            <input class="search" type="search">
+
+            <a class="manageCollaborators" href="#"></a>
+            <a class="addCollaborators" href="#"></a>
+
+            <div style="clear: both;"></div>
+            <!-- ---- -->
+
+            <button class="importPresentation" href="#">Importer une présentation</button>
+
+            <p class="breadcrumbs">
+                <a class="breadcrumbs_breadcrumb" href="#">Mon dossier</a>
+                <span class="breadcrumbs_separator">&gt;</span>
+                <a class="breadcrumbs_breadcrumb breadcrumbs_breadcrumb-active" href="#" >Nom de la présentation</a>
+            </p>
+        </div>
+        
+        <div class="page">
+            
+            <div class="page_left">
+            </div>
+            
+            <div class="page_right">
+                <div class="page_right_bar">
+                    <button class="downloadPresentation">Télécharger la présentation</button>
+                    <button class="downloadSelectedSlides downloadSelectedSlides-disabled">Télécharger la sélection</button>
+
+                    <div class="presentationComment">
+                        <h3>Commentaire</h3> <a href="#" class="presentationComment-edit">Modifier</a><br>
+                        Duis ultrices vestibulum lacus non luctus. Praesent aliquet, justo ut accumsan bibendum, sem erat sagittis nunc, a vulputate diam ulla nisi. {{ message }}
+                    </div>
+                </div>
+                hello
+            </div>
+        </div>
+
+        <div class="bottomBar">
+            <button class="downloadGeneratedPresentation" href="#">Télécharger</button>
+            <button class="saveGeneratedPresentation" href="#">Sauvegarder</button>
+            <a class="clearGeneratedPresentation" href="#"></a>
+        </div>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!'
+            }
+        })
+    </script>
+
+</body>
+
+</html>
