@@ -105,6 +105,10 @@ html {
     background-color: $primarybg;
     /* box-shadow: 0px 4px 4px rgba(0,0,0,0.24); */
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+    
+    > * {
+        vertical-align: top;
+    }
 
     .logo {
         @include width-colspan(1);
@@ -356,20 +360,20 @@ html {
         
 }
 
-/* MODULES */
+/* COMPONENTS */
 
-.module_burger {
+.component_burger {
     display: block; 
     
     position: relative;
     
-    &:not(.module_burger-active) > ul {
+    &:not(.component_burger-active) > ul {
         transform: scale(0);
         pointer-events: none;
     }
     
+    
     ul {
-        
         transform-origin: top left;
         transform: scale(1);
         transition: .2s ease-out;
@@ -399,5 +403,18 @@ html {
         border-radius: 4px;
         width: 150px;
         box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+    }
+    
+    &.component_burger-alignRight {
+        ul {
+            transform-origin: top right;
+            text-align: right;
+            left: auto;
+            right: 0; 
+            li a {
+                padding-left: 0;
+                padding-right: 15px;
+            }
+        }   
     }
 }

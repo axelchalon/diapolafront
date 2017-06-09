@@ -25,6 +25,8 @@ html {
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12); }
   .topBar > * {
     font-size: 1rem; }
+  .topBar > * {
+    vertical-align: top; }
   .topBar .logo {
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 1 + 30px * 0);
     background: #727272;
@@ -253,14 +255,14 @@ html {
         right: 5px;
         line-height: 30px; }
 
-/* MODULES */
-.module_burger {
+/* COMPONENTS */
+.component_burger {
   display: block;
   position: relative; }
-  .module_burger:not(.module_burger-active) > ul {
+  .component_burger:not(.component_burger-active) > ul {
     transform: scale(0);
     pointer-events: none; }
-  .module_burger ul {
+  .component_burger ul {
     transform-origin: top left;
     transform: scale(1);
     transition: .2s ease-out;
@@ -273,13 +275,21 @@ html {
     border-radius: 4px;
     width: 150px;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12); }
-    .module_burger ul li a {
+    .component_burger ul li a {
       display: block;
       line-height: 3rem;
       padding-left: 15px; }
-      .module_burger ul li a:hover {
+      .component_burger ul li a:hover {
         background: #f8f8f8; }
-    .module_burger ul li:not(:last-child) {
+    .component_burger ul li:not(:last-child) {
       border-bottom: 1px solid #ececec; }
+  .component_burger.component_burger-alignRight ul {
+    transform-origin: top right;
+    text-align: right;
+    left: auto;
+    right: 0; }
+    .component_burger.component_burger-alignRight ul li a {
+      padding-left: 0;
+      padding-right: 15px; }
 
 /*# sourceMappingURL=style.css.map */

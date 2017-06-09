@@ -16,7 +16,10 @@
             <input class="search" type="search" placeholder="Rechercher dans vos présentations">
 
             <a class="manageCollaborators" href="#"></a>
-            <a class="myProfile" href="#"></a>
+            <div class="myProfile">
+                <a href="#"></a>
+                <burger align="right" :items="[{text: 'Mots-clés'}, {text: 'Renommer'}, {text: 'Supprimer'}]"></burger>
+            </div>
 
             <div style="clear: both;"></div>
             <!-- ---- -->
@@ -28,7 +31,7 @@
                 <a class="breadcrumbs_breadcrumb" href="#">Mon dossier</a>
                 <span class="breadcrumbs_separator">&gt;</span>
                 <a class="breadcrumbs_breadcrumb breadcrumbs_breadcrumb-active" href="#" >Nom de la présentation</a>
-                <burger :items="[{text: 'Mots-clés'}, {text: 'Renommer'}, {text: 'Supprimer'}]"></burger>
+                <burger align="left" :items="[{text: 'Mots-clés'}, {text: 'Renommer'}, {text: 'Supprimer'}]"></burger>
             </div>
         </div>
         
@@ -110,13 +113,14 @@
         // register
         Vue.component('burger', {
           props: {
-              items: Array
+              items: Array,
+              align: String
           },
           data: function() {
               return {active: false};
           },
           template: `
-                <div class="module_burger" v-bind:class='{"module_burger-active": active }' v-on:click="active = !active">
+                <div class="component_burger" v-bind:class='{"component_burger-active": active, "component_burger-alignLeft": align == "left", "component_burger-alignRight": align == "right" }' v-on:click="active = !active">
                     <a href="#">&sdot; &sdot; &sdot;</a>
                     <ul>
                         <li v-for="item in items"><a href="#">{{item.text}}</a></li>
