@@ -13,12 +13,12 @@
         <div class="topBar">
             <h1 class="logo"></h1>
 
-            <input class="search" type="search" placeholder="Rechercher dans vos présentations">
+            <input class="search" type="search" placeholder="Rechercher dans vos présentations" @keyup.enter="search($event.target.value); $event.target.value=''; ">
 
             <a class="manageCollaborators" href="#"></a>
             <div class="myProfile">
                 <a href="#"></a>
-                <burger align="right" :items="[{text: 'Mots-clés'}, {text: 'Renommer'}, {text: 'Supprimer'}]"></burger>
+                <burger align="right" :items="[{text: 'Mon compte'}, {text: 'Déconnexion'}]"></burger>
             </div>
 
             <div style="clear: both;"></div>
@@ -27,7 +27,7 @@
 
             <button class="importPresentation" href="#">Importer une présentation</button>
 
-            <div class="breadcrumbs">
+            <div class="breadcrumbs" v-if="page == 'presentation'">
                 <a class="breadcrumbs_breadcrumb" href="#">Mon dossier</a>
                 <span class="breadcrumbs_separator">&gt;</span>
                 <a class="breadcrumbs_breadcrumb breadcrumbs_breadcrumb-active" href="#" >Nom de la présentation</a>
@@ -42,32 +42,28 @@
             </div>
             
             <div class="page_right">
-                <div class="page_right_topBar">
+                <div class="page_right_topBar page_right_topBar-presentation" v-if="page == 'presentation'">
                     <button class="downloadPresentation">Télécharger la présentation</button>
                     <button class="downloadSelectedSlides downloadSelectedSlides-disabled">Télécharger la sélection</button>
 
                     <div class="presentationComment">
                         <h3>Commentaire</h3> <a href="#" class="presentationComment-edit">Modifier</a><br>
-                        <p>Duis ultrices vestibulum lacus non luctus. Praesent aliquet, justo ut accumsan bibendum, sem erat sagittis nunc, a vulputate diam ulla nisi. {{ message }}</p>
+                        <p>Duis ultrices vestibulum lacus non luctus. Praesent aliquet, justo ut accumsan bibendum, sem erat sagittis nunc, a vulputate diam ulla nisi.</p>
                     </div>
                 </div>
                 
+                <div class="page_right_topBar page_right_topBar-search" v-if="page == 'search'">
+                    <h2>XX résultats trouvés</h2>
+                    
+                    <ul>
+                        <li :class="{active: searchTab == 'all'}"><a href="#" @click="searchTab = 'all'">Tout (XX)</a></li>
+                        <li :class="{active: searchTab == 'slides'}"><a href="#" @click="searchTab = 'slides'">Slides (XX)</a></li>
+                        <li :class="{active: searchTab == 'presentations'}" @click="searchTab = 'presentations'"><a href="#">Présentations (XX)</a></li>
+                    </ul>
+                </div>
+                
                 <div class="page_right_page">
-                    <div class="page_right_page_slide">
-                    </div>
-                    <div class="page_right_page_slide">
-                    </div>
-                    <div class="page_right_page_slide">
-                    </div>
-                    <div class="page_right_page_slide">
-                    </div>
-                    <div class="page_right_page_slide">
-                    </div>
-                    <div class="page_right_page_slide">
-                    </div>
-                    <div class="page_right_page_slide">
-                    </div>
-                    <div class="page_right_page_slide">
+                    <div v-for="n in 10" class="page_right_page_slide">
                     </div>
                 </div>
                 
@@ -103,12 +99,6 @@
     </div>
 
     <script>
-        /*
-        
-                        <li><a href="#">Mots-clés</a></li>
-                        <li><a href="#">Renommer</a></li>
-                        <li><a href="#">Supprimer</a></li>
-                        */
         
         // register
         Vue.component('burger', {
@@ -133,11 +123,17 @@
             data: {
                 message: 'Hello Vue!',
                 bottomBarActive: true,
-                generatedPresentationSlides: [{title: "Nom de la présentation",previewUrl: "https://www.placecage.com/200/130"}]
+                page: "presentation",
+                generatedPresentationSlides: [{title: "Nom de la présentation",previewUrl: "https://www.placecage.com/200/130"}],
+                searchTab: "all"
             },
             methods: {
                 removeGeneratedPresentationSlide: function(index) {
                     this.$delete(this.generatedPresentationSlides, index);
+                },
+                search: function (q) {
+                    this.page = "search";
+                    this.searchTab = "all";
                 }
             }
         })

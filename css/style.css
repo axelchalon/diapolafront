@@ -55,6 +55,7 @@ html {
   .topBar .topBar_innerSeparator {
     height: 30px; }
   .topBar .importPresentation {
+    vertical-align: middle;
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
     line-height: 2.7rem;
     border-radius: 4px;
@@ -64,6 +65,7 @@ html {
     margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 1 + 30px);
     display: inline-block; }
   .topBar .breadcrumbs {
+    vertical-align: middle;
     display: inline-block;
     font-size: 1.4rem;
     letter-spacing: -0.5px; }
@@ -84,6 +86,7 @@ html {
   padding-right: 50px;
   white-space: nowrap;
   font-size: 0;
+  padding-right: 0;
   display: flex;
   flex-direction: column;
   display: flex;
@@ -98,27 +101,27 @@ html {
     flex-shrink: 0;
     padding-top: 13px; }
   .page .page_right {
-    padding-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px);
     flex-grow: 1; }
-    .page .page_right .page_right_topBar {
+    .page .page_right .page_right_topBar-presentation {
       padding: 13px 0 30px 0;
+      padding-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px);
       border-bottom: 1px solid #ececec; }
-      .page .page_right .page_right_topBar .downloadPresentation {
+      .page .page_right .page_right_topBar-presentation .downloadPresentation {
         width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
         line-height: 2.7rem;
         border-radius: 4px;
         border: 1px solid #727272;
         float: left;
         margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px); }
-      .page .page_right .page_right_topBar .downloadSelectedSlides {
+      .page .page_right .page_right_topBar-presentation .downloadSelectedSlides {
         float: left;
         margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px); }
-        .page .page_right .page_right_topBar .downloadSelectedSlides:not(.downloadSelectedSlides-disabled) {
+        .page .page_right .page_right_topBar-presentation .downloadSelectedSlides:not(.downloadSelectedSlides-disabled) {
           width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
           line-height: 2.7rem;
           border-radius: 4px;
           border: 1px solid #727272; }
-        .page .page_right .page_right_topBar .downloadSelectedSlides.downloadSelectedSlides-disabled {
+        .page .page_right .page_right_topBar-presentation .downloadSelectedSlides.downloadSelectedSlides-disabled {
           width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
           line-height: 2.7rem;
           border-radius: 4px;
@@ -126,19 +129,46 @@ html {
           color: #c7c7cc;
           border-color: #c7c7cc;
           pointer-events: none; }
-      .page .page_right .page_right_topBar .presentationComment {
+      .page .page_right .page_right_topBar-presentation .presentationComment {
         margin-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 4); }
-        .page .page_right .page_right_topBar .presentationComment h3 {
+        .page .page_right .page_right_topBar-presentation .presentationComment h3 {
           display: inline;
           font-weight: bold; }
-        .page .page_right .page_right_topBar .presentationComment .presentationComment-edit {
+        .page .page_right .page_right_topBar-presentation .presentationComment .presentationComment-edit {
           color: #c7c7cc;
           font-size: 0.85rem;
           margin-left: 10px; }
-        .page .page_right .page_right_topBar .presentationComment p {
+        .page .page_right .page_right_topBar-presentation .presentationComment p {
           margin-top: 5px;
           white-space: normal; }
+    .page .page_right .page_right_topBar-search {
+      padding: 35px 0 0px 0;
+      padding-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px);
+      border-bottom: 1px solid #ececec; }
+      .page .page_right .page_right_topBar-search h2 {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #333; }
+      .page .page_right .page_right_topBar-search ul {
+        margin-top: 20px; }
+        .page .page_right .page_right_topBar-search ul li {
+          display: inline-block;
+          position: relative; }
+          .page .page_right .page_right_topBar-search ul li a {
+            display: block;
+            line-height: 3rem;
+            padding: 0 20px; }
+          .page .page_right .page_right_topBar-search ul li.active:after {
+            content: " ";
+            display: block;
+            height: 2px;
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            background: #333; }
     .page .page_right .page_right_page {
+      padding-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px);
       padding-top: 20px;
       white-space: normal; }
       .page .page_right .page_right_page .page_right_page_slide {
