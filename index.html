@@ -53,17 +53,17 @@
                 </div>
                 
                 <div class="page_right_topBar page_right_topBar-search" v-if="page == 'search'">
-                    <h2>XX résultats trouvés</h2>
+                    <h2>{{searchResults.length}} résultats trouvés</h2>
                     
                     <ul>
-                        <li :class="{active: searchTab == 'all'}"><a href="#" @click="searchTab = 'all'">Tout (XX)</a></li>
-                        <li :class="{active: searchTab == 'slides'}"><a href="#" @click="searchTab = 'slides'">Slides (XX)</a></li>
-                        <li :class="{active: searchTab == 'presentations'}" @click="searchTab = 'presentations'"><a href="#">Présentations (XX)</a></li>
+                        <li :class="{active: searchTab == 'all'}"><a href="#" @click.prevent="searchTab = 'all'">Tout ({{searchResults.length}})</a></li>
+                        <li :class="{active: searchTab == 'slides'}"><a href="#" @click.prevent="searchTab = 'slides'">Slides ({{searchResultsSlides.length}})</a></li>
+                        <li :class="{active: searchTab == 'presentations'}" @click.prevent="searchTab = 'presentations'"><a href="#">Présentations ({{searchResultsPresentations.length}})</a></li>
                     </ul>
                 </div>
                 
                 <div class="page_right_page">
-                    <div v-for="n in 10" class="page_right_page_slide">
+                    <div v-for="searchResult in (searchTab == 'all' ? searchResults : searchTab == 'slides' ? searchResultsSlides : searchResultsPresentations)" class="page_right_page_slide">
                     </div>
                 </div>
                 
@@ -71,7 +71,7 @@
         </div>
 
         <div class="bottomBar" :class='{"bottomBar-active": bottomBarActive}'>
-            <a class="bottomBar_toggler" href="#" @click="bottomBarActive = !bottomBarActive">^</a>
+            <a class="bottomBar_toggler" href="#" @click.prevent="bottomBarActive = !bottomBarActive">^</a>
             <button class="downloadGeneratedPresentation" href="#">Télécharger</button>
             <button class="saveGeneratedPresentation" href="#">Sauvegarder</button>
             <a class="clearGeneratedPresentation" href="#">Tout effacer</a>
@@ -82,7 +82,7 @@
                 <li v-for="(generatedPresentationSlide, index) in generatedPresentationSlides" class="bottomBar_listOfSlides_slide">
                     <div class="bottomBar_listOfSlides_slide_image" :style='{"background-image": "url(" + generatedPresentationSlide.previewUrl + ")"}'></div>
                     <p class="bottomBar_listOfSlides_slide_title">{{generatedPresentationSlide.title}}</p>
-                    <a class="bottomBar_listOfSlides_slide_remove" href="#" v-on:click="removeGeneratedPresentationSlide(index)">
+                    <a class="bottomBar_listOfSlides_slide_remove" href="#" v-on:click.prevent="removeGeneratedPresentationSlide(index)">
                         &times;
                     </a>
                 </li>
@@ -110,7 +110,7 @@
               return {active: false};
           },
           template: `
-                <div class="component_burger" v-bind:class='{"component_burger-active": active, "component_burger-alignLeft": align == "left", "component_burger-alignRight": align == "right" }' v-on:click="active = !active">
+                <div class="component_burger" v-bind:class='{"component_burger-active": active, "component_burger-alignLeft": align == "left", "component_burger-alignRight": align == "right" }' v-on:click.prevent="active = !active">
                     <a href="#">&sdot; &sdot; &sdot;</a>
                     <ul>
                         <li v-for="item in items"><a href="#">{{item.text}}</a></li>
@@ -125,7 +125,16 @@
                 bottomBarActive: true,
                 page: "presentation",
                 generatedPresentationSlides: [{title: "Nom de la présentation",previewUrl: "https://www.placecage.com/200/130"}],
-                searchTab: "all"
+                searchTab: "all",
+                searchResults: []
+            },
+            computed: {
+                searchResultsSlides: function() {
+                    return this.searchResults.filter(x => x.type == "slide");
+                },
+                searchResultsPresentations: function() {
+                    return this.searchResults.filter(x => x.type == "presentation");
+                }  
             },
             methods: {
                 removeGeneratedPresentationSlide: function(index) {
@@ -134,6 +143,24 @@
                 search: function (q) {
                     this.page = "search";
                     this.searchTab = "all";
+                    this.searchResults = [
+                        {
+                            title: "Slide",
+                            type: "slide"
+                        },
+                        {
+                            title: "Slide",
+                            type: "slide"
+                        },
+                        {
+                            title: "Slide",
+                            type: "slide"
+                        },
+                        {
+                            title: "Presentation",
+                            type: "presentation"
+                        }
+                    ];
                 }
             }
         })
