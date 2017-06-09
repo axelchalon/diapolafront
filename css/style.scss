@@ -93,6 +93,7 @@ $sectionpadding: 13px;
 html {
     font-size: 13px;
     font-family: "Gotham Book", Gotham-Book, Arial, sans-serif;
+    color: $dark;
 }
 
 .topBar {
@@ -146,6 +147,7 @@ html {
 
     .breadcrumbs {
         display: inline-block;
+        > * { float: left; margin-right: 10px; }
         
         font-size: 1.4rem;
         letter-spacing: -0.5px;
@@ -341,4 +343,42 @@ html {
     }
     
         
+}
+
+
+.module_burger {
+    display: block; 
+    
+    position: relative;
+    
+    &:not(.module_burger-active) > ul {
+        display: none;
+    }
+    
+    ul {
+        li {
+            a {
+                display: block;
+                line-height: 3rem;
+                padding-left: 15px;
+                &:hover {
+                    background: $gray;
+                }
+            }
+            
+            &:not(:last-child) {
+                border-bottom: 1px solid $delineator;
+            }
+            
+        }
+        
+        font-size: 1rem;
+        
+        position: absolute;
+        left: 0; top: 100%; 
+        background: white; 
+        border-radius: 4px;
+        width: 150px;
+        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+    }
 }

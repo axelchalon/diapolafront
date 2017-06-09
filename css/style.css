@@ -9,7 +9,8 @@
  */
 html {
   font-size: 13px;
-  font-family: "Gotham Book", Gotham-Book, Arial, sans-serif; }
+  font-family: "Gotham Book", Gotham-Book, Arial, sans-serif;
+  color: #727272; }
 
 .topBar {
   padding-left: 50px;
@@ -64,6 +65,9 @@ html {
     display: inline-block;
     font-size: 1.4rem;
     letter-spacing: -0.5px; }
+    .topBar .breadcrumbs > * {
+      float: left;
+      margin-right: 10px; }
     .topBar .breadcrumbs .breadcrumbs_breadcrumb {
       color: #c7c7cc; }
     .topBar .breadcrumbs .breadcrumbs_separator {
@@ -240,5 +244,28 @@ html {
         position: absolute;
         right: 5px;
         line-height: 30px; }
+
+.module_burger {
+  display: block;
+  position: relative; }
+  .module_burger:not(.module_burger-active) > ul {
+    display: none; }
+  .module_burger ul {
+    font-size: 1rem;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background: white;
+    border-radius: 4px;
+    width: 150px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12); }
+    .module_burger ul li a {
+      display: block;
+      line-height: 3rem;
+      padding-left: 15px; }
+      .module_burger ul li a:hover {
+        background: #f8f8f8; }
+    .module_burger ul li:not(:last-child) {
+      border-bottom: 1px solid #ececec; }
 
 /*# sourceMappingURL=style.css.map */
