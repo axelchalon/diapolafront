@@ -28,14 +28,7 @@
                 <a class="breadcrumbs_breadcrumb" href="#">Mon dossier</a>
                 <span class="breadcrumbs_separator">&gt;</span>
                 <a class="breadcrumbs_breadcrumb breadcrumbs_breadcrumb-active" href="#" >Nom de la présentation</a>
-                <div class="module_burger module_burger-active">
-                    <a href="#">&sdot; &sdot; &sdot;</a>
-                    <ul>
-                        <li><a href="#">Mots-clés</a></li>
-                        <li><a href="#">Renommer</a></li>
-                        <li><a href="#">Supprimer</a></li>
-                    </ul>
-                </div>
+                <burger :items="[{text: 'Mots-clés'}, {text: 'Renommer'}, {text: 'Supprimer'}]"></burger>
             </div>
         </div>
         
@@ -107,6 +100,30 @@
     </div>
 
     <script>
+        /*
+        
+                        <li><a href="#">Mots-clés</a></li>
+                        <li><a href="#">Renommer</a></li>
+                        <li><a href="#">Supprimer</a></li>
+                        */
+        
+        // register
+        Vue.component('burger', {
+          props: {
+              items: Array
+          },
+          data: function() {
+              return {active: false};
+          },
+          template: `
+                <div class="module_burger" v-bind:class='{"module_burger-active": active }' v-on:click="active = !active">
+                    <a href="#">&sdot; &sdot; &sdot;</a>
+                    <ul>
+                        <li v-for="item in items"><a href="#">{{item.text}}</a></li>
+                    </ul>
+                </div>`
+        })
+        
         var app = new Vue({
             el: '#app',
             data: {
