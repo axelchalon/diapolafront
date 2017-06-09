@@ -9,9 +9,58 @@ $black: #333;
 $disabled: #c7c7cc;
 $delineator: #ececec;
 
-$colspan1: 113px;
-$colspan2: 198px;
-$colspan5: 539px;
+$gridcols: 12;
+$gridgutter: 10px;
+$gridoutermargin: 20px;
+
+// used for width
+@function colspan($span){
+    // 1 column
+    // 1 column = $col_width: calc(100vw - 2*$gridoutermargin - ($gridcols-1)*$gridgutter) / $gridcols
+    
+    
+    $vw: 500px;
+    $result: #{($vw - 2 * $gridoutermargin - ($gridcols - 1)*$gridgutter) / $gridcols * $span + $gridgutter * ($span - 1)};
+    @return $result
+    
+    // @return calc((500px - 2*#{$gridoutermargin} - (#{$gridcols}-1)*#{$gridgutter}) / #{$gridcols} * #{$span} + #{$gridgutter} * (#{$span}-1))
+}
+
+// used for margin
+@function colspanm($span){
+    // 1 column
+    // 1 column = $col_width: calc(100vw - 2*$gridoutermargin - ($gridcols-1)*$gridgutter) / $gridcols
+    
+    
+    @if $span == 0 { @return $gridgutter }
+    
+    $vw: 500px;
+    $result: #{((($vw - 2 * $gridoutermargin - ($gridcols - 1)*$gridgutter) / $gridcols) + $gridgutter) * $span + $gridgutter};
+    @return $result
+    
+    // @return calc((500px - 2*#{$gridoutermargin} - (#{$gridcols}-1)*#{$gridgutter}) / #{$gridcols} * #{$span} + #{$gridgutter} * (#{$span}))
+}
+
+// @todo mixin grid qui ajoute padding-left et padding-right
+// @todo mixin gridwidth(2) et gridmarginright(2)
+
+.gridtest { height: 20px; margin-bottom: 5px; background: pink; }
+.one { width: colspan(1); }
+.two { width: colspan(2); }
+.three { width: colspan(3); }
+.four { width: colspan(4); }
+.five { width: colspan(5); }
+.six { width: colspan(6); }
+.seven { width: colspan(7); }
+.eight { width: colspan(8); }
+.nine { width: colspan(9); }
+.ten { width: colspan(10); }
+.eleven { width: colspan(11); }
+.twelve { width: colspan(12); }
+.a { display: inline-block; width: colspan(1); margin-right: colspanm(1); }
+.b { display: inline-block; width: colspan(1); margin-right: colspanm(0); }
+.c { display: inline-block; width: colspan(3); margin-right: colspanm(3); }
+.d { display: inline-block; width: colspan(3); }
 
 $smaller: 0.85rem;
 
@@ -26,7 +75,7 @@ html { font-size: 13px; font-family: "Gotham Book", Gotham-Book, Arial, sans-ser
  @mixin button {
      line-height: 2.7rem;
      border-radius: 4px;
-     width: $colspan2;
+     width: colspan(2);
      border: 1px solid $dark;
  }
 
@@ -48,14 +97,18 @@ html { font-size: 13px; font-family: "Gotham Book", Gotham-Book, Arial, sans-ser
 }
 
 .topBar {
+    padding-left: $gridoutermargin;
+    padding-right: $gridoutermargin;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    
     background-color: $primarybg;
     /* box-shadow: 0px 4px 4px rgba(0,0,0,0.24); */
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
     position: relative;
-    padding: 13px 0;
     
     .logo {
-        width: $colspan1;
+        width: colspan(1);
         background: $dark;
         height: 20px;
     }
@@ -63,7 +116,7 @@ html { font-size: 13px; font-family: "Gotham Book", Gotham-Book, Arial, sans-ser
     .search {
         line-height: 3.5rem;
         background: #ececec;
-        width: $colspan5;
+        width: colspan(5);
     }
 
     .importPresentation {

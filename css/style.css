@@ -1,4 +1,64 @@
 @import url(reset.css);
+.gridtest {
+  height: 20px;
+  margin-bottom: 5px;
+  background: pink; }
+
+.one {
+  width: 29.16667px; }
+
+.two {
+  width: 68.33333px; }
+
+.three {
+  width: 107.5px; }
+
+.four {
+  width: 146.66667px; }
+
+.five {
+  width: 185.83333px; }
+
+.six {
+  width: 225px; }
+
+.seven {
+  width: 264.16667px; }
+
+.eight {
+  width: 303.33333px; }
+
+.nine {
+  width: 342.5px; }
+
+.ten {
+  width: 381.66667px; }
+
+.eleven {
+  width: 420.83333px; }
+
+.twelve {
+  width: 460px; }
+
+.a {
+  display: inline-block;
+  width: 29.16667px;
+  margin-right: 49.16667px; }
+
+.b {
+  display: inline-block;
+  width: 29.16667px;
+  margin-right: 10px; }
+
+.c {
+  display: inline-block;
+  width: 107.5px;
+  margin-right: 127.5px; }
+
+.d {
+  display: inline-block;
+  width: 107.5px; }
+
 html {
   font-size: 13px;
   font-family: "Gotham Book", Gotham-Book, Arial, sans-serif; }
@@ -9,23 +69,26 @@ html {
  * (todo plugin? haskell)
  */
 .topBar {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 13px;
+  padding-bottom: 13px;
   background-color: white;
   /* box-shadow: 0px 4px 4px rgba(0,0,0,0.24); */
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
-  position: relative;
-  padding: 13px 0; }
+  position: relative; }
   .topBar .logo {
-    width: 113px;
+    width: 29.16667px;
     background: #727272;
     height: 20px; }
   .topBar .search {
     line-height: 3.5rem;
     background: #ececec;
-    width: 539px; }
+    width: 185.83333px; }
   .topBar .importPresentation {
     line-height: 2.7rem;
     border-radius: 4px;
-    width: 198px;
+    width: 68.33333px;
     border: 1px solid #727272;
     background: #727272;
     color: white; }
@@ -54,17 +117,17 @@ html {
     .page .page_right .page_right_topBar .downloadPresentation {
       line-height: 2.7rem;
       border-radius: 4px;
-      width: 198px;
+      width: 68.33333px;
       border: 1px solid #727272; }
     .page .page_right .page_right_topBar .downloadSelectedSlides:not(.downloadSelectedSlides-disabled) {
       line-height: 2.7rem;
       border-radius: 4px;
-      width: 198px;
+      width: 68.33333px;
       border: 1px solid #727272; }
     .page .page_right .page_right_topBar .downloadSelectedSlides-disabled {
       line-height: 2.7rem;
       border-radius: 4px;
-      width: 198px;
+      width: 68.33333px;
       border: 1px solid #727272;
       color: #c7c7cc;
       border-color: #c7c7cc;
@@ -98,14 +161,14 @@ html {
   .bottomBar .downloadGeneratedPresentation {
     line-height: 2.7rem;
     border-radius: 4px;
-    width: 198px;
+    width: 68.33333px;
     border: 1px solid #727272;
     background: #727272;
     color: white; }
   .bottomBar .saveGeneratedPresentation {
     line-height: 2.7rem;
     border-radius: 4px;
-    width: 198px;
+    width: 68.33333px;
     border: 1px solid #727272; }
 
 /*# sourceMappingURL=style.css.map */
