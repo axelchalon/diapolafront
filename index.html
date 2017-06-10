@@ -114,7 +114,7 @@
             <div class="diaporama_currentSlideInformation">
                 <div class="diaporama_currentSlideInformation_tags">
                     <h3>Mots-clés</h3>
-                    <tags :initial-tags="diaporamaSlides[diaporamaCurrentSlideIndex].tags"></tags>
+                    <tags :tags="diaporamaSlides[diaporamaCurrentSlideIndex].tags" :on-tag-add="addTagToSlide" :on-tag-remove="removeTagFromSlide"></tags>
                 </div>
                 <div class="diaporama_currentSlideInformation_comment">
                     <h3>Commentaire de diapositive</h3>
@@ -157,24 +157,15 @@
         
         Vue.component('tags', {
           props: {
-              initialTags: Array
-          },
-          data: function() {
-              return {tags: this.initialTags || []};
-          },
-          methods: {
-            addTag: function(tag) {
-                this.tags.push(tag);
-            },
-            removeTag: function(tag) {
-                this.tags = this.tags.filter(x => x != tag);
-            }
+              tags: Array,
+              onTagAdd: Function,
+              onTagRemove: Function,
           },
           template:
             `<div class="component_tags">
                 <ul>
                     <li class="component_tags_tag" v-for="tag in tags">
-                        <a class="component_tags_tag_close" href="#" @click.prevent="removeTag(tag)">
+                        <a class="component_tags_tag_close" href="#" @click.prevent="onTagRemove(tag)">
                             &times;
                         </a>
                         {{tag}}
@@ -183,7 +174,7 @@
 
                 <div class="component_tags_addTag">
                     <input placeholder="Ajouter un tag">
-                    <button @click.prevent="addTag($event.target.parentNode.querySelector('input').value); $event.target.parentNode.querySelector('input').value='';">+</button>
+                    <button @click.prevent="onTagAdd($event.target.parentNode.querySelector('input').value); $event.target.parentNode.querySelector('input').value='';">+</button>
                 </div>
             </div>`
         })
@@ -221,6 +212,14 @@
                     // hydrate diaporamaPresentationTitle
                     // hydrate diaporamaCurrentSlideIndex
                     // diaporamaSlides
+                },
+                addTagToSlide: function(tag,slide) {
+                  // faire requête serveur
+                    this.diaporamaSlides[0].tags.push(tag);
+                },
+                removeTagFromSlide: function (tag,slide) {
+                  // faire requête serveur
+                    this.diaporamaSlides[0].tags = this.diaporamaSlides[0].tags.filter(x => x != tag);
                 },
                 search: function (q) {
                     this.page = "search";
