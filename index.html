@@ -107,13 +107,43 @@
             
             <a href="#" @click.prevent="diaporamaMode = false" class="diaporama_exit">Fermer le mode lecture</a>
                 
-            <div class="diaporama_previousSlide"></div>
-            <div class="diaporama_nextSlide"></div>
+            <div class="diaporama_previousSlide" v-if="diaporamaCurrentSlideIndex > 0" :style='{"background-image": "url(" + diaporamaSlides[diaporamaCurrentSlideIndex-1].viewUrl + ")"}'></div>
+            <div class="diaporama_nextSlide" v-if="diaporamaCurrentSlideIndex < diaporamaSlides.length-1" :style='{"background-image": "url(" + diaporamaSlides[diaporamaCurrentSlideIndex+1].viewUrl + ")"}'></div>
+            
+            <div class="diaporama_currentSlide" :style='{"background-image": "url(" + diaporamaSlides[diaporamaCurrentSlideIndex].viewUrl + ")"}'></div>
+            <div class="diaporama_currentSlideInformation">
+                <div class="diaporama_currentSlideInformation_tags">
+                    <h3>Mots-clés</h3>
+                    <div class="component_tags">
+                        <ul>
+                            <li class="component_tags_tag" v-for="tag in diaporamaSlides[diaporamaCurrentSlideIndex].tags">
+                                <a class="component_tags_tag_close" href="#">
+                                    &times;
+                                </a>
+                                {{tag}}
+                            </li>
+                        </ul>
+                        
+                        <div class="component_tags_addTag">
+                            <input placeholder="Ajouter un tag">
+                            <button>+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="diaporama_currentSlideInformation_comment">
+                    <h3>Commentaire de diapositive</h3>
+                    <p>{{diaporamaSlides[diaporamaCurrentSlideIndex].comment}}</p>
+                </div>
+            </div>
             
             <div class="diaporama_banner">
-            Nom de la présentation
-            <small>4/25</small>
+                {{diaporamaPresentationTitle}}
+                <small>{{diaporamaCurrentSlideIndex+1}}/{{diaporamaSlides.length}}</small>
+
+                <a class="diaporama_gotoPreviousSlide" href="#" v-if="diaporamaCurrentSlideIndex > 0" @click.prevent="diaporamaCurrentSlideIndex--"></a>
+                <a class="diaporama_gotoNextSlide" href="#" v-if="diaporamaCurrentSlideIndex < diaporamaSlides.length-1" @click.prevent="diaporamaCurrentSlideIndex++"></a>
             </div>
+            
         </div>
     </div>
 
@@ -144,6 +174,9 @@
                 bottomBarActive: true,
                 page: "presentation",
                 diaporamaMode: true,
+                diaporamaPresentationTitle: "Nom de la préz!",
+                diaporamaCurrentSlideIndex: 0,
+                diaporamaSlides: [{viewUrl: "https://www.placecage.com/1200/900", tags: ["onea","oneb","onec"], comment: "Lorem ipsum..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["twox","twoc","twod"], comment: "Lorem ipsum 2..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["threea","threeb","threec"], comment: "Lorem ipsum 3..."} ],
                 presentationSlides: [{},{},{},{},{},{},{}],
                 generatedPresentationSlides: [{title: "Nom de la présentation",previewUrl: "https://www.placecage.com/200/130"}],
                 searchTab: "all",
