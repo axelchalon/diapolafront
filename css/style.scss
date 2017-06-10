@@ -57,6 +57,14 @@ $sectionpadding: 13px;
  * (todo plugin? haskell)
  */
 
+@mixin slide-presentation-title {
+    position: absolute; bottom: 0;
+    left: 0; right: 0; height: 30px;
+    background: white;
+    line-height: 30px;
+    padding-left: 5px;
+}
+
 @mixin remove-button {
     background-color: #ffffff;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
@@ -295,10 +303,17 @@ html {
                 height: 141px;
                 border-radius: 4px;
                 background-color: #ffffff;
+                background-repeat: no-repeat;
+                background-size: cover;
                 box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
                 display: inline-block;
                 margin-right: 20px;
                 margin-bottom: 35px;
+                position: relative;
+                
+                .page_right_page_slide_presentationTitle {
+                    @include slide-presentation-title;
+                }
             }
         }
     }
@@ -393,11 +408,7 @@ html {
             }
             
             .bottomBar_listOfSlides_slide_title {
-                position: absolute; bottom: 0;
-                left: 0; right: 0; height: 30px;
-                background: white;
-                line-height: 30px;
-                padding-left: 5px;
+                @include slide-presentation-title;
             }
             
             .bottomBar_listOfSlides_slide_remove {

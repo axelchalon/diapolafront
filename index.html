@@ -48,7 +48,7 @@
 
                     <div class="presentationComment">
                         <h3>Commentaire</h3> <a href="#" class="presentationComment-edit">Modifier</a><br>
-                        <p>Duis ultrices vestibulum lacus non luctus. Praesent aliquet, justo ut accumsan bibendum, sem erat sagittis nunc, a vulputate diam ulla nisi.</p>
+                        <p>{{presentationComment}}</p>
                     </div>
                 </div>
                 
@@ -63,8 +63,10 @@
                 </div>
                 
                 <div v-if="page == 'search'" class="page_right_page">
-                    <div v-for="searchResult in (searchTab == 'all' ? searchResults : searchTab == 'slides' ? searchResultsSlides : searchResultsPresentations)" class="page_right_page_slide">
-                    </div>
+                    <a v-for="searchResult in (searchTab == 'all' ? searchResults : searchTab == 'slides' ? searchResultsSlides : searchResultsPresentations)" class="page_right_page_slide" :style='{"background-image": "url(" + searchResult.previewUrl + ")"}' href="#" @click.prevent="searchResult.type == 'slide' ? launchDiaporamaOnSlide(searchResult) : viewPresentationForSlide(searchResult)">
+                        
+                        <p v-if="searchResult.type == 'slide'" class="page_right_page_slide_presentationTitle">{{searchResult.presentationTitle}}</p>
+                    </a>
                 </div>
                 
                 <div v-if="page == 'presentation'" class="page_right_page">
@@ -185,11 +187,12 @@
                 message: 'Hello Vue!',
                 bottomBarActive: true,
                 page: "presentation",
-                diaporamaMode: true,
+                diaporamaMode: false,
                 diaporamaPresentationTitle: "Nom de la préz!",
                 diaporamaCurrentSlideIndex: 0,
                 diaporamaSlides: [{viewUrl: "https://www.placecage.com/1200/900", tags: ["onea","oneb","onec"], comment: "Lorem ipsum..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["twox","twoc","twod"], comment: "Lorem ipsum 2..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["threea","threeb","threec"], comment: "Lorem ipsum 3..."} ],
                 presentationSlides: [{},{},{},{},{},{},{}],
+                presentationComment: "Duis ultrices vestibulum lacus non luctus. Praesent aliquet, justo ut accumsan bibendum, sem erat sagittis nunc, a vulputate diam ulla nisi.",
                 generatedPresentationSlides: [{title: "Nom de la présentation",previewUrl: "https://www.placecage.com/200/130"}],
                 searchTab: "all",
                 searchQuery: "",
@@ -214,12 +217,16 @@
                     // diaporamaSlides
                 },
                 addTagToSlide: function(tag,slide) {
-                  // faire requête serveur
+                  // faire requête serveur pour update tags
                     this.diaporamaSlides[0].tags.push(tag);
                 },
                 removeTagFromSlide: function (tag,slide) {
-                  // faire requête serveur
+                  // faire requête serveur pour update tags
                     this.diaporamaSlides[0].tags = this.diaporamaSlides[0].tags.filter(x => x != tag);
+                },
+                viewPresentationForSlide: function(slide) {
+                    // faire requête serveur pour récup liste des slides de la présentation et infos présentation
+                    this.page = 'presentation';  
                 },
                 search: function (q) {
                     this.page = "search";
@@ -227,20 +234,24 @@
                     this.searchQuery = q;
                     this.searchResults = [
                         {
-                            title: "Slide",
-                            type: "slide"
+                            presentationTitle: "Slide prez",
+                            type: "slide",
+                            previewUrl: "https://www.placecage.com/200/130"
                         },
                         {
-                            title: "Slide",
-                            type: "slide"
+                            presentationTitle: "Slide prez",
+                            type: "slide",
+                            previewUrl: "https://www.placecage.com/200/130"
                         },
                         {
-                            title: "Slide",
-                            type: "slide"
+                            presentationTitle: "Slide prez",
+                            type: "slide",
+                            previewUrl: "https://www.placecage.com/200/130"
                         },
                         {
                             title: "Presentation",
-                            type: "presentation"
+                            type: "presentation",
+                            previewUrl: "https://www.placecage.com/200/130"
                         }
                     ];
                 }
