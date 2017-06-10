@@ -290,6 +290,7 @@ html {
             padding-top: 20px;
             white-space: normal; 
             .page_right_page_slide {
+                display: block;
                 width: 227px;
                 height: 141px;
                 border-radius: 4px;
@@ -457,10 +458,10 @@ html {
         transform: translateX(-50%);
         text-align: center;
         
-        h3 { font-weight: bold; margin-top: 20px; margin-bottom: 25px; }
+        h3 { font-weight: bold; margin-bottom: 25px; }
         
         .diaporama_currentSlideInformation_tags {
-            padding: 0 50px; box-sizing: border-box;
+            padding: 20px 50px; box-sizing: border-box;
             position: absolute;
             left: 0;
             width: 50%;
@@ -470,7 +471,7 @@ html {
         }
         
         .diaporama_currentSlideInformation_comment {
-            padding: 0 50px; box-sizing: border-box;
+            padding: 20px 50px; box-sizing: border-box;
             position: absolute;
             left: 50%;
             width: 50%;
@@ -499,6 +500,7 @@ html {
             font-weight: normal;
             display: block;
         }
+        .diaporama_banner_text { user-select: none; }
         
         position: relative;
         .diaporama_gotoPreviousSlide, .diaporama_gotoNextSlide {
@@ -585,6 +587,7 @@ html {
         border-radius: 4px;
         border: solid 1px $blue;
         margin-right: 5px;
+        margin-bottom: 5px;
 
         &:hover {
             background: $orange;
@@ -628,6 +631,7 @@ html {
             text-align: center;
             font-size: 2rem;
             color: #cfd0d5;
+            outline: none;
             
             &:hover {
                 background: $blue;

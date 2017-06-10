@@ -172,6 +172,7 @@ html {
       padding-top: 20px;
       white-space: normal; }
       .page .page_right .page_right_page .page_right_page_slide {
+        display: block;
         width: 227px;
         height: 141px;
         border-radius: 4px;
@@ -326,10 +327,9 @@ html {
     text-align: center; }
     .diaporama .diaporama_currentSlideInformation h3 {
       font-weight: bold;
-      margin-top: 20px;
       margin-bottom: 25px; }
     .diaporama .diaporama_currentSlideInformation .diaporama_currentSlideInformation_tags {
-      padding: 0 50px;
+      padding: 20px 50px;
       box-sizing: border-box;
       position: absolute;
       left: 0;
@@ -338,7 +338,7 @@ html {
       bottom: 0;
       overflow: auto; }
     .diaporama .diaporama_currentSlideInformation .diaporama_currentSlideInformation_comment {
-      padding: 0 50px;
+      padding: 20px 50px;
       box-sizing: border-box;
       position: absolute;
       left: 50%;
@@ -365,6 +365,8 @@ html {
       font-size: 1rem;
       font-weight: normal;
       display: block; }
+    .diaporama .diaporama_banner .diaporama_banner_text {
+      user-select: none; }
     .diaporama .diaporama_banner .diaporama_gotoPreviousSlide, .diaporama .diaporama_banner .diaporama_gotoNextSlide {
       width: 52px;
       height: 52px;
@@ -422,6 +424,7 @@ html {
   border-radius: 4px;
   border: solid 1px #77b0ff;
   margin-right: 5px;
+  margin-bottom: 5px;
   position: relative; }
   .component_tags .component_tags_tag:hover {
     background: #ffa277;
@@ -472,7 +475,8 @@ html {
     width: 20%;
     text-align: center;
     font-size: 2rem;
-    color: #cfd0d5; }
+    color: #cfd0d5;
+    outline: none; }
     .component_tags .component_tags_addTag button:hover {
       background: #77b0ff;
       color: white; }

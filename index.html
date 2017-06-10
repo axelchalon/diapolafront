@@ -68,8 +68,8 @@
                 </div>
                 
                 <div v-if="page == 'presentation'" class="page_right_page">
-                    <div v-for="presentationSlide in presentationSlides" class="page_right_page_slide">
-                    </div>
+                    <a v-for="presentationSlide in presentationSlides" class="page_right_page_slide" href="#" @click.prevent="launchDiaporamaOnSlide(presentationSlide)">
+                    </a>
                 </div>
                 
                 
@@ -80,7 +80,7 @@
             <a class="bottomBar_toggler" href="#" @click.prevent="bottomBarActive = !bottomBarActive">^</a>
             <button class="downloadGeneratedPresentation" href="#">Télécharger</button>
             <button class="saveGeneratedPresentation" href="#">Sauvegarder</button>
-            <a class="clearGeneratedPresentation" href="#">Tout effacer</a>
+            <a class="clearGeneratedPresentation" href="#" @click.prevent="generatedPresentationSlides = []">Tout effacer</a>
             
             <div class="bottomBar_delineator"></div>
             
@@ -107,28 +107,14 @@
             
             <a href="#" @click.prevent="diaporamaMode = false" class="diaporama_exit">Fermer le mode lecture</a>
                 
-            <div class="diaporama_previousSlide" v-if="diaporamaCurrentSlideIndex > 0" :style='{"background-image": "url(" + diaporamaSlides[diaporamaCurrentSlideIndex-1].viewUrl + ")"}'></div>
-            <div class="diaporama_nextSlide" v-if="diaporamaCurrentSlideIndex < diaporamaSlides.length-1" :style='{"background-image": "url(" + diaporamaSlides[diaporamaCurrentSlideIndex+1].viewUrl + ")"}'></div>
+            <div class="diaporama_previousSlide" v-if="diaporamaCurrentSlideIndex > 0" :style='{"background-image": "url(" + diaporamaSlides[diaporamaCurrentSlideIndex-1].viewUrl + ")"}' @click.prevent="diaporamaCurrentSlideIndex--"></div>
+            <div class="diaporama_nextSlide" v-if="diaporamaCurrentSlideIndex < diaporamaSlides.length-1" :style='{"background-image": "url(" + diaporamaSlides[diaporamaCurrentSlideIndex+1].viewUrl + ")"}' @click.prevent="diaporamaCurrentSlideIndex++"></div>
             
             <div class="diaporama_currentSlide" :style='{"background-image": "url(" + diaporamaSlides[diaporamaCurrentSlideIndex].viewUrl + ")"}'></div>
             <div class="diaporama_currentSlideInformation">
                 <div class="diaporama_currentSlideInformation_tags">
                     <h3>Mots-clés</h3>
-                    <div class="component_tags">
-                        <ul>
-                            <li class="component_tags_tag" v-for="tag in diaporamaSlides[diaporamaCurrentSlideIndex].tags">
-                                <a class="component_tags_tag_close" href="#">
-                                    &times;
-                                </a>
-                                {{tag}}
-                            </li>
-                        </ul>
-                        
-                        <div class="component_tags_addTag">
-                            <input placeholder="Ajouter un tag">
-                            <button>+</button>
-                        </div>
-                    </div>
+                    <tags :initial-tags="diaporamaSlides[diaporamaCurrentSlideIndex].tags"></tags>
                 </div>
                 <div class="diaporama_currentSlideInformation_comment">
                     <h3>Commentaire de diapositive</h3>
@@ -137,8 +123,10 @@
             </div>
             
             <div class="diaporama_banner">
-                {{diaporamaPresentationTitle}}
-                <small>{{diaporamaCurrentSlideIndex+1}}/{{diaporamaSlides.length}}</small>
+                <div class="diaporama_banner_text">
+                    {{diaporamaPresentationTitle}}
+                    <small>{{diaporamaCurrentSlideIndex+1}}/{{diaporamaSlides.length}}</small>
+                </div>
 
                 <a class="diaporama_gotoPreviousSlide" href="#" v-if="diaporamaCurrentSlideIndex > 0" @click.prevent="diaporamaCurrentSlideIndex--"></a>
                 <a class="diaporama_gotoNextSlide" href="#" v-if="diaporamaCurrentSlideIndex < diaporamaSlides.length-1" @click.prevent="diaporamaCurrentSlideIndex++"></a>
@@ -159,12 +147,45 @@
               return {active: false};
           },
           template: `
-                <div class="component_burger" v-bind:class='{"component_burger-active": active, "component_burger-alignLeft": align == "left", "component_burger-alignRight": align == "right" }' v-on:click.prevent="active = !active">
-                    <a href="#">&sdot; &sdot; &sdot;</a>
+                <div class="component_burger" v-bind:class='{"component_burger-active": active, "component_burger-alignLeft": align == "left", "component_burger-alignRight": align == "right" }'>
+                    <a href="#" v-on:click.prevent="active = !active">&sdot; &sdot; &sdot;</a>
                     <ul>
                         <li v-for="item in items"><a href="#">{{item.text}}</a></li>
                     </ul>
                 </div>`
+        })
+        
+        Vue.component('tags', {
+          props: {
+              initialTags: Array
+          },
+          data: function() {
+              return {tags: this.initialTags || []};
+          },
+          methods: {
+            addTag: function(tag) {
+                this.tags.push(tag);
+            },
+            removeTag: function(tag) {
+                this.tags = this.tags.filter(x => x != tag);
+            }
+          },
+          template:
+            `<div class="component_tags">
+                <ul>
+                    <li class="component_tags_tag" v-for="tag in tags">
+                        <a class="component_tags_tag_close" href="#" @click.prevent="removeTag(tag)">
+                            &times;
+                        </a>
+                        {{tag}}
+                    </li>
+                </ul>
+
+                <div class="component_tags_addTag">
+                    <input placeholder="Ajouter un tag">
+                    <button @click.prevent="addTag($event.target.parentNode.querySelector('input').value); $event.target.parentNode.querySelector('input').value='';">+</button>
+                </div>
+            </div>`
         })
         
         var app = new Vue({
@@ -194,6 +215,12 @@
             methods: {
                 removeGeneratedPresentationSlide: function(index) {
                     this.$delete(this.generatedPresentationSlides, index);
+                },
+                launchDiaporamaOnSlide: function(slide) {
+                    this.diaporamaMode = true;
+                    // hydrate diaporamaPresentationTitle
+                    // hydrate diaporamaCurrentSlideIndex
+                    // diaporamaSlides
                 },
                 search: function (q) {
                     this.page = "search";
