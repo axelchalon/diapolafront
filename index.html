@@ -31,7 +31,7 @@
                 <a class="breadcrumbs_breadcrumb" href="#">Mon dossier</a>
                 <span class="breadcrumbs_separator">&gt;</span>
                 <a class="breadcrumbs_breadcrumb breadcrumbs_breadcrumb-active" href="#" >Nom de la présentation</a>
-                <burger align="left" :items="[{text: 'Mots-clés'}, {text: 'Renommer'}, {text: 'Supprimer'}]"></burger>
+                <burger align="left" :items="[{text: 'Mots-clés', callback: presentationShowKeywords}, {text: 'Renommer'}, {text: 'Supprimer', callback: presentationShowConfirmDelete}]"></burger>
             </div>
         </div>
         
@@ -105,6 +105,23 @@
             </ul>
         </div>
         
+        <div v-show="presentationKeywordsShown" class="presentationKeywords">
+            <div class="presentationKeywords_modal">
+                <a href="#" class="presentationKeywords_modal_close" @click.prevent="presentationKeywordsShown = false">&times;</a>
+                <h3>Mots-clés de la présentation</h3>
+                <tags :tags="presentationTags" :on-tag-add="addTagToPresentation" :on-tag-remove="removeTagFromPresentation"></tags>
+            </div>
+        </div>
+        
+        <div v-show="presentationConfirmDeleteShown" class="presentationShowConfirmDelete">
+            <div class="presentationShowConfirmDelete_modal">
+                <a href="#" class="presentationShowConfirmDelete_modal_close" @click.prevent="presentationConfirmDeleteShown = false">&times;</a>
+                <h3>Êtes-vous sûr de vouloir supprimer la présentation ?</h3>
+                <button class="presentationShowConfirmDelete_modal_yes" @click.href="deletePresentation">Oui</button>
+                <button class="presentationShowConfirmDelete_modal_no" @click.href="presentationConfirmDeleteShown = false">Non</button>
+            </div>
+        </div>
+        
         <div v-show="diaporamaMode" class="diaporama">
             
             <a href="#" @click.prevent="diaporamaMode = false" class="diaporama_exit">Fermer le mode lecture</a>
@@ -152,7 +169,7 @@
                 <div class="component_burger" v-bind:class='{"component_burger-active": active, "component_burger-alignLeft": align == "left", "component_burger-alignRight": align == "right" }'>
                     <a href="#" v-on:click.prevent="active = !active">&sdot; &sdot; &sdot;</a>
                     <ul>
-                        <li v-for="item in items"><a href="#">{{item.text}}</a></li>
+                        <li v-for="item in items"><a href="#" @click.prevent="item.callback(); active = false;">{{item.text}}</a></li>
                     </ul>
                 </div>`
         })
@@ -191,8 +208,11 @@
                 diaporamaPresentationTitle: "Nom de la préz!",
                 diaporamaCurrentSlideIndex: 0,
                 diaporamaSlides: [{viewUrl: "https://www.placecage.com/1200/900", tags: ["onea","oneb","onec"], comment: "Lorem ipsum..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["twox","twoc","twod"], comment: "Lorem ipsum 2..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["threea","threeb","threec"], comment: "Lorem ipsum 3..."} ],
+                presentationTags: ["tag prez", "tag prez2"],
                 presentationSlides: [{},{},{},{},{},{},{}],
                 presentationComment: "Duis ultrices vestibulum lacus non luctus. Praesent aliquet, justo ut accumsan bibendum, sem erat sagittis nunc, a vulputate diam ulla nisi.",
+                presentationKeywordsShown: false,
+                presentationConfirmDeleteShown: false,
                 generatedPresentationSlides: [{title: "Nom de la présentation",previewUrl: "https://www.placecage.com/200/130"}],
                 searchTab: "all",
                 searchQuery: "",
@@ -216,6 +236,14 @@
                     // hydrate diaporamaCurrentSlideIndex
                     // diaporamaSlides
                 },
+                addTagToPresentation: function(tag) {
+                  // faire requête serveur pour update tags
+                    this.presentationTags.push(tag);
+                },
+                removeTagFromPresentation: function (tag) {
+                  // faire requête serveur pour update tags
+                    this.presentationTags = this.presentationTags.filter(x => x != tag);
+                },
                 addTagToSlide: function(tag,slide) {
                   // faire requête serveur pour update tags
                     this.diaporamaSlides[0].tags.push(tag);
@@ -227,6 +255,19 @@
                 viewPresentationForSlide: function(slide) {
                     // faire requête serveur pour récup liste des slides de la présentation et infos présentation
                     this.page = 'presentation';  
+                    // presentationTags...
+                },
+                presentationShowKeywords: function() {
+                  this.presentationKeywordsShown = true;
+                },
+                presentationShowConfirmDelete: function() {
+                  this.presentationConfirmDeleteShown = true;
+                },
+                deletePresentation: function() {
+                    alert('del');
+                  // requête serveur delete presentation
+                  // changer this.presentation et revenir à la home
+                    this.presentationConfirmDeleteShown = false;
                 },
                 search: function (q) {
                     this.page = "search";
@@ -257,6 +298,12 @@
                 }
             }
         })
+        
+        var API = {
+          getPresentationInfo: (id) => {
+              // return promise...
+          }  
+        };
     </script>
 
 </body>

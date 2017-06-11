@@ -57,6 +57,27 @@ $sectionpadding: 13px;
  * (todo plugin? haskell)
  */
 
+@mixin modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0, 0.5);
+}
+
+@mixin modal {
+    background: white;
+    width: 50%; position: absolute;
+    left: 50%;
+    top: 50%; transform: translateY(-50%) translateX(-50%);
+    padding: 20px 40px 40px 40px;
+    position: relative;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+}
+
 @mixin slide-presentation-title {
     position: absolute; bottom: 0;
     left: 0; right: 0; height: 30px;
@@ -416,17 +437,54 @@ html {
             }
         }
     }
-    
         
 }
 
+.presentationKeywords {
+    @include modal-overlay;
+    
+    .presentationKeywords_modal {
+        @include modal;
+        
+        h3 {
+            font-weight: bold; margin-bottom: 30px;
+        }
+        
+        .presentationKeywords_modal_close {
+            position: absolute; right: 5px; top: 5px;
+        }
+    }
+}
+
+.presentationShowConfirmDelete {
+    @include modal-overlay;
+    
+    .presentationShowConfirmDelete_modal {
+        @include modal;
+        
+        h3 {
+            font-weight: bold; margin-bottom: 30px;
+        }
+        
+        .presentationShowConfirmDelete_modal_close {
+            position: absolute; right: 5px; top: 5px;
+        }
+        
+        .presentationShowConfirmDelete_modal_yes {
+            @include button-primary-enabled;
+            display: inline-block;
+        }
+        
+        .presentationShowConfirmDelete_modal_no {
+            @include button-secondary-enabled;
+            display: inline-block;
+        }
+    }
+}
+
+
 .diaporama {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0, 0.5);
+    @include modal-overlay;
     
     .diaporama_exit {
         line-height: 2.7rem;
