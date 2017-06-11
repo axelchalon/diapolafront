@@ -47,11 +47,25 @@ html {
     margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px);
     display: inline-block; }
   .topBar .myProfile {
-    width: 20px;
-    height: 20px;
-    background: #727272;
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 1 + 30px * 0);
     display: inline-block; }
+    .topBar .myProfile > a {
+      display: inline-block;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat; }
+    .topBar .myProfile .component_burger {
+      display: inline-block;
+      vertical-align: top; }
+      .topBar .myProfile .component_burger > a {
+        font-size: 0;
+        width: 10px;
+        height: 40px;
+        background: blue;
+        display: block; }
   .topBar .topBar_innerSeparator {
     height: 30px; }
   .topBar .importPresentation {
@@ -242,8 +256,17 @@ html {
   .bottomBar .clearGeneratedPresentation {
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
     line-height: 2.7rem;
-    border: 1px solid transparent;
-    color: #c7c7cc; }
+    border-radius: 4px;
+    border: 1px solid #727272;
+    float: right;
+    text-align: center; }
+    .bottomBar .clearGeneratedPresentation .clearGeneratedPresentation_icon {
+      width: 20px;
+      height: 20px;
+      background: blue;
+      margin-right: 5px;
+      display: inline-block;
+      vertical-align: middle; }
   .bottomBar .bottomBar_delineator {
     height: 1px;
     background: #ececec;
@@ -459,6 +482,57 @@ html {
     .diaporama .diaporama_banner .diaporama_gotoNextSlide {
       right: 0;
       transform: translateY(-50%) translateX(50%); }
+
+.login {
+  background-color: #fafcff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+  .login .login_modal {
+    width: 425px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    border-radius: 4px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24);
+    padding: 2.5rem 85px 4rem;
+    box-sizing: border-box;
+    color: #333; }
+    .login .login_modal h3 {
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.3rem;
+      padding-bottom: 3.3rem; }
+    .login .login_modal label {
+      font-weight: bold;
+      display: block; }
+    .login .login_modal input {
+      display: block;
+      border: solid 1px #cfd0d5;
+      border-radius: 4px;
+      line-height: 3.5rem;
+      width: 100%;
+      padding-left: 15px; }
+    .login .login_modal button {
+      width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
+      line-height: 2.7rem;
+      border-radius: 4px;
+      border: 1px solid #727272;
+      background: #727272;
+      color: white;
+      width: 100%;
+      display: block;
+      margin-bottom: 1.3rem;
+      margin-top: 3rem; }
+    .login .login_modal small {
+      text-align: center;
+      display: block; }
+    .login .login_modal small a {
+      color: #659eff; }
 
 /* COMPONENTS */
 .component_burger {
