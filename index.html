@@ -11,7 +11,44 @@
 <body>
     <div id="app">
         
-        <div class="login" v-if="!account.loggedIn">
+        <div class="signUp" v-if="signUpShown">
+            <div class="signUp_modal">
+                <h3>S'inscrire</h3>
+                
+                <form>
+                    
+                    <div class="signUp_modal_left">
+                        <label for="signUp_lastname">Nom</label><br>
+                        <input type="email" id="signUp_lastname"><br>
+                    </div>
+                    <div class="signUp_modal_right">
+                        <label for="signUp_firstname">Prénom</label><br>
+                        <input type="email" id="signUp_firstname"><br>
+                    </div>
+                    <div style="clear:both;"></div>
+                    
+                    <label for="signUp_email">Adresse mail</label><br>
+                    <input type="email" id="signUp_email"><br>
+                    
+                    <div class="signUp_modal_left">
+                        <label for="signUp_password">Mot de passe</label><br>
+                        <input type="password" id="signUp_password"><br>
+                    </div>
+                    <div class="signUp_modal_right">
+                        <label for="signUp_password_confirm">Mot de passe</label><br>
+                        <input type="password" id="signUp_password_confirm"><br>
+                    </div>
+                    <div style="clear:both;"></div>
+                    
+                    
+                    <button type="submit" @click.prevent="signUp($event.target.parentNode.querySelector('#signUp_lastname').value, $event.target.parentNode.querySelector('#signUp_firstname').value, $event.target.parentNode.querySelector('#signUp_email').value, $event.target.parentNode.querySelector('#signUp_password').value, $event.target.parentNode.querySelector('#signUp_password_confirm').value)">S'inscrire</button>
+                    
+                    <small>Déjà un compte ? <a href="#" @click.prevent="signUpShown = false">Se connecter</a></small>
+                </form>
+            </div>
+        </div>
+        
+        <div class="login" v-if="!account.loggedIn && !signUpShown">
             <div class="login_modal">
                 <h3>S'identifier</h3>
                 
@@ -26,7 +63,7 @@
                     
                     <button type="submit" @click.prevent="logIn($event.target.parentNode.querySelector('#login_email').value, $event.target.parentNode.querySelector('#login_password').value)">Se connecter</button>
                     
-                    <small>Pas encore de compte ? <a href="#">S'inscrire</a></small>
+                    <small>Pas encore de compte ? <a href="#" @click.prevent="signUpShown = true">S'inscrire</a></small>
                 </form>
             </div>
         </div>
@@ -230,6 +267,7 @@
                   loggedIn: false,
                   avatarPreviewUrl: "https://placecage.com/50/50"
                 },
+                signUpShown: true,
                 message: 'Hello Vue!',
                 bottomBarActive: true,
                 page: "presentation",
@@ -306,6 +344,11 @@
                     // requête serveur
                     this.account.loggedIn = true;
                     // hydrate account info
+                },
+                signUp: function(lastname,firstname,email,password,password_confirm) {
+                    console.log(lastname,firstname,email,password,password_confirm)
+                    this.account.loggedIn = true;
+                    this.signUpShown = false;
                 },
                 search: function (q) {
                     this.page = "search";

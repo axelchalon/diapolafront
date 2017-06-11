@@ -664,6 +664,59 @@ html {
     }
 }
 
+.signUp {
+    background-color: #fafcff;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    
+    .signUp_modal {
+        width: 650px;
+        position: absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%);
+        border-radius: 4px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24);
+        padding: 2.5rem 85px 4rem; 
+        box-sizing: border-box;
+        color: $black;
+        
+        .signUp_modal_left {
+            float: left;
+        }
+        .signUp_modal_right {
+            float: right;
+        }
+        
+        h3 {
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.3rem;
+            padding-bottom: 3.3rem;
+        }
+        
+        label { font-weight: bold; display: block; }
+        
+        input {
+            display: block;
+            border: solid 1px #cfd0d5;
+            border-radius: 4px;
+            line-height: 3.5rem;
+            width: 100%;
+            padding-left: 15px;
+            margin-bottom: 1rem;
+        }
+        
+        button {
+            @include button-primary-enabled;
+            width: 100%;
+            display: block; margin-bottom: 1.3rem;
+            margin-top: 3rem;
+        }
+        
+        small { text-align: center; display: block;}
+        small a { color: #659eff; }
+    }
+}
+
 /* COMPONENTS */
 
 .component_burger {
