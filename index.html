@@ -31,7 +31,7 @@
                 <a class="breadcrumbs_breadcrumb" href="#">Mon dossier</a>
                 <span class="breadcrumbs_separator">&gt;</span>
                 <a class="breadcrumbs_breadcrumb breadcrumbs_breadcrumb-active" href="#" >Nom de la présentation</a>
-                <burger align="left" :items="[{text: 'Mots-clés', callback: presentationShowKeywords}, {text: 'Renommer'}, {text: 'Supprimer', callback: presentationShowConfirmDelete}]"></burger>
+                <burger align="left" :items="[{text: 'Mots-clés', callback: presentationShowKeywords}, {text: 'Renommer', callback: presentationRename}, {text: 'Supprimer', callback: presentationShowConfirmDelete}]"></burger>
             </div>
         </div>
         
@@ -259,6 +259,9 @@
                 },
                 presentationShowKeywords: function() {
                   this.presentationKeywordsShown = true;
+                },
+                presentationRename: function() {
+                    prompt(':hap:')
                 },
                 presentationShowConfirmDelete: function() {
                   this.presentationConfirmDeleteShown = true;
