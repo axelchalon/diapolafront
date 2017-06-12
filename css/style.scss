@@ -318,7 +318,8 @@ html {
         border-right: 1px solid $delineator;
         flex-shrink: 0;
         padding-top: $sectionpadding;
-        ul li {
+        ul li a {
+            display: block;
             line-height: 2rem;
             padding-left: 32px;
             background: url("../img/icon_presentation_blue.png") no-repeat 10px center;
@@ -395,6 +396,10 @@ html {
                         display: block;
                         line-height: 3rem;
                         padding: 0 20px;
+                        color: $black;
+                    }
+                    &.active a {
+                        color: $blue;
                     }
                     &.active:after {
                         content: " ";
@@ -404,7 +409,7 @@ html {
                         bottom: -1px;
                         left: 0;
                         right: 0;
-                        background: $black;
+                        background: $blue;
                     }
                 }
                
@@ -417,7 +422,7 @@ html {
             @include padding-left-colspan(0);
             padding-top: 20px;
             white-space: normal; 
-            .page_right_page_slide {
+            .page_right_page_slide, .page_right_page_presentation {
                 display: block;
                 width: 227px;
                 height: 141px;
@@ -437,8 +442,21 @@ html {
                 margin-bottom: 35px;
                 position: relative;
                 
+            }
+            .page_right_page_slide {
                 .page_right_page_slide_presentationTitle {
                     @include slide-presentation-title;
+                }
+            }
+            .page_right_page_presentation {
+                .page_right_page_presentation_presentationTitle {
+                    display: none;
+                }
+                &:hover .page_right_page_presentation_presentationTitle {
+                    position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); line-height: 141px; vertical-align: middle; color: white;
+                    display: block;
+                    text-align: center;
+                    font-weight: 500;
                 }
             }
         }

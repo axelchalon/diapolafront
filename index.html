@@ -102,7 +102,7 @@
 
                 <div class="page_left">
                     <ul>
-                        <li v-for="presentation in presentations">{{presentation.title}}</li>
+                        <li v-for="presentation in presentations"><a href="#" @click.prevent="goToPresentation(presentation)">{{presentation.title}}</a></li>
                     </ul>
                 </div>
 
@@ -128,9 +128,12 @@
                     </div>
 
                     <div v-if="page == 'search'" class="page_right_page">
-                        <a v-for="searchResult in (searchTab == 'all' ? searchResults : searchTab == 'slides' ? searchResultsSlides : searchResultsPresentations)" class="page_right_page_slide" :style='{"background-image": "url(" + searchResult.previewUrl + ")"}' href="#" @click.prevent="searchResult.type == 'slide' ? launchDiaporamaOnSlide(searchResult) : viewPresentationForSlide(searchResult)">
+                        <a v-for="searchResult in (searchTab == 'all' ? searchResults : searchTab == 'slides' ? searchResultsSlides : searchResultsPresentations)"  :style='{"background-image": "url(" + searchResult.previewUrl + ")"}' href="#" @click.prevent="searchResult.type == 'slide' ? launchDiaporamaOnSlide(searchResult) : goToPresentationForSlide(searchResult)"
+                            :class="{page_right_page_slide: searchResult.type == 'slide', page_right_page_presentation: searchResult.type == 'presentation', }"
+                           >
 
-                            <p v-if="searchResult.type == 'slide'" class="page_right_page_slide_presentationTitle">{{searchResult.presentationTitle}}</p>
+                            <p 
+                               :class="{page_right_page_slide_presentationTitle: searchResult.type == 'slide', page_right_page_presentation_presentationTitle: searchResult.type == 'presentation'}">{{searchResult.presentationTitle || searchResult.title}}</p>
                         </a>
                     </div>
 
@@ -326,7 +329,12 @@
                   // faire requête serveur pour update tags
                     this.diaporamaSlides[0].tags = this.diaporamaSlides[0].tags.filter(x => x != tag);
                 },
-                viewPresentationForSlide: function(slide) {
+                goToPresentation: function(slide) {
+                    // faire requête serveur pour récup liste des slides de la présentation et infos présentation
+                    this.page = 'presentation';  
+                    // presentationTags...
+                },
+                goToPresentationForSlide: function(slide) {
                     // faire requête serveur pour récup liste des slides de la présentation et infos présentation
                     this.page = 'presentation';  
                     // presentationTags...
