@@ -141,57 +141,68 @@ html {
   .page .page_left {
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 3 + 30px * 2);
     height: 100vh;
-    border-right: 1px solid #ececec;
+    border-right: 1px solid #e3eefe;
     flex-shrink: 0;
     padding-top: 13px; }
+    .page .page_left ul li {
+      line-height: 2rem;
+      padding-left: 32px;
+      background: url("../img/icon_presentation_blue.png") no-repeat 10px center; }
+      .page .page_left ul li:hover {
+        background-color: #77b0ff;
+        background-image: url("../img/icon_presentation_white.png");
+        color: white;
+        cursor: pointer; }
   .page .page_right {
     flex-grow: 1; }
     .page .page_right .page_right_topBar-presentation {
       padding: 13px 0 30px 0;
       padding-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px);
-      border-bottom: 1px solid #ececec; }
+      border-bottom: 1px solid #e3eefe;
+      /*
+      .downloadSelectedSlides {
+          float: left;
+          @include margin-right-colspan(0);
+          &:not(.downloadSelectedSlides-disabled) {
+              @include button-secondary-enabled;
+          }
+          &.downloadSelectedSlides-disabled {
+              @include button-secondary-disabled;
+          }
+      }*/ }
       .page .page_right .page_right_topBar-presentation .downloadPresentation {
         width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
         line-height: 2.76rem;
         border-radius: 4px;
         border: 1px solid #727272;
         font-weight: 500;
-        float: left;
-        margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px); }
-      .page .page_right .page_right_topBar-presentation .downloadSelectedSlides {
-        float: left;
-        margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px); }
-        .page .page_right .page_right_topBar-presentation .downloadSelectedSlides:not(.downloadSelectedSlides-disabled) {
-          width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
-          line-height: 2.76rem;
-          border-radius: 4px;
-          border: 1px solid #727272;
-          font-weight: 500; }
-        .page .page_right .page_right_topBar-presentation .downloadSelectedSlides.downloadSelectedSlides-disabled {
-          width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
-          line-height: 2.76rem;
-          border-radius: 4px;
-          border: 1px solid #727272;
-          font-weight: 500;
-          color: #cfd0d5;
-          border-color: #cfd0d5;
-          pointer-events: none; }
+        background: transparent;
+        border-color: #77b0ff;
+        color: #77b0ff;
+        float: left; }
+        .page .page_right .page_right_topBar-presentation .downloadPresentation:hover {
+          border-color: #5688dc;
+          color: #5688dc;
+          cursor: pointer; }
       .page .page_right .page_right_topBar-presentation .presentationComment {
-        margin-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 4); }
+        margin-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 2);
+        color: #333; }
         .page .page_right .page_right_topBar-presentation .presentationComment h3 {
           display: inline;
           font-weight: 500; }
         .page .page_right .page_right_topBar-presentation .presentationComment .presentationComment-edit {
-          color: #cfd0d5;
+          color: #77b0ff;
           font-size: 0.85rem;
           margin-left: 10px; }
+          .page .page_right .page_right_topBar-presentation .presentationComment .presentationComment-edit:hover {
+            color: #5688dc; }
         .page .page_right .page_right_topBar-presentation .presentationComment p {
           margin-top: 5px;
           white-space: normal; }
     .page .page_right .page_right_topBar-search {
       padding: 35px 0 0px 0;
       padding-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px);
-      border-bottom: 1px solid #ececec; }
+      border-bottom: 1px solid #e3eefe; }
       .page .page_right .page_right_topBar-search h2 {
         font-size: 1.4rem;
         font-weight: 500;
@@ -231,6 +242,10 @@ html {
         margin-right: 20px;
         margin-bottom: 35px;
         position: relative; }
+        .page .page_right .page_right_page .page_right_page_slide:hover {
+          box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.46); }
+        .page .page_right .page_right_page .page_right_page_slide:active {
+          box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.75); }
         .page .page_right .page_right_page .page_right_page_slide .page_right_page_slide_presentationTitle {
           position: absolute;
           bottom: 0;
@@ -290,16 +305,30 @@ html {
     border-radius: 4px;
     border: 1px solid #727272;
     font-weight: 500;
+    background: transparent;
+    border-color: #77b0ff;
+    color: #77b0ff;
     float: left;
     margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px); }
+    .bottomBar .saveGeneratedPresentation:hover {
+      border-color: #5688dc;
+      color: #5688dc;
+      cursor: pointer; }
   .bottomBar .clearGeneratedPresentation {
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
     line-height: 2.76rem;
     border-radius: 4px;
     border: 1px solid #727272;
     font-weight: 500;
+    background: transparent;
+    border-color: #77b0ff;
+    color: #77b0ff;
     float: right;
     text-align: center; }
+    .bottomBar .clearGeneratedPresentation:hover {
+      border-color: #5688dc;
+      color: #5688dc;
+      cursor: pointer; }
     .bottomBar .clearGeneratedPresentation .clearGeneratedPresentation_icon {
       width: 20px;
       height: 20px;
@@ -309,7 +338,7 @@ html {
       vertical-align: middle; }
   .bottomBar .bottomBar_delineator {
     height: 1px;
-    background: #ececec;
+    background: #e3eefe;
     width: 95%;
     margin: 30px auto; }
   .bottomBar .bottomBar_listOfSlides {
@@ -433,7 +462,14 @@ html {
       border-radius: 4px;
       border: 1px solid #727272;
       font-weight: 500;
+      background: transparent;
+      border-color: #77b0ff;
+      color: #77b0ff;
       display: inline-block; }
+      .presentationShowConfirmDelete .presentationShowConfirmDelete_modal .presentationShowConfirmDelete_modal_no:hover {
+        border-color: #5688dc;
+        color: #5688dc;
+        cursor: pointer; }
 
 .diaporama {
   position: fixed;
@@ -494,7 +530,7 @@ html {
       width: 50%;
       bottom: 0;
       top: 0;
-      border-left: 1px solid #ececec;
+      border-left: 1px solid #e3eefe;
       overflow: auto; }
   .diaporama .diaporama_banner {
     width: 500px;
@@ -688,7 +724,7 @@ html {
       .component_burger ul li a:hover {
         background: #f8f8f8; }
     .component_burger ul li:not(:last-child) {
-      border-bottom: 1px solid #ececec; }
+      border-bottom: 1px solid #e3eefe; }
   .component_burger.component_burger-alignRight ul {
     transform-origin: top right;
     text-align: right;

@@ -101,13 +101,15 @@
             <div class="page">
 
                 <div class="page_left">
-                    Arborescence de fichiers ici...
+                    <ul>
+                        <li v-for="presentation in presentations">{{presentation.title}}</li>
+                    </ul>
                 </div>
 
                 <div class="page_right">
                     <div class="page_right_topBar page_right_topBar-presentation" v-if="page == 'presentation'">
                         <button class="downloadPresentation">Télécharger la présentation</button>
-                        <button class="downloadSelectedSlides downloadSelectedSlides-disabled">Télécharger la sélection</button>
+                        <!--<button class="downloadSelectedSlides downloadSelectedSlides-disabled">Télécharger la sélection</button>-->
 
                         <div class="presentationComment">
                             <h3>Commentaire</h3> <a href="#" class="presentationComment-edit">Modifier</a><br>
@@ -275,6 +277,7 @@
                 message: 'Hello Vue!',
                 bottomBarActive: true,
                 page: "presentation",
+                presentations: [{title: "Pres1"}, {title: "Pres2"}, {title: "Pres3"}],
                 diaporamaMode: false,
                 diaporamaPresentationTitle: "Nom de la préz!",
                 diaporamaCurrentSlideIndex: 0,

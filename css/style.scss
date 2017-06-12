@@ -7,7 +7,7 @@ $gray: #f8f8f8;
 $ondark: white;
 $black: #333;
 $disabled: #cfd0d5;
-$delineator: #ececec;
+$delineator: #e3eefe;
 
 $blue: #77b0ff;
 $orange: #ffa277;
@@ -70,6 +70,15 @@ $sectionpadding: 13px;
 
 @mixin modal-shadow {
     box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24);
+}
+
+@mixin modal-hover-shadow {
+    box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.46);
+    // border: 1px solid rgb(209, 209, 255)
+}
+
+@mixin modal-active-shadow {
+    box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.75);
 }
 
 @mixin modal {
@@ -138,6 +147,14 @@ $sectionpadding: 13px;
 
 @mixin button-secondary-enabled {
     @include button;
+    background: transparent;
+    border-color: $blue;
+    color: $blue;
+    &:hover {
+        border-color: $blueunpeuassombri;
+        color: $blueunpeuassombri;
+        cursor: pointer;
+    }
 }
 
 @mixin button-secondary-disabled {
@@ -301,6 +318,17 @@ html {
         border-right: 1px solid $delineator;
         flex-shrink: 0;
         padding-top: $sectionpadding;
+        ul li {
+            line-height: 2rem;
+            padding-left: 32px;
+            background: url("../img/icon_presentation_blue.png") no-repeat 10px center;
+            &:hover {
+                background-color: $blue;
+                background-image: url("../img/icon_presentation_white.png");
+                color: white;
+                cursor: pointer;
+            }
+        }
     }
 
     .page_right {
@@ -314,9 +342,8 @@ html {
             .downloadPresentation {
                 @include button-secondary-enabled;
                 float: left;
-                @include margin-right-colspan(0);
             }
-            
+            /*
             .downloadSelectedSlides {
                 float: left;
                 @include margin-right-colspan(0);
@@ -326,19 +353,23 @@ html {
                 &.downloadSelectedSlides-disabled {
                     @include button-secondary-disabled;
                 }
-            }
+            }*/
            
             .presentationComment {
-                @include margin-left-colspan(4);
+                @include margin-left-colspan(2);
                 h3 {
                     display: inline;
                     font-weight: 500;
                 }
                 .presentationComment-edit {
-                    color: $disabled;
+                    color: $blue;
+                    &:hover {
+                        color: $blueunpeuassombri;
+                    }
                     font-size: $smaller;
                     margin-left: 10px;
                 }
+                color: $black;
                 
                 p { margin-top: 5px; white-space: normal; }
             }
@@ -395,6 +426,12 @@ html {
                 background-repeat: no-repeat;
                 background-size: cover;
                 @include modal-shadow;
+                &:hover {
+                    @include modal-hover-shadow;
+                }
+                &:active {
+                    @include modal-active-shadow;
+                }
                 display: inline-block;
                 margin-right: 20px;
                 margin-bottom: 35px;
