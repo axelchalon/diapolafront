@@ -191,39 +191,58 @@ html {
             line-height: 3.5rem;
             border: 1px solid $disabled;
             border-radius: 4px;
+            &:focus {
+                background-image: url("../img/icon_search_blue.png");
+            }
         }
     }
 
-    .manageCollaborators {
-        @include placeholder;
-        @include width-colspan(1);
+    .iconsOnTheRight {
+        @include width-colspan(2);
         @include margin-right-colspan(0);
         display: inline-block;
-    }
-    
-    .myProfile {
-        @include width-colspan(1);
-        display: inline-block;
+        text-align: right;
         
-        > a {
-            display: inline-block;
-            width: 42px;
-            height: 42px;
+        a.manageCollaborators {
+            width: 42px; height: 42px;
             border-radius: 50%;
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
+            background: $blue no-repeat center center url("../img/icon_manageCollaborators.png");
+            display: block; margin: auto;
+            &:hover {
+                background-color: $blueunpeuassombri;
+            }
+            display: inline-block;
         }
         
-        .component_burger {
+        .myProfile {
             display: inline-block;
-            vertical-align: top;
+            margin-left: 10px;
+
             > a {
-                font-size: 0;
-                width: 10px;
-                height: 40px;
-                background: blue;
-                display: block;
+                display: inline-block;
+                width: 42px;
+                height: 42px;
+                border-radius: 50%;
+                background-size: cover;
+                background-position: center center;
+                background-repeat: no-repeat;
+            }
+
+            .component_burger {
+                display: inline-block;
+                vertical-align: top;
+                margin-left: 4px;
+                > a {
+                    font-size: 0;
+                    width: 10px;
+                    height: 40px;
+                    background: url("../img/icon_chevron.png") no-repeat center center;
+                    background-size: contain;
+                    display: block;
+                    &:hover {
+                        background-image:     url("../img/icon_chevron_hover.png");
+                    }
+                }
             }
         }
     }
@@ -242,7 +261,7 @@ html {
     .breadcrumbs {
         vertical-align: middle;
         display: inline-block;
-        > * { float: left; margin-right: 10px; }
+        > * { margin-right: 10px; }
         
         font-size: 1.4rem;
         letter-spacing: -0.5px;
@@ -258,6 +277,10 @@ html {
         .breadcrumbs_breadcrumb-active {
             font-weight: 500;
             color: $black;
+        }
+        
+        .component_burger {
+            display: inline-block;
         }
     }
 }
@@ -762,6 +785,14 @@ html {
         pointer-events: none;
     }
     
+    > a {
+        display: block;
+        letter-spacing: 1px;
+        color: $blue;
+        &:hover {
+            color: $blueunpeuassombri;
+        }
+    }
     
     ul {
         transform-origin: top left;
@@ -782,7 +813,6 @@ html {
             &:not(:last-child) {
                 border-bottom: 1px solid $delineator;
             }
-            
         }
         
         font-size: 1rem;
@@ -873,9 +903,18 @@ html {
 
 input:focus {
     border-color: $blue !important;
-    color: $blue !important;
+    color: $blue !important;        
 }
 
 ::-webkit-search-cancel-button{
     display: none !important;
+}
+
+::placeholder {
+    color: $disabled;
+    font-style: italic;
+}
+
+:focus::placeholder {
+    color: transparent;
 }

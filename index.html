@@ -77,10 +77,13 @@
                     <input type="search" placeholder="Rechercher dans vos présentations" @keyup.enter="search($event.target.value); $event.target.value=''; ">
                 </div>
                     
-                <a class="manageCollaborators" href="#"></a>
-                <div class="myProfile">
-                    <a href="#" :style='{"background-image": "url(" + account.avatarPreviewUrl + ")"}' onclick="this.parentNode.querySelector('.component_burger_toggle').click()"></a>
-                    <burger align="right" :items="[{text: 'Mon compte'}, {text: 'Déconnexion'}]"></burger>
+                <div class="iconsOnTheRight">
+                    <a href="#" class="manageCollaborators"></a>
+                    
+                    <div class="myProfile">
+                        <a href="#" :style='{"background-image": "url(" + account.avatarPreviewUrl + ")"}' onclick="this.parentNode.querySelector('.component_burger_toggle').click()"></a>
+                        <burger align="right" :items="[{text: 'Mon compte'}, {text: 'Déconnexion'}]"></burger>
+                    </div>
                 </div>
 
                 <div style="clear: both;"></div>
@@ -90,8 +93,6 @@
                 <button class="importPresentation" href="#">Importer une présentation</button>
 
                 <div class="breadcrumbs" v-if="page == 'presentation'">
-                    <a class="breadcrumbs_breadcrumb" href="#">Mon dossier</a>
-                    <span class="breadcrumbs_separator">&gt;</span>
                     <a class="breadcrumbs_breadcrumb breadcrumbs_breadcrumb-active" href="#" >Nom de la présentation</a>
                     <burger align="left" :items="[{text: 'Mots-clés', callback: presentationShowKeywords}, {text: 'Renommer', callback: presentationRename}, {text: 'Supprimer', callback: presentationShowConfirmDelete}]"></burger>
                 </div>
@@ -232,7 +233,7 @@
           },
           template: `
                 <div class="component_burger" v-bind:class='{"component_burger-active": active, "component_burger-alignLeft": align == "left", "component_burger-alignRight": align == "right" }'>
-                    <a href="#" v-on:click.prevent="active = !active" class="component_burger_toggle">&sdot; &sdot; &sdot;</a>
+                    <a href="#" v-on:click.prevent="active = !active" class="component_burger_toggle">&#8226;&#8226;&#8226;</a>
                     <ul>
                         <li v-for="item in items"><a href="#" @click.prevent="item.callback(); active = false;">{{item.text}}</a></li>
                     </ul>
