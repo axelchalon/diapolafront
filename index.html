@@ -347,8 +347,16 @@
                 },
                 signUp: function(lastname,firstname,email,password,password_confirm) {
                     console.log(lastname,firstname,email,password,password_confirm)
-                    this.account.loggedIn = true;
-                    this.signUpShown = false;
+                    
+                    API.signUp(lastname,firstname,email,password,password_confirm).then((res) => {
+                        console.log('(VUE) API RESPONSE :',res)
+                        this.account.loggedIn = true;
+                        this.signUpShown = false;
+                    }).catch(this.logOut)
+                },
+                logOut: function () {
+                    console.log('log out')  
+                    this.account.loggedIn = false;
                 },
                 search: function (q) {
                     this.page = "search";
