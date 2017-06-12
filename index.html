@@ -340,10 +340,11 @@
                     this.presentationConfirmDeleteShown = false;
                 },
                 logIn: function(email,password) {
-                    console.log(login_email,login_password)
-                    // requête serveur
-                    this.account.loggedIn = true;
-                    // hydrate account info
+                    console.log(email,password)
+                    API.logIn(email,password).then((res) => {
+                        console.log('(VUE) API RESPONSE :',res)
+                        this.account.loggedIn = true;
+                    }).catch(this.logOut)
                 },
                 signUp: function(lastname,firstname,email,password,password_confirm) {
                     console.log(lastname,firstname,email,password,password_confirm)
