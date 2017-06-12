@@ -49,7 +49,12 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-input {
+input, button {
     outline: none;
     border: none;
+		font-size: 100%;
+		font: inherit;
+}
+input:active, input:focus, button:focus, button:active {
+	outline: none;
 }

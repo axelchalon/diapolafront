@@ -6,11 +6,13 @@ $dark: #727272;
 $gray: #f8f8f8;
 $ondark: white;
 $black: #333;
-$disabled: #c7c7cc;
+$disabled: #cfd0d5;
 $delineator: #ececec;
 
 $blue: #77b0ff;
 $orange: #ffa277;
+$orangeunpeuassombri: #FF9463;
+$blueunpeuassombri: #5688dc;
 
 $smaller: 0.85rem;
 
@@ -66,6 +68,10 @@ $sectionpadding: 13px;
     background: rgba(0,0,0, 0.5);
 }
 
+@mixin modal-shadow {
+    box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24);
+}
+
 @mixin modal {
     background: white;
     width: 50%; position: absolute;
@@ -75,7 +81,7 @@ $sectionpadding: 13px;
     position: relative;
     text-align: center;
     border-radius: 4px;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+    @include modal-shadow;
 }
 
 @mixin slide-presentation-title {
@@ -88,7 +94,7 @@ $sectionpadding: 13px;
 
 @mixin remove-button {
     background-color: #ffffff;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+    @include modal-shadow;
     border-radius: 50% 50%;
     width: 30px; height: 30px;
     bottom: 15px;
@@ -98,6 +104,7 @@ $sectionpadding: 13px;
     line-height: 30px;
 }
 
+
 @mixin placeholder {
     width: 20px;
     height: 20px;
@@ -106,9 +113,10 @@ $sectionpadding: 13px;
 
 @mixin button {
     @include width-colspan(2);
-    line-height: 2.7rem;
+    line-height: 2.76rem;
     border-radius: 4px;
     border: 1px solid $dark;
+    font-weight: 500;
 }
 
 @mixin buttonlike {
@@ -119,8 +127,13 @@ $sectionpadding: 13px;
 
 @mixin button-primary-enabled {
     @include button;
-    background: $dark;
-    color: $ondark;
+    background: $orange;
+    border-color: $orange;
+    color: white;
+    &:hover {
+        background: $orangeunpeuassombri;
+        cursor: pointer;
+    }
 }
 
 @mixin button-secondary-enabled {
@@ -136,7 +149,7 @@ $sectionpadding: 13px;
 
 html {
     font-size: 13px;
-    font-family: "Gotham Book", Gotham-Book, Arial, sans-serif;
+    font-family: Montserrat, Arial, sans-serif;
     color: $dark;
 }
 
@@ -147,8 +160,7 @@ html {
     position: relative;
 
     background-color: $primarybg;
-    /* box-shadow: 0px 4px 4px rgba(0,0,0,0.24); */
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+    @include modal-shadow;
     
     > * {
         vertical-align: top;
@@ -163,11 +175,23 @@ html {
     }
 
     .search {
-        line-height: 3.5rem;
-        background: #ececec;
-        @include width-colspan(5);
-        @include margin-right-colspan(3);
+        @include width-colspan(6);
+        @include margin-right-colspan(1);
+        @include margin-left-colspan(1);
         display: inline-block;
+        input {
+            margin: auto;
+            width: 80%;
+            display: block;
+            background-size: 18px 18px;
+            background-repeat: no-repeat;
+            background-position: 20px center;
+            padding-left: 58px;
+            background-image: url("../img/icon_search.png");
+            line-height: 3.5rem;
+            border: 1px solid $disabled;
+            border-radius: 4px;
+        }
     }
 
     .manageCollaborators {
@@ -232,7 +256,7 @@ html {
         }
 
         .breadcrumbs_breadcrumb-active {
-            font-weight: bold;
+            font-weight: 500;
             color: $black;
         }
     }
@@ -285,7 +309,7 @@ html {
                 @include margin-left-colspan(4);
                 h3 {
                     display: inline;
-                    font-weight: bold;
+                    font-weight: 500;
                 }
                 .presentationComment-edit {
                     color: $disabled;
@@ -303,7 +327,7 @@ html {
             @include padding-left-colspan(0);
             h2 {
                 font-size: 1.4rem;
-                font-weight: bold;
+                font-weight: 500;
                 color: $black;
             }
             
@@ -347,7 +371,7 @@ html {
                 background-color: #ffffff;
                 background-repeat: no-repeat;
                 background-size: cover;
-                box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+                @include modal-shadow;
                 display: inline-block;
                 margin-right: 20px;
                 margin-bottom: 35px;
@@ -441,7 +465,7 @@ html {
             
             &.bottomBar_listOfSlides_slide {
                 border-radius: 4px;
-                box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);   
+                @include modal-shadow;
                 border: 2px solid transparent;
             }
             
@@ -478,7 +502,7 @@ html {
         @include modal;
         
         h3 {
-            font-weight: bold; margin-bottom: 30px;
+            font-weight: 500; margin-bottom: 30px;
         }
         
         .presentationKeywords_modal_close {
@@ -494,7 +518,7 @@ html {
         @include modal;
         
         h3 {
-            font-weight: bold; margin-bottom: 30px;
+            font-weight: 500; margin-bottom: 30px;
         }
         
         .presentationShowConfirmDelete_modal_close {
@@ -558,7 +582,7 @@ html {
         transform: translateX(-50%);
         text-align: center;
         
-        h3 { font-weight: bold; margin-bottom: 25px; }
+        h3 { font-weight: 500; margin-bottom: 25px; }
         
         .diaporama_currentSlideInformation_tags {
             padding: 20px 50px; box-sizing: border-box;
@@ -585,14 +609,14 @@ html {
     .diaporama_banner {
         width: 500px;
         background-color: white;
-        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+        @include modal-shadow;
         text-align: center;
         position: absolute;
         padding: 15px 0;
         top: 100px;
         left: 50%;
         transform: translateX(-50%) translateY(-50%);
-        font-weight: bold;
+        font-weight: 500;
         font-size: 1.4rem;
         small {
             margin-top: .3rem;
@@ -630,22 +654,22 @@ html {
         position: absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%);
         border-radius: 4px;
         background-color: #ffffff;
-        box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24);
+        @include modal-shadow;
         padding: 2.5rem 85px 4rem; 
         box-sizing: border-box;
         color: $black;
         h3 {
-            font-weight: bold;
+            font-weight: 500;
             text-align: center;
             font-size: 1.3rem;
             padding-bottom: 3.3rem;
         }
         
-        label { font-weight: bold; display: block; }
+        label { font-weight: 500; display: block; }
         
         input {
             display: block;
-            border: solid 1px #cfd0d5;
+            border: solid 1px $disabled;
             border-radius: 4px;
             line-height: 3.5rem;
             width: 100%;
@@ -659,8 +683,12 @@ html {
             margin-top: 3rem;
         }
         
-        small { text-align: center; display: block;}
-        small a { color: #659eff; }
+        small { text-align: center; display: block; font-size: 0.85rem; }
+        small a { color: #659eff; font-weight: 500;
+            &:hover {
+                color: $blueunpeuassombri;
+            }
+        }
     }
 }
 
@@ -674,7 +702,7 @@ html {
         position: absolute; top: 50%; left: 50%; transform: translateY(-50%) translateX(-50%);
         border-radius: 4px;
         background-color: #ffffff;
-        box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24);
+        @include modal-shadow;
         padding: 2.5rem 85px 4rem; 
         box-sizing: border-box;
         color: $black;
@@ -687,17 +715,17 @@ html {
         }
         
         h3 {
-            font-weight: bold;
+            font-weight: 500;
             text-align: center;
             font-size: 1.3rem;
             padding-bottom: 3.3rem;
         }
         
-        label { font-weight: bold; display: block; }
+        label { font-weight: 500; display: block; }
         
         input {
             display: block;
-            border: solid 1px #cfd0d5;
+            border: solid 1px $disabled;
             border-radius: 4px;
             line-height: 3.5rem;
             width: 100%;
@@ -707,13 +735,18 @@ html {
         
         button {
             @include button-primary-enabled;
-            width: 100%;
+            width: 200px;
+            margin: auto;
             display: block; margin-bottom: 1.3rem;
             margin-top: 3rem;
         }
         
-        small { text-align: center; display: block;}
-        small a { color: #659eff; }
+        small { text-align: center; display: block; font-size: 0.85rem; }
+        small a { color: #659eff; font-weight: 500; 
+            &:hover {
+                color: $blueunpeuassombri;
+            }
+        }
     }
 }
 
@@ -759,7 +792,7 @@ html {
         background: white; 
         border-radius: 4px;
         width: 150px;
-        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+        @include modal-shadow;
     }
     
     &.component_burger-alignRight {
@@ -806,7 +839,7 @@ html {
         
     .component_tags_addTag {
         border-radius: 4px;
-        border: solid 1px #cfd0d5;
+        border: solid 1px $disabled;
         position: relative;
         margin: auto;
         height: 3.5rem;
@@ -822,12 +855,12 @@ html {
         }
 
         button {
-            border-left: solid 1px #cfd0d5;
+            border-left: solid 1px $disabled;
             position: absolute; top: 0; bottom: 0; right: 0;   
             width: 20%;
             text-align: center;
             font-size: 2rem;
-            color: #cfd0d5;
+            color: $disabled;
             outline: none;
             
             &:hover {
@@ -836,4 +869,13 @@ html {
             }
         }
     }
+}
+
+input:focus {
+    border-color: $blue !important;
+    color: $blue !important;
+}
+
+::-webkit-search-cancel-button{
+    display: none !important;
 }

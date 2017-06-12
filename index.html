@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <script src="https://unpkg.com/vue"></script>
     <script src="js/prefixfree.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -41,7 +42,7 @@
                     <div style="clear:both;"></div>
                     
                     
-                    <button type="submit" @click.prevent="signUp($event.target.parentNode.querySelector('#signUp_lastname').value, $event.target.parentNode.querySelector('#signUp_firstname').value, $event.target.parentNode.querySelector('#signUp_email').value, $event.target.parentNode.querySelector('#signUp_password').value, $event.target.parentNode.querySelector('#signUp_password_confirm').value)">S'inscrire</button>
+                    <button type="submit" @click.prevent="signUp($event.target.parentNode.querySelector('#signUp_lastname').value, $event.target.parentNode.querySelector('#signUp_firstname').value, $event.target.parentNode.querySelector('#signUp_email').value, $event.target.parentNode.querySelector('#signUp_password').value, $event.target.parentNode.querySelector('#signUp_password_confirm').value)">Créer mon compte</button>
                     
                     <small>Déjà un compte ? <a href="#" @click.prevent="signUpShown = false">Se connecter</a></small>
                 </form>
@@ -72,8 +73,10 @@
             <div class="topBar">
                 <h1 class="logo"></h1>
 
-                <input class="search" type="search" placeholder="Rechercher dans vos présentations" @keyup.enter="search($event.target.value); $event.target.value=''; ">
-
+                <div class="search">
+                    <input type="search" placeholder="Rechercher dans vos présentations" @keyup.enter="search($event.target.value); $event.target.value=''; ">
+                </div>
+                    
                 <a class="manageCollaborators" href="#"></a>
                 <div class="myProfile">
                     <a href="#" :style='{"background-image": "url(" + account.avatarPreviewUrl + ")"}' onclick="this.parentNode.querySelector('.component_burger_toggle').click()"></a>
@@ -264,10 +267,10 @@
             el: '#app',
             data: {
                 account: {
-                  loggedIn: false,
+                  loggedIn: true,
                   avatarPreviewUrl: "https://placecage.com/50/50"
                 },
-                signUpShown: true,
+                signUpShown: false,
                 message: 'Hello Vue!',
                 bottomBarActive: true,
                 page: "presentation",

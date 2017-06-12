@@ -9,7 +9,7 @@
  */
 html {
   font-size: 13px;
-  font-family: "Gotham Book", Gotham-Book, Arial, sans-serif;
+  font-family: Montserrat, Arial, sans-serif;
   color: #727272; }
 
 .topBar {
@@ -21,8 +21,7 @@ html {
   padding-bottom: 13px;
   position: relative;
   background-color: white;
-  /* box-shadow: 0px 4px 4px rgba(0,0,0,0.24); */
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12); }
+  box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24); }
   .topBar > * {
     font-size: 1rem; }
   .topBar > * {
@@ -34,11 +33,22 @@ html {
     display: inline-block;
     margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 1 + 30px); }
   .topBar .search {
-    line-height: 3.5rem;
-    background: #ececec;
-    width: calc((100vw - 2*50px - 11 * 30px) / 12 * 5 + 30px * 4);
-    margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 3 + 30px);
+    width: calc((100vw - 2*50px - 11 * 30px) / 12 * 6 + 30px * 5);
+    margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 1 + 30px);
+    margin-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 1);
     display: inline-block; }
+    .topBar .search input {
+      margin: auto;
+      width: 80%;
+      display: block;
+      background-size: 18px 18px;
+      background-repeat: no-repeat;
+      background-position: 20px center;
+      padding-left: 58px;
+      background-image: url("../img/icon_search.png");
+      line-height: 3.5rem;
+      border: 1px solid #cfd0d5;
+      border-radius: 4px; }
   .topBar .manageCollaborators {
     width: 20px;
     height: 20px;
@@ -71,13 +81,18 @@ html {
   .topBar .importPresentation {
     vertical-align: middle;
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
-    line-height: 2.7rem;
+    line-height: 2.76rem;
     border-radius: 4px;
     border: 1px solid #727272;
-    background: #727272;
+    font-weight: 500;
+    background: #ffa277;
+    border-color: #ffa277;
     color: white;
     margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 1 + 30px);
     display: inline-block; }
+    .topBar .importPresentation:hover {
+      background: #FF9463;
+      cursor: pointer; }
   .topBar .breadcrumbs {
     vertical-align: middle;
     display: inline-block;
@@ -87,11 +102,11 @@ html {
       float: left;
       margin-right: 10px; }
     .topBar .breadcrumbs .breadcrumbs_breadcrumb {
-      color: #c7c7cc; }
+      color: #cfd0d5; }
     .topBar .breadcrumbs .breadcrumbs_separator {
-      color: #c7c7cc; }
+      color: #cfd0d5; }
     .topBar .breadcrumbs .breadcrumbs_breadcrumb-active {
-      font-weight: bold;
+      font-weight: 500;
       color: #333; }
 
 .page {
@@ -122,9 +137,10 @@ html {
       border-bottom: 1px solid #ececec; }
       .page .page_right .page_right_topBar-presentation .downloadPresentation {
         width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
-        line-height: 2.7rem;
+        line-height: 2.76rem;
         border-radius: 4px;
         border: 1px solid #727272;
+        font-weight: 500;
         float: left;
         margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px); }
       .page .page_right .page_right_topBar-presentation .downloadSelectedSlides {
@@ -132,24 +148,26 @@ html {
         margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px); }
         .page .page_right .page_right_topBar-presentation .downloadSelectedSlides:not(.downloadSelectedSlides-disabled) {
           width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
-          line-height: 2.7rem;
-          border-radius: 4px;
-          border: 1px solid #727272; }
-        .page .page_right .page_right_topBar-presentation .downloadSelectedSlides.downloadSelectedSlides-disabled {
-          width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
-          line-height: 2.7rem;
+          line-height: 2.76rem;
           border-radius: 4px;
           border: 1px solid #727272;
-          color: #c7c7cc;
-          border-color: #c7c7cc;
+          font-weight: 500; }
+        .page .page_right .page_right_topBar-presentation .downloadSelectedSlides.downloadSelectedSlides-disabled {
+          width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
+          line-height: 2.76rem;
+          border-radius: 4px;
+          border: 1px solid #727272;
+          font-weight: 500;
+          color: #cfd0d5;
+          border-color: #cfd0d5;
           pointer-events: none; }
       .page .page_right .page_right_topBar-presentation .presentationComment {
         margin-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 4); }
         .page .page_right .page_right_topBar-presentation .presentationComment h3 {
           display: inline;
-          font-weight: bold; }
+          font-weight: 500; }
         .page .page_right .page_right_topBar-presentation .presentationComment .presentationComment-edit {
-          color: #c7c7cc;
+          color: #cfd0d5;
           font-size: 0.85rem;
           margin-left: 10px; }
         .page .page_right .page_right_topBar-presentation .presentationComment p {
@@ -161,7 +179,7 @@ html {
       border-bottom: 1px solid #ececec; }
       .page .page_right .page_right_topBar-search h2 {
         font-size: 1.4rem;
-        font-weight: bold;
+        font-weight: 500;
         color: #333; }
       .page .page_right .page_right_topBar-search ul {
         margin-top: 20px; }
@@ -193,7 +211,7 @@ html {
         background-color: #ffffff;
         background-repeat: no-repeat;
         background-size: cover;
-        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+        box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24);
         display: inline-block;
         margin-right: 20px;
         margin-bottom: 35px;
@@ -239,25 +257,32 @@ html {
     transform: translateX(-50%); }
   .bottomBar .downloadGeneratedPresentation {
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
-    line-height: 2.7rem;
+    line-height: 2.76rem;
     border-radius: 4px;
     border: 1px solid #727272;
-    background: #727272;
+    font-weight: 500;
+    background: #ffa277;
+    border-color: #ffa277;
     color: white;
     float: left;
     margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px); }
+    .bottomBar .downloadGeneratedPresentation:hover {
+      background: #FF9463;
+      cursor: pointer; }
   .bottomBar .saveGeneratedPresentation {
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
-    line-height: 2.7rem;
+    line-height: 2.76rem;
     border-radius: 4px;
     border: 1px solid #727272;
+    font-weight: 500;
     float: left;
     margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px); }
   .bottomBar .clearGeneratedPresentation {
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
-    line-height: 2.7rem;
+    line-height: 2.76rem;
     border-radius: 4px;
     border: 1px solid #727272;
+    font-weight: 500;
     float: right;
     text-align: center; }
     .bottomBar .clearGeneratedPresentation .clearGeneratedPresentation_icon {
@@ -287,7 +312,7 @@ html {
       background: white; }
       .bottomBar .bottomBar_listOfSlides li.bottomBar_listOfSlides_slide {
         border-radius: 4px;
-        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+        box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24);
         border: 2px solid transparent; }
       .bottomBar .bottomBar_listOfSlides li.bottomBar_listOfSlides_placeholder {
         border: dashed 2px #ececec;
@@ -311,7 +336,7 @@ html {
         padding-left: 5px; }
       .bottomBar .bottomBar_listOfSlides li .bottomBar_listOfSlides_slide_remove {
         background-color: #ffffff;
-        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+        box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24);
         border-radius: 50% 50%;
         width: 30px;
         height: 30px;
@@ -339,9 +364,9 @@ html {
     position: relative;
     text-align: center;
     border-radius: 4px;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12); }
+    box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24); }
     .presentationKeywords .presentationKeywords_modal h3 {
-      font-weight: bold;
+      font-weight: 500;
       margin-bottom: 30px; }
     .presentationKeywords .presentationKeywords_modal .presentationKeywords_modal_close {
       position: absolute;
@@ -366,9 +391,9 @@ html {
     position: relative;
     text-align: center;
     border-radius: 4px;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12); }
+    box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24); }
     .presentationShowConfirmDelete .presentationShowConfirmDelete_modal h3 {
-      font-weight: bold;
+      font-weight: 500;
       margin-bottom: 30px; }
     .presentationShowConfirmDelete .presentationShowConfirmDelete_modal .presentationShowConfirmDelete_modal_close {
       position: absolute;
@@ -376,17 +401,23 @@ html {
       top: 5px; }
     .presentationShowConfirmDelete .presentationShowConfirmDelete_modal .presentationShowConfirmDelete_modal_yes {
       width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
-      line-height: 2.7rem;
+      line-height: 2.76rem;
       border-radius: 4px;
       border: 1px solid #727272;
-      background: #727272;
+      font-weight: 500;
+      background: #ffa277;
+      border-color: #ffa277;
       color: white;
       display: inline-block; }
+      .presentationShowConfirmDelete .presentationShowConfirmDelete_modal .presentationShowConfirmDelete_modal_yes:hover {
+        background: #FF9463;
+        cursor: pointer; }
     .presentationShowConfirmDelete .presentationShowConfirmDelete_modal .presentationShowConfirmDelete_modal_no {
       width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
-      line-height: 2.7rem;
+      line-height: 2.76rem;
       border-radius: 4px;
       border: 1px solid #727272;
+      font-weight: 500;
       display: inline-block; }
 
 .diaporama {
@@ -429,7 +460,7 @@ html {
     transform: translateX(-50%);
     text-align: center; }
     .diaporama .diaporama_currentSlideInformation h3 {
-      font-weight: bold;
+      font-weight: 500;
       margin-bottom: 25px; }
     .diaporama .diaporama_currentSlideInformation .diaporama_currentSlideInformation_tags {
       padding: 20px 50px;
@@ -453,14 +484,14 @@ html {
   .diaporama .diaporama_banner {
     width: 500px;
     background-color: white;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24);
     text-align: center;
     position: absolute;
     padding: 15px 0;
     top: 100px;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
-    font-weight: bold;
+    font-weight: 500;
     font-size: 1.4rem;
     position: relative; }
     .diaporama .diaporama_banner small {
@@ -503,12 +534,12 @@ html {
     box-sizing: border-box;
     color: #333; }
     .login .login_modal h3 {
-      font-weight: bold;
+      font-weight: 500;
       text-align: center;
       font-size: 1.3rem;
       padding-bottom: 3.3rem; }
     .login .login_modal label {
-      font-weight: bold;
+      font-weight: 500;
       display: block; }
     .login .login_modal input {
       display: block;
@@ -519,20 +550,29 @@ html {
       padding-left: 15px; }
     .login .login_modal button {
       width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
-      line-height: 2.7rem;
+      line-height: 2.76rem;
       border-radius: 4px;
       border: 1px solid #727272;
-      background: #727272;
+      font-weight: 500;
+      background: #ffa277;
+      border-color: #ffa277;
       color: white;
       width: 100%;
       display: block;
       margin-bottom: 1.3rem;
       margin-top: 3rem; }
+      .login .login_modal button:hover {
+        background: #FF9463;
+        cursor: pointer; }
     .login .login_modal small {
       text-align: center;
-      display: block; }
+      display: block;
+      font-size: 0.85rem; }
     .login .login_modal small a {
-      color: #659eff; }
+      color: #659eff;
+      font-weight: 500; }
+      .login .login_modal small a:hover {
+        color: #5688dc; }
 
 .signUp {
   background-color: #fafcff;
@@ -558,12 +598,12 @@ html {
     .signUp .signUp_modal .signUp_modal_right {
       float: right; }
     .signUp .signUp_modal h3 {
-      font-weight: bold;
+      font-weight: 500;
       text-align: center;
       font-size: 1.3rem;
       padding-bottom: 3.3rem; }
     .signUp .signUp_modal label {
-      font-weight: bold;
+      font-weight: 500;
       display: block; }
     .signUp .signUp_modal input {
       display: block;
@@ -575,20 +615,30 @@ html {
       margin-bottom: 1rem; }
     .signUp .signUp_modal button {
       width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
-      line-height: 2.7rem;
+      line-height: 2.76rem;
       border-radius: 4px;
       border: 1px solid #727272;
-      background: #727272;
+      font-weight: 500;
+      background: #ffa277;
+      border-color: #ffa277;
       color: white;
-      width: 100%;
+      width: 200px;
+      margin: auto;
       display: block;
       margin-bottom: 1.3rem;
       margin-top: 3rem; }
+      .signUp .signUp_modal button:hover {
+        background: #FF9463;
+        cursor: pointer; }
     .signUp .signUp_modal small {
       text-align: center;
-      display: block; }
+      display: block;
+      font-size: 0.85rem; }
     .signUp .signUp_modal small a {
-      color: #659eff; }
+      color: #659eff;
+      font-weight: 500; }
+      .signUp .signUp_modal small a:hover {
+        color: #5688dc; }
 
 /* COMPONENTS */
 .component_burger {
@@ -609,7 +659,7 @@ html {
     background: white;
     border-radius: 4px;
     width: 150px;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12); }
+    box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24); }
     .component_burger ul li a {
       display: block;
       line-height: 3rem;
@@ -645,7 +695,7 @@ html {
   .component_tags .component_tags_tag .component_tags_tag_close {
     display: none;
     background-color: #ffffff;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24);
     border-radius: 50% 50%;
     width: 30px;
     height: 30px;
@@ -690,5 +740,12 @@ html {
     .component_tags .component_tags_addTag button:hover {
       background: #77b0ff;
       color: white; }
+
+input:focus {
+  border-color: #77b0ff !important;
+  color: #77b0ff !important; }
+
+::-webkit-search-cancel-button {
+  display: none !important; }
 
 /*# sourceMappingURL=style.css.map */
