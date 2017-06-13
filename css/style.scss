@@ -690,7 +690,7 @@ html {
     color: $black;
     
     .diaporama_exit {
-        line-height: 2.7rem;
+        /*line-height: 2.7rem;
         background: $orange;
         color: $dark; 
         padding: 0 15px;
@@ -698,7 +698,17 @@ html {
         border-radius: 4px;
         top: 20px;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-50%);*/
+        
+        position: absolute;
+        left: calc(50% + 450px);
+        transform: translateX(-100px);
+        width: 100px;
+        height: 20px;
+        top: 20px;
+        font-size: 5rem;
+        color: white;
+        text-align: right;
     }
     
     .diaporama_previousSlide, .diaporama_nextSlide, , .diaporama_currentSlide {

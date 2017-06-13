@@ -586,15 +586,24 @@ html {
   z-index: 10;
   color: #333; }
   .diaporama .diaporama_exit {
-    line-height: 2.7rem;
-    background: #ffa277;
-    color: #727272;
+    /*line-height: 2.7rem;
+    background: $orange;
+    color: $dark; 
     padding: 0 15px;
     position: absolute;
     border-radius: 4px;
     top: 20px;
     left: 50%;
-    transform: translateX(-50%); }
+    transform: translateX(-50%);*/
+    position: absolute;
+    left: calc(50% + 450px);
+    transform: translateX(-100px);
+    width: 100px;
+    height: 20px;
+    top: 20px;
+    font-size: 5rem;
+    color: white;
+    text-align: right; }
   .diaporama .diaporama_previousSlide, .diaporama .diaporama_nextSlide, .diaporama .diaporama_currentSlide {
     width: 900px;
     background: #f8f8f8;
