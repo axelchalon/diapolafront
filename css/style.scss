@@ -486,7 +486,6 @@ html {
                 margin-right: 20px;
                 margin-bottom: 35px;
                 position: relative;
-                
             }
             .page_right_page_slide {
                 .page_right_page_slide_presentationTitle {
@@ -717,6 +716,10 @@ html {
         position: absolute;
         top: 100px;
         bottom: 250px;
+        
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
     }
     .diaporama_previousSlide {
         right: 90%;

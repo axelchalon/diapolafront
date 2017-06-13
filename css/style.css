@@ -609,7 +609,10 @@ html {
     background: #f8f8f8;
     position: absolute;
     top: 100px;
-    bottom: 250px; }
+    bottom: 250px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center; }
   .diaporama .diaporama_previousSlide {
     right: 90%; }
   .diaporama .diaporama_nextSlide {

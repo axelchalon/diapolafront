@@ -110,7 +110,7 @@
                 <button class="importPresentation" href="#">Importer une présentation</button>
 
                 <div class="breadcrumbs" v-if="page == 'presentation'">
-                    <a class="breadcrumbs_breadcrumb breadcrumbs_breadcrumb-active" href="#" >Nom de la présentation</a>
+                    <a class="breadcrumbs_breadcrumb breadcrumbs_breadcrumb-active" href="#" >{{ presentationTitle }}</a>
                     <burger align="left" :items="[{text: 'Mots-clés', callback: presentationShowKeywords}, {text: 'Renommer', callback: presentationRename}, {text: 'Supprimer', callback: presentationShowConfirmDelete}]"></burger>
                 </div>
             </div>
@@ -119,7 +119,7 @@
 
                 <div class="page_left">
                     <ul>
-                        <li v-for="presentation in presentations"><a href="#" @click.prevent="goToPresentation(presentation)">{{presentation.title}}</a></li>
+                        <li v-for="presentation in presentations"><a href="#" @click.prevent="goToPresentation(presentation.id)">{{presentation.title}}</a></li>
                     </ul>
                 </div>
 
@@ -155,7 +155,8 @@
                     </div>
 
                     <div v-if="page == 'presentation'" class="page_right_page">
-                        <a v-for="presentationSlide in presentationSlides" class="page_right_page_slide" href="#" @click.prevent="launchDiaporamaOnSlide(presentationSlide)">
+                        <a v-for="presentationSlide in presentationSlides" class="page_right_page_slide" href="#" 
+                           :style='{"background-image": "url(" + presentationSlide.previewUrl + ")"}' @click.prevent="launchDiaporamaOnSlide(presentationSlide)">
                         </a>
                     </div>
 
@@ -245,6 +246,8 @@
         </div>
     </div>
 
+    
+    <script src="js/api.js"></script>
     <script>
         
         // register
@@ -293,19 +296,19 @@
             el: '#app',
             data: {
                 account: {
-                  loggedIn: false,
+                  loggedIn: true,
                   avatarPreviewUrl: "https://placecage.com/50/50"
                 },
                 signUpShown: false,
-                message: 'Hello Vue!',
                 bottomBarActive: true,
                 page: "presentation",
                 presentations: [{title: "Pres1"}, {title: "Pres2"}, {title: "Pres3"}],
-                diaporamaMode: true,
+                diaporamaMode: false,
                 diaporamaPresentationTitle: "Nom de la préz!",
                 diaporamaCurrentSlideIndex: 0,
                 diaporamaSlides: [{viewUrl: "https://www.placecage.com/1200/900", tags: ["onea","oneb","onec"], comment: "Lorem ipsum..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["twox","twoc","twod"], comment: "Lorem ipsum 2..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["threea","threeb","threec"], comment: "Lorem ipsum 3..."} ],
-                presentationTags: ["tag prez", "tag prez2"],
+                presentationTitle: "",
+                presentationTags: ["", ""],
                 presentationSlides: [{},{},{},{},{},{},{}],
                 presentationComment: "Duis ultrices vestibulum lacus non luctus. Praesent aliquet, justo ut accumsan bibendum, sem erat sagittis nunc, a vulputate diam ulla nisi.",
                 presentationKeywordsShown: false,
@@ -349,10 +352,24 @@
                   // faire requête serveur pour update tags
                     this.diaporamaSlides[0].tags = this.diaporamaSlides[0].tags.filter(x => x != tag);
                 },
-                goToPresentation: function(slide) {
-                    // faire requête serveur pour récup liste des slides de la présentation et infos présentation
-                    this.page = 'presentation';  
-                    // presentationTags...
+                goToPresentation: function(id) {
+                    API.getPresentationInfo(id).then((res) => {
+                        console.log('woupi', res)
+                        
+                        var slidz = res.slides.map((t) => {
+                            t.previewUrl = HOST + t.thumbnail_url;
+                            t.viewUrl = HOST + t.picture_url;
+                            return t;
+                        });
+                        this.presentationSlides = slidz;
+                        
+                        this.presentationTags = res.tags;
+                        this.presentationComment = res.description;
+                        this.presentationTitle = res.title;
+                        this.presentationTags = res.tags;
+                        this.diaporamaSlides = slidz;
+                          
+                    });
                 },
                 goToPresentationForSlide: function(slide) {
                     // faire requête serveur pour récup liste des slides de la présentation et infos présentation
@@ -379,7 +396,10 @@
                     API.logIn(email,password).then((res) => {
                         console.log('(VUE) API RESPONSE :',res)
                         this.account.loggedIn = true;
-                    }).catch(this.logOut)
+                        
+                        this.getPresentations();
+                        
+                    }).catch((err) => { console.error('ERR',err); this.logOut(); })
                 },
                 signUp: function(lastname,firstname,email,password,password_confirm) {
                     console.log(lastname,firstname,email,password,password_confirm)
@@ -393,6 +413,12 @@
                 logOut: function () {
                     console.log('log out')  
                     this.account.loggedIn = false;
+                },
+                getPresentations: function() {
+                  API.getPresentations().then((res) => {
+                        console.log('(VUE) GET PRESENTATIONS',res)
+                        this.presentations = res;
+                    })
                 },
                 search: function (q) {
                     this.page = "search";
@@ -423,8 +449,9 @@
                 }
             }
         })
+        
+        app.getPresentations();
     </script>
-    <script src="js/api.js"></script>
             
 
 </body>

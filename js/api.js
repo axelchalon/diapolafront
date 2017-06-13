@@ -7,15 +7,15 @@ var qs = params => Object.keys(params)
     .join('&');
 
 var API = {
-    jwtToken: undefined,
+    jwtToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6IiIsInVzZXJuYW1lIjoibW9rYSIsImV4cCI6MTQ5OTk1NTE3NCwib3JpZ19pYXQiOjE0OTczNjMxNzR9.xxQpUsRnFbgYv9wTkl5stFkQvmzuCTeLMCNoURhRhnc',
     _fetch: function (url, options) {
-        if (options.headers)
+        if (options && options.headers)
             var headers = options.headers;
         else
             var headers = new Headers();
         
         if (typeof this.jwtToken !== 'undefined')
-            headers.append("X-JWT", this.jwtToken);
+            headers.append("Authorization", "JWT " + this.jwtToken);
 
         return fetch(url, Object.assign({}, options, {
             headers: headers
@@ -28,7 +28,10 @@ var API = {
         })
     },
     getPresentationInfo: function (id) {
-        // return promise...
+        return this._fetch(HOST + '/presentations/'+id);  
+    },
+    getPresentations: function() {
+        return this._fetch(HOST + '/presentations/');
     },
     signUp: function (lastname, firstname, email, password, password_confirm) {
         return this._fetch('http://echo.jsontest.com/key/value/one/two')
