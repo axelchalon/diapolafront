@@ -12,10 +12,10 @@ var API = {
         if (options && options.headers)
             var headers = options.headers;
         else
-            var headers = new Headers();
+            var headers = {};
         
         if (typeof this.jwtToken !== 'undefined')
-            headers.append("Authorization", "JWT " + this.jwtToken);
+            headers["Authorization"] = "JWT " + this.jwtToken;
 
         return fetch(url, Object.assign({}, options, {
             headers: headers
@@ -30,8 +30,21 @@ var API = {
     getPresentationInfo: function (id) {
         return this._fetch(HOST + '/presentations/'+id);  
     },
+    deletePresentation: function (id) {
+        return this._fetch(HOST + '/presentations/'+id, {method: 'DELETE'});  
+    },
+    renamePresentation: function (newname,id) {
+        return this._fetch(HOST + '/presentations/'+id, {method: 'PUT',
+                            headers: {'Content-Type':'application/json'}, body: JSON.stringify({title: newname})
+                                                        
+                                                        });  
+    },
     getPresentations: function() {
         return this._fetch(HOST + '/presentations/');
+    },
+    addTagToSlide: function(tag,id) {
+        return this._fetch(HOST + '/slides/' + id + '/', { method: 'PUT', 
+            headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: qs({value: tag})});
     },
     signUp: function (lastname, firstname, email, password, password_confirm) {
         return this._fetch('http://echo.jsontest.com/key/value/one/two')

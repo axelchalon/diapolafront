@@ -213,7 +213,7 @@
                 </div>
             </div>
 
-            <div v-show="diaporamaMode" class="diaporama">
+            <div v-if="diaporamaMode" class="diaporama">
 
                 <a href="#" @click.prevent="diaporamaMode = false" class="diaporama_exit">&times;</a>
 
@@ -224,7 +224,7 @@
                 <div class="diaporama_currentSlideInformation">
                     <div class="diaporama_currentSlideInformation_tags">
                         <h3>Mots-clés</h3>
-                        <tags :tags="diaporamaSlides[diaporamaCurrentSlideIndex].tags" :on-tag-add="addTagToSlide" :on-tag-remove="removeTagFromSlide"></tags>
+                        <tags :tags="diaporamaSlides[diaporamaCurrentSlideIndex].tags" :on-tag-add="addTagToSlide" :second="diaporamaSlides[diaporamaCurrentSlideIndex].id" :on-tag-remove="removeTagFromSlide"></tags>
                     </div>
                     <div class="diaporama_currentSlideInformation_comment">
                         <h3>Commentaire de diapositive</h3>
@@ -272,7 +272,13 @@
           props: {
               tags: Array,
               onTagAdd: Function,
+              second: Number,
               onTagRemove: Function,
+          },
+          methods: {
+            onTagAddLol: function(wooby,wb) {
+                this.onTagAdd(wooby,this.second)
+            }
           },
           template:
             `<div class="component_tags">
@@ -287,7 +293,7 @@
 
                 <div class="component_tags_addTag">
                     <input placeholder="Ajouter un tag">
-                    <button @click.prevent="onTagAdd($event.target.parentNode.querySelector('input').value); $event.target.parentNode.querySelector('input').value='';">+</button>
+                    <button @click.prevent="onTagAddLol($event.target.parentNode.querySelector('input').value); $event.target.parentNode.querySelector('input').value='';">+</button>
                 </div>
             </div>`
         })
@@ -307,6 +313,7 @@
                 diaporamaPresentationTitle: "Nom de la préz!",
                 diaporamaCurrentSlideIndex: 0,
                 diaporamaSlides: [{viewUrl: "https://www.placecage.com/1200/900", tags: ["onea","oneb","onec"], comment: "Lorem ipsum..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["twox","twoc","twod"], comment: "Lorem ipsum 2..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["threea","threeb","threec"], comment: "Lorem ipsum 3..."} ],
+                presentationId: 0,
                 presentationTitle: "",
                 presentationTags: ["", ""],
                 presentationSlides: [{},{},{},{},{},{},{}],
@@ -327,6 +334,8 @@
                 }  
             },
             methods: {
+                _catchFn: function(err) {        console.error('ERR',err); this.logOut();
+                },
                 removeGeneratedPresentationSlide: function(index) {
                     this.$delete(this.generatedPresentationSlides, index);
                 },
@@ -344,9 +353,15 @@
                   // faire requête serveur pour update tags
                     this.presentationTags = this.presentationTags.filter(x => x != tag);
                 },
-                addTagToSlide: function(tag,slide) {
+                addTagToSlide: function(tag,slideId) {
+                    console.log('addtagtoslide',tag,slideId)
                   // faire requête serveur pour update tags
-                    this.diaporamaSlides[0].tags.push(tag);
+                    API.addTagToSlide(tag,slideId).then((res) => {
+                        
+                       console.log('res !!',res) ;
+                        
+                        this.diaporamaSlides[0].tags.push(tag);
+                    }).catch(this._catchFn)
                 },
                 removeTagFromSlide: function (tag,slide) {
                   // faire requête serveur pour update tags
@@ -355,14 +370,17 @@
                 goToPresentation: function(id) {
                     API.getPresentationInfo(id).then((res) => {
                         console.log('woupi', res)
-                        
+                        console.log(res);
                         var slidz = res.slides.map((t) => {
                             t.previewUrl = HOST + t.thumbnail_url;
                             t.viewUrl = HOST + t.picture_url;
+                            t.comment = t.description;
+                            t.tags = t.tags.map((x) => x.value);
                             return t;
                         });
                         this.presentationSlides = slidz;
                         
+                        this.presentationId = id;
                         this.presentationTags = res.tags;
                         this.presentationComment = res.description;
                         this.presentationTitle = res.title;
@@ -380,16 +398,30 @@
                   this.presentationKeywordsShown = true;
                 },
                 presentationRename: function() {
-                    prompt(':hap:')
+                    var newname = prompt(':hap:') ;
+                    API.renamePresentation(newname,this.presentationId).then(res => {
+                        console.log('renamed',res);
+                        var oldname = this.presentationTitle;
+                        this.presentationTitle = newname;
+                        this.presentations = this.presentations.map(prez => {
+                            prez.title = prez.title == oldname ? newname : prez.title;
+                            return prez;
+                        }
+                        )
+                    })
                 },
                 presentationShowConfirmDelete: function() {
                   this.presentationConfirmDeleteShown = true;
                 },
                 deletePresentation: function() {
-                    alert('del');
-                  // requête serveur delete presentation
-                  // changer this.presentation et revenir à la home
+                    var id = this.presentationId;
+                    console.log('DEL');
                     this.presentationConfirmDeleteShown = false;
+                    API.deletePresentation(id).then((res) => {
+                        // @todo redirect home
+                        console.log('del res',res)    
+                    }).catch(this._catchFn);
+                    
                 },
                 logIn: function(email,password) {
                     console.log(email,password)
@@ -399,7 +431,7 @@
                         
                         this.getPresentations();
                         
-                    }).catch((err) => { console.error('ERR',err); this.logOut(); })
+                    }).catch(this._catchFn)
                 },
                 signUp: function(lastname,firstname,email,password,password_confirm) {
                     console.log(lastname,firstname,email,password,password_confirm)
@@ -417,7 +449,7 @@
                 getPresentations: function() {
                   API.getPresentations().then((res) => {
                         console.log('(VUE) GET PRESENTATIONS',res)
-                        this.presentations = res;
+                        this.presentations = res.sort();
                     })
                 },
                 search: function (q) {
