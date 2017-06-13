@@ -10,6 +10,23 @@
 </head>
 
 <body>
+    
+    
+    <div class="gridtest grid">
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+    </div>
+    
     <div id="app">
         
         <div class="signUp" v-if="signUpShown">
@@ -147,11 +164,14 @@
             </div>
 
             <div class="bottomBar" :class='{"bottomBar-active": bottomBarActive}'>
-                <a class="bottomBar_toggler" href="#" @click.prevent="bottomBarActive = !bottomBarActive">^</a>
-                <button class="downloadGeneratedPresentation" href="#">Télécharger</button>
-                <button class="saveGeneratedPresentation" href="#">Sauvegarder</button>
-                <a class="clearGeneratedPresentation" href="#" @click.prevent="generatedPresentationSlides = []"><span class="clearGeneratedPresentation_icon"></span>Tout effacer</a>
-
+                <a class="bottomBar_toggler" href="#" @click.prevent="bottomBarActive = !bottomBarActive"></a>
+                
+                <div class="bottomBar_top">
+                    <button class="downloadGeneratedPresentation" href="#">Télécharger</button>
+                    <button class="saveGeneratedPresentation" href="#">Sauvegarder</button>
+                    <a class="clearGeneratedPresentation" href="#" @click.prevent="generatedPresentationSlides = []"><span class="clearGeneratedPresentation_icon"></span>Tout effacer</a>
+                </div>
+                
                 <div style="clear:both;"></div>
 
                 <div class="bottomBar_delineator"></div>
@@ -213,7 +233,7 @@
 
                 <div class="diaporama_banner">
                     <div class="diaporama_banner_text">
-                        {{diaporamaPresentationTitle}}
+                        <h3>{{diaporamaPresentationTitle}}</h3>
                         <small>{{diaporamaCurrentSlideIndex+1}}/{{diaporamaSlides.length}}</small>
                     </div>
 
@@ -281,7 +301,7 @@
                 bottomBarActive: true,
                 page: "presentation",
                 presentations: [{title: "Pres1"}, {title: "Pres2"}, {title: "Pres3"}],
-                diaporamaMode: false,
+                diaporamaMode: true,
                 diaporamaPresentationTitle: "Nom de la préz!",
                 diaporamaCurrentSlideIndex: 0,
                 diaporamaSlides: [{viewUrl: "https://www.placecage.com/1200/900", tags: ["onea","oneb","onec"], comment: "Lorem ipsum..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["twox","twoc","twod"], comment: "Lorem ipsum 2..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["threea","threeb","threec"], comment: "Lorem ipsum 3..."} ],
