@@ -145,7 +145,7 @@
                     </div>
 
                     <div v-if="page == 'search'" class="page_right_page">
-                        <a v-for="searchResult in (searchTab == 'all' ? searchResults : searchTab == 'slides' ? searchResultsSlides : searchResultsPresentations)"  :style='{"background-image": "url(" + searchResult.previewUrl + ")"}' href="#" @click.prevent="searchResult.type == 'slide' ? launchDiaporamaOnSlide(searchResult.id) : goToPresentationForSlide(searchResult)"
+                        <a v-for="searchResult in (searchTab == 'all' ? searchResults : searchTab == 'slides' ? searchResultsSlides : searchResultsPresentations)"  :style='{"background-image": "url(" + searchResult.previewUrl + ")"}' href="#" @click.prevent="searchResult.type == 'slide' ? launchDiaporamaOnSlide(searchResult.id) : goToPresentation(searchResult.id)"
                             :class="{page_right_page_slide: searchResult.type == 'slide', page_right_page_presentation: searchResult.type == 'presentation', }"
                            >
 
@@ -488,6 +488,7 @@
                   console.log('title',title,'comment',comment,'..et tags stored local')  
                 },
                 goToPresentation: function(id) {
+                    console.log('gotopresentation',id)
                     API.getPresentationInfo(id).then((res) => {
                         console.log('woupi', res)
                         console.log(res);
@@ -582,8 +583,11 @@
                         
                         console.log('search res',res)
                         this.searchResults = res.map((e) => {
-                            if (e.presentation)
+                            if (e.presentation) {
                                 e.presentationTitle = e.presentation.title;
+                                
+                                e.presentationId = e.presentation.id;
+                            }
                             
                             e.type = 'slide';
                             

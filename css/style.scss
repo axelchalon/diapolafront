@@ -240,7 +240,7 @@ html {
 
     .search {
         @include width-colspan(6);
-        @include margin-right-colspan(1);
+        /* @include margin-right-colspan(1); */
         @include margin-left-colspan(1);
         display: inline-block;
         input {

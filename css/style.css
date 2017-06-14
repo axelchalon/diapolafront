@@ -70,7 +70,7 @@ html {
     margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 1 + 30px); }
   .topBar .search {
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 6 + 30px * 5);
-    margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 1 + 30px);
+    /* @include margin-right-colspan(1); */
     margin-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 1);
     display: inline-block; }
     .topBar .search input {
