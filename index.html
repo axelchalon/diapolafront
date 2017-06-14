@@ -324,7 +324,7 @@
             el: '#app',
             data: {
                 account: {
-                  loggedIn: true,
+                  loggedIn: false,
                   avatarPreviewUrl: "https://placecage.com/50/50"
                 },
                 signUpShown: false,
@@ -363,6 +363,15 @@
                         this.diaporamaMode = false;
                         this.presentationKeywordsShown = false;
                         this.manageCollaboratorsShown = false;
+                    }
+                    else if (e.keyCode == 37) { // l
+                        if (this.diaporamaMode && this.diaporamaCurrentSlideIndex > 0)
+                            this.diaporamaCurrentSlideIndex = this.diaporamaCurrentSlideIndex-1;
+                    }
+                    else if (e.keyCode == 39) { // r
+                        
+                        if (this.diaporamaMode && this.diaporamaCurrentSlideIndex < this.diaporamaSlides.length-1)
+                            this.diaporamaCurrentSlideIndex = this.diaporamaCurrentSlideIndex+1;
                     }
                 })
             },
