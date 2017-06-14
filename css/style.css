@@ -524,8 +524,15 @@ html {
       margin-bottom: 30px; }
     .manageCollaborators .manageCollaborators_modal .manageCollaborators_modal_close {
       position: absolute;
-      right: 5px;
-      top: 5px; }
+      height: 20px;
+      font-size: 5rem;
+      color: white;
+      text-align: right;
+      position: absolute;
+      top: -60px;
+      right: 0; }
+      .manageCollaborators .manageCollaborators_modal .manageCollaborators_modal_close:hover {
+        color: #EEE; }
     .manageCollaborators .manageCollaborators_modal .manageCollaborators_addCollaborator {
       position: relative;
       margin: auto;
@@ -591,8 +598,15 @@ html {
       margin-bottom: 30px; }
     .presentationKeywords .presentationKeywords_modal .presentationKeywords_modal_close {
       position: absolute;
-      right: 5px;
-      top: 5px; }
+      height: 20px;
+      font-size: 5rem;
+      color: white;
+      text-align: right;
+      position: absolute;
+      top: -60px;
+      right: 0; }
+      .presentationKeywords .presentationKeywords_modal .presentationKeywords_modal_close:hover {
+        color: #EEE; }
 
 .presentationShowConfirmDelete {
   position: fixed;
@@ -619,8 +633,15 @@ html {
       margin-bottom: 30px; }
     .presentationShowConfirmDelete .presentationShowConfirmDelete_modal .presentationShowConfirmDelete_modal_close {
       position: absolute;
-      right: 5px;
-      top: 5px; }
+      height: 20px;
+      font-size: 5rem;
+      color: white;
+      text-align: right;
+      position: absolute;
+      top: -60px;
+      right: 0; }
+      .presentationShowConfirmDelete .presentationShowConfirmDelete_modal .presentationShowConfirmDelete_modal_close:hover {
+        color: #EEE; }
     .presentationShowConfirmDelete .presentationShowConfirmDelete_modal .presentationShowConfirmDelete_modal_yes {
       width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
       line-height: 2.76rem;
@@ -661,14 +682,16 @@ html {
   color: #333; }
   .diaporama .diaporama_exit {
     position: absolute;
-    left: calc(50% + 450px);
-    transform: translateX(-100px);
-    width: 100px;
     height: 20px;
-    top: 20px;
     font-size: 5rem;
     color: white;
-    text-align: right; }
+    text-align: right;
+    position: absolute;
+    top: -60px;
+    right: 0;
+    right: auto;
+    left: calc(50% + 450px);
+    top: 20px; }
     .diaporama .diaporama_exit:hover {
       color: #EEE; }
   .diaporama .diaporama_addToGeneratedPresentation {

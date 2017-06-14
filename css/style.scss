@@ -63,6 +63,20 @@ $sectionpadding: 13px;
  * (todo plugin? haskell)
  */
 
+@mixin modal-exit-button {
+    position: absolute;
+    height: 20px;
+    font-size: 5rem;
+    color: white;
+    text-align: right;
+    &:hover {
+        color: #EEE;
+    }
+    position: absolute;
+    top: -60px;
+    right: 0;
+}
+
 @mixin modal-overlay {
     position: fixed;
     top: 0;
@@ -658,7 +672,7 @@ html {
         }
         
         .manageCollaborators_modal_close {
-            position: absolute; right: 5px; top: 5px;
+            @include modal-exit-button;
         }
         
         .manageCollaborators_addCollaborator {
@@ -719,7 +733,7 @@ html {
         }
         
         .presentationKeywords_modal_close {
-            position: absolute; right: 5px; top: 5px;
+            @include modal-exit-button;
         }
     }
 }
@@ -735,7 +749,7 @@ html {
         }
         
         .presentationShowConfirmDelete_modal_close {
-            position: absolute; right: 5px; top: 5px;
+            @include modal-exit-button;
         }
         
         .presentationShowConfirmDelete_modal_yes {
@@ -758,18 +772,10 @@ html {
     color: $black;
     
     .diaporama_exit {        
-        position: absolute;
+        @include modal-exit-button;
+        right: auto;
         left: calc(50% + 450px);
-        transform: translateX(-100px);
-        width: 100px;
-        height: 20px;
         top: 20px;
-        font-size: 5rem;
-        color: white;
-        text-align: right;
-        &:hover {
-            color: #EEE;
-        }
     }
     
     .diaporama_addToGeneratedPresentation {
