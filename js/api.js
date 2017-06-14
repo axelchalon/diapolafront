@@ -27,6 +27,10 @@ var API = {
             return response.json();
         })
     },
+    logOut: function() {
+        this.jwtToken = undefined;
+        return Promise.resolve();
+    },
     getPresentationInfo: function (id) {
         return this._fetch(HOST + '/presentations/'+id);  
     },
@@ -43,8 +47,20 @@ var API = {
         return this._fetch(HOST + '/presentations/');
     },
     addTagToSlide: function(tag,id) {
-        return this._fetch(HOST + '/slides/' + id + '/', { method: 'PUT', 
-            headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: qs({value: tag})});
+        return this._fetch(HOST + '/slides/' + id + '/tags', { method: 'POST', 
+            headers: {'Content-Type':'application/json'}, body: JSON.stringify({action: 'add', tag: tag})});
+    },
+    addTagToPresentation: function(tag,id) {
+        return this._fetch(HOST + '/presentations/' + id + '/tags', { method: 'POST', 
+            headers: {'Content-Type':'application/json'}, body: JSON.stringify({action: 'add', tag: tag})});
+    },
+    removeTagFromSlide: function(tag,id) {
+        return this._fetch(HOST + '/slides/' + id + '/tags', { method: 'POST', 
+            headers: {'Content-Type':'application/json'}, body: JSON.stringify({action: 'delete', tag: tag})});
+    },
+    removeTagFromPresentation: function(tag,id) {
+        return this._fetch(HOST + '/presentations/' + id + '/tags', { method: 'POST', 
+            headers: {'Content-Type':'application/json'}, body: JSON.stringify({action: 'delete', tag: tag})});
     },
     signUp: function (lastname, firstname, email, password, password_confirm) {
         return this._fetch('http://echo.jsontest.com/key/value/one/two')

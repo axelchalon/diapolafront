@@ -99,7 +99,7 @@
                     
                     <div class="myProfile">
                         <a href="#" :style='{"background-image": "url(" + account.avatarPreviewUrl + ")"}' onclick="this.parentNode.querySelector('.component_burger_toggle').click()"></a>
-                        <burger align="right" :items="[{text: 'Mon compte'}, {text: 'Déconnexion'}]"></burger>
+                        <burger align="right" :items="[{text: 'Mon compte'}, {text: 'Déconnexion', callback: logOut}]"></burger>
                     </div>
                 </div>
 
@@ -200,7 +200,7 @@
                 <div class="presentationKeywords_modal">
                     <a href="#" class="presentationKeywords_modal_close" @click.prevent="presentationKeywordsShown = false">&times;</a>
                     <h3>Mots-clés de la présentation</h3>
-                    <tags :tags="presentationTags" :on-tag-add="addTagToPresentation" :on-tag-remove="removeTagFromPresentation"></tags>
+                    <tags :tags="presentationTags" :on-tag-add="addTagToPresentation" :second="-1" :on-tag-remove="removeTagFromPresentation"></tags>
                 </div>
             </div>
 
@@ -241,6 +241,8 @@
                     <a class="diaporama_gotoPreviousSlide" href="#" v-if="diaporamaCurrentSlideIndex > 0" @click.prevent="diaporamaCurrentSlideIndex--"></a>
                     <a class="diaporama_gotoNextSlide" href="#" v-if="diaporamaCurrentSlideIndex < diaporamaSlides.length-1" @click.prevent="diaporamaCurrentSlideIndex++"></a>
                 </div>
+                
+                <a href="#" class="diaporama_addToGeneratedPresentation">Ajouter à la collection</a>
 
             </div>
         </div>
@@ -278,13 +280,16 @@
           methods: {
             onTagAddLol: function(wooby,wb) {
                 this.onTagAdd(wooby,this.second)
+            },
+            onTagRemoveLol: function(wooby,wb) {
+                this.onTagRemove(wooby,this.second)
             }
           },
           template:
             `<div class="component_tags">
                 <ul>
                     <li class="component_tags_tag" v-for="tag in tags">
-                        <a class="component_tags_tag_close" href="#" @click.prevent="onTagRemove(tag)">
+                        <a class="component_tags_tag_close" href="#" @click.prevent="onTagRemoveLol(tag)">
                             &times;
                         </a>
                         {{tag}}
@@ -307,13 +312,13 @@
                 },
                 signUpShown: false,
                 bottomBarActive: true,
-                page: "presentation",
-                presentations: [{title: "Pres1"}, {title: "Pres2"}, {title: "Pres3"}],
-                diaporamaMode: false,
+                page: "",
+                presentations: [],
+                diaporamaMode: true,
                 diaporamaPresentationTitle: "Nom de la préz!",
                 diaporamaCurrentSlideIndex: 0,
                 diaporamaSlides: [{viewUrl: "https://www.placecage.com/1200/900", tags: ["onea","oneb","onec"], comment: "Lorem ipsum..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["twox","twoc","twod"], comment: "Lorem ipsum 2..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["threea","threeb","threec"], comment: "Lorem ipsum 3..."} ],
-                presentationId: 0,
+                presentationId: -1,
                 presentationTitle: "",
                 presentationTags: ["", ""],
                 presentationSlides: [{},{},{},{},{},{},{}],
@@ -334,7 +339,7 @@
                 }  
             },
             methods: {
-                _catchFn: function(err) {        console.error('ERR',err); this.logOut();
+                _catchFn: function(err) {        console.error('ERR',err); // this.logOut();
                 },
                 removeGeneratedPresentationSlide: function(index) {
                     this.$delete(this.generatedPresentationSlides, index);
@@ -345,13 +350,18 @@
                     // hydrate diaporamaCurrentSlideIndex
                     // diaporamaSlides
                 },
-                addTagToPresentation: function(tag) {
-                  // faire requête serveur pour update tags
-                    this.presentationTags.push(tag);
+                addTagToPresentation: function(tag) { API.addTagToPresentation(tag,this.presentationId).then((res) => {
+                        console.log('add ok',res)
+                        this.presentationTags.push(tag);
+                    })
                 },
                 removeTagFromPresentation: function (tag) {
-                  // faire requête serveur pour update tags
-                    this.presentationTags = this.presentationTags.filter(x => x != tag);
+                 API.removeTagFromPresentation(tag,this.presentationId).then((res) => {
+                        
+                       console.log('wubba dubba dub dub',res) ;
+
+                        this.presentationTags = this.presentationTags.filter(x => x != tag);
+                  });
                 },
                 addTagToSlide: function(tag,slideId) {
                     console.log('addtagtoslide',tag,slideId)
@@ -363,9 +373,14 @@
                         this.diaporamaSlides[0].tags.push(tag);
                     }).catch(this._catchFn)
                 },
-                removeTagFromSlide: function (tag,slide) {
-                  // faire requête serveur pour update tags
-                    this.diaporamaSlides[0].tags = this.diaporamaSlides[0].tags.filter(x => x != tag);
+                removeTagFromSlide: function (tag,slideId) {
+                 console.log('removetagfromslide',tag,slideId) ;
+                    API.removeTagFromSlide(tag,slideId).then((res) => {
+                        
+                       console.log('res rem tag slide !!',res) ;
+
+                        this.diaporamaSlides[0].tags = this.diaporamaSlides[0].tags.filter(x => x != tag);
+                  });
                 },
                 goToPresentation: function(id) {
                     API.getPresentationInfo(id).then((res) => {
@@ -381,12 +396,13 @@
                         this.presentationSlides = slidz;
                         
                         this.presentationId = id;
-                        this.presentationTags = res.tags;
+                        this.presentationTags = res.tags.map((x) => x.value);
                         this.presentationComment = res.description;
                         this.presentationTitle = res.title;
-                        this.presentationTags = res.tags;
                         this.diaporamaSlides = slidz;
                           
+                        
+                        this.page="presentation";
                     });
                 },
                 goToPresentationForSlide: function(slide) {
@@ -443,8 +459,11 @@
                     }).catch(this.logOut)
                 },
                 logOut: function () {
-                    console.log('log out')  
+                    
+                  API.logOut().then((res) => {
+                    console.log('log out');
                     this.account.loggedIn = false;
+                  });
                 },
                 getPresentations: function() {
                   API.getPresentations().then((res) => {
@@ -483,6 +502,29 @@
         })
         
         app.getPresentations();
+        
+        var skip = false;
+        function hashChanged() {
+            if (skip) {
+                console.log('skip');
+                setTimeout(() => {
+                    skip = false
+                }, 200);
+                return;
+            }
+            console.log('hash upd');
+            var hash = window.location.hash.substr(1);
+            if (hash == 'hello')
+                {
+                    console.log('HELLO')
+                    skip = true;
+                    window.location.hash='';
+                }
+        }
+
+        window.onhashchange = hashChanged;
+        hashChanged();
+
     </script>
             
 

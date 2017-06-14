@@ -182,12 +182,19 @@ html {
     color: $dark;
 }
 
+
 @media screen and (max-height: 850px) {
     html{
-        zoom: 0.8;
+        /*
+        div.app {
+            zoom: 0.8;
+        }*/
+        
         .iconsOnTheRight {
             float: right;
         }
+        
+        //    diaporama_currentSlideInformation, .diaporama_previousSlide, .diaporama_nextSlide, .diaporama_currentSlide 
     }
 }
 
@@ -417,7 +424,7 @@ html {
                 }
                 color: $black;
                 
-                p { margin-top: 5px; white-space: normal; }
+                p { font-weight: 300; margin-top: 5px; white-space: normal; }
             }
         }
 
@@ -689,17 +696,7 @@ html {
     
     color: $black;
     
-    .diaporama_exit {
-        /*line-height: 2.7rem;
-        background: $orange;
-        color: $dark; 
-        padding: 0 15px;
-        position: absolute;
-        border-radius: 4px;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);*/
-        
+    .diaporama_exit {        
         position: absolute;
         left: calc(50% + 450px);
         transform: translateX(-100px);
@@ -711,8 +708,19 @@ html {
         text-align: right;
     }
     
-    .diaporama_previousSlide, .diaporama_nextSlide, , .diaporama_currentSlide {
-        width: 900px;
+    .diaporama_addToGeneratedPresentation {
+        @include button-primary-enabled;
+        dispay: block;
+        position: absolute;
+        text-align: center;
+        
+        bottom: 250px;
+        left: 50%;
+        transform: translateX(-50%) translateY(50%);
+    }
+    
+    .diaporama_previousSlide, .diaporama_nextSlide, .diaporama_currentSlide {
+        width: calc(1.78 * (100vh - 350px));
         background: $gray;
         position: absolute;
         top: 100px;
@@ -736,7 +744,7 @@ html {
     
     .diaporama_currentSlideInformation {
         background: white;
-        width: 900px;
+        width: calc(1.78 * (100vh - 350px));
         position: absolute;
         bottom: 50px;
         height: 200px;
@@ -765,6 +773,7 @@ html {
             top: 0;
             border-left: 1px solid $delineator;
             overflow: auto; 
+            font-weight: 300;
         }
     }
 
@@ -796,9 +805,15 @@ html {
         
         position: relative;
         .diaporama_gotoPreviousSlide, .diaporama_gotoNextSlide {
-            width: 52px; height: 52px; background: blue;
+            width: 52px; height: 52px;
+            background: url("../img/icon_chevron_left.png") no-repeat center center $blue;
+            border-radius: 50% 50%;
             position: absolute;
             top: 50%;
+            @include modal-shadow;
+            &:hover {
+                background-color: $blueunpeuassombri;
+            }
         }
         .diaporama_gotoPreviousSlide {
             left: 0;
@@ -806,7 +821,7 @@ html {
         }
         .diaporama_gotoNextSlide {
             right: 0;
-            transform: translateY(-50%) translateX(50%);
+            transform: translateY(-50%) translateX(50%) rotate(180deg);
         }
     }
     
@@ -1003,6 +1018,7 @@ html {
         
         position: relative;
         .component_tags_tag_close {
+            z-index: 2;
             display: none;
             @include remove-button;
             position: absolute; top: 0; right: 0;
