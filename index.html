@@ -48,18 +48,18 @@
                     <label for="signUp_email">Adresse mail</label><br>
                     <input type="email" id="signUp_email"><br>
                     
-                    <div class="signUp_modal_left">
+                    <!-- <div class="signUp_modal_left"> -->
                         <label for="signUp_password">Mot de passe</label><br>
-                        <input type="password" id="signUp_password"><br>
+                        <input type="password" id="signUp_password"><br><!--
                     </div>
                     <div class="signUp_modal_right">
                         <label for="signUp_password_confirm">Mot de passe</label><br>
                         <input type="password" id="signUp_password_confirm"><br>
-                    </div>
+                    </div>-->
                     <div style="clear:both;"></div>
                     
                     
-                    <button type="submit" @click.prevent="signUp($event.target.parentNode.querySelector('#signUp_lastname').value, $event.target.parentNode.querySelector('#signUp_firstname').value, $event.target.parentNode.querySelector('#signUp_email').value, $event.target.parentNode.querySelector('#signUp_password').value, $event.target.parentNode.querySelector('#signUp_password_confirm').value)">Créer mon compte</button>
+                    <button type="submit" @click.prevent="signUp($event.target.parentNode.querySelector('#signUp_lastname').value, $event.target.parentNode.querySelector('#signUp_firstname').value, $event.target.parentNode.querySelector('#signUp_email').value, $event.target.parentNode.querySelector('#signUp_password').value, $event.target.parentNode.querySelector('#signUp_password').value)">Créer mon compte</button>
                     
                     <small>Déjà un compte ? <a href="#" @click.prevent="signUpShown = false">Se connecter</a></small>
                 </form>
@@ -99,7 +99,7 @@
                     
                     <div class="myProfile">
                         <a href="#" :style='{"background-image": "url(" + account.avatarPreviewUrl + ")"}' onclick="this.parentNode.querySelector('.component_burger_toggle').click()"></a>
-                        <burger align="right" :items="[{text: 'Mon compte'}, {text: 'Déconnexion', callback: logOut}]"></burger>
+                        <burger align="right" :items="[{text: 'Déconnexion', callback: logOut}]"></burger>
                     </div>
                 </div>
 
@@ -107,7 +107,7 @@
                 <!-- ---- -->
                 <div class="topBar_innerSeparator"></div>
 
-                <button class="importPresentation" href="#">Importer une présentation</button>
+                <button class="importPresentation" href="#" @click.prevent="importPresentationShown = true;  importSavePresentationTags= [];">Importer une présentation</button>
 
                 <div class="breadcrumbs" v-if="page == 'presentation'">
                     <a class="breadcrumbs_breadcrumb breadcrumbs_breadcrumb-active" href="#" >{{ presentationTitle }}</a>
@@ -169,7 +169,7 @@
                 
                 <div class="bottomBar_top">
                     <button class="downloadGeneratedPresentation" href="#">Télécharger</button>
-                    <button class="saveGeneratedPresentation" href="#">Sauvegarder</button>
+                    <button class="saveGeneratedPresentation" href="#" @click.prevent="savePresentationShown = true; importSavePresentationTags= [];">Sauvegarder</button>
                     <a class="clearGeneratedPresentation" href="#" @click.prevent="generatedPresentationSlides = []"><span class="clearGeneratedPresentation_icon"></span>Tout effacer</a>
                 </div>
                 
@@ -227,6 +227,31 @@
                     <button class="presentationShowConfirmDelete_modal_no" @click.href="presentationConfirmDeleteShown = false">Non</button>
                 </div>
             </div>
+            
+            <div v-show="savePresentationShown || importPresentationShown" class="saveOrImportPresentation">
+                <div class="saveOrImportPresentation_modal">
+                    <h3>Sauvegarder la nouvelle présentation</h3>
+                    
+                    <form>
+                        <div class="saveOrImportPresentation_modal_left">
+                            <label for="saveOrImportPresentation_title">Titre</label><br>
+                            <input type="text" id="saveOrImportPresentation_title"><br><br>
+                            <label for="saveOrImportPresentation_comment">Commentaire</label><br>
+                            <textarea type="email" id="saveOrImportPresentation_comment"></textarea><br>
+                        </div>
+                        <div class="saveOrImportPresentation_modal_right">
+                            <label for="">Mots-clés</label><br>
+                            <tags :tags="importSavePresentationTags" :on-tag-add="addTagToImportSavePresentation" :second="-1" :on-tag-remove="removeTagFromImportSavePresentation"></tags>
+                        </div>
+                        
+                        <div style="clear: both;"></div>
+
+                        <button type="submit" @click.prevent="saveOrImportPresentation($event.target.parentNode.querySelector('#saveOrImportPresentation_title').value, $event.target.parentNode.querySelector('#saveOrImportPresentation_comment').value)">Sauvegarder</button>
+                        <button class="saveOrImportPresentation_modal_cancel" @click.prevent="savePresentationShown = false; importPresentationShown = false;">Annuler</button>
+
+                    </form>
+                </div>
+            </div>
 
             <div v-if="diaporamaMode" class="diaporama">
 
@@ -262,6 +287,10 @@
             </div>
         </div>
     </div>
+    <!--
+    <form enctype="multipart/form-data" action="/upload/image" method="post" id="uploadForm" class="uploadForm">
+        <input id="image-file" type="file" />
+    </form>-->
 
     
     <script src="js/api.js"></script>
@@ -294,6 +323,7 @@
           },
           methods: {
             onTagAddLol: function(wooby,wb) {
+                if (!wooby.trim().length) return;
                 this.onTagAdd(wooby,this.second)
             },
             onTagRemoveLol: function(wooby,wb) {
@@ -324,7 +354,7 @@
             el: '#app',
             data: {
                 account: {
-                  loggedIn: false,
+                  loggedIn: true,
                   avatarPreviewUrl: "https://placecage.com/50/50"
                 },
                 signUpShown: false,
@@ -333,7 +363,7 @@
                 presentations: [],
                 manageCollaboratorsShown: false,
                 manageCollaboratorsToastMessage: '',
-                diaporamaMode: true,
+                diaporamaMode: false,
                 diaporamaPresentationTitle: "Nom de la préz!",
                 diaporamaCurrentSlideIndex: 0,
                 diaporamaSlides: [{viewUrl: "https://www.placecage.com/1200/900", tags: ["onea","oneb","onec"], comment: "Lorem ipsum..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["twox","twoc","twod"], comment: "Lorem ipsum 2..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["threea","threeb","threec"], comment: "Lorem ipsum 3..."} ],
@@ -347,7 +377,10 @@
                 generatedPresentationSlides: [{title: "Nom de la présentation",previewUrl: "https://www.placecage.com/200/130"}],
                 searchTab: "all",
                 searchQuery: "",
-                searchResults: []
+                searchResults: [],
+                savePresentationShown: false,
+                importPresentationShown: false,
+                importSavePresentationTags: []
             },
             computed: {
                 searchResultsSlides: function() {
@@ -382,11 +415,20 @@
                     if (email.trim() == '') return;
                     
                     API.addCollaborator(email).then(() => {
+                        console.log('ok')
                         this.manageCollaboratorsToastMessage = email + ' a bien été invité !';
                     }).catch(this._catchFn);
                 },
                 removeGeneratedPresentationSlide: function(index) {
                     this.$delete(this.generatedPresentationSlides, index);
+                },
+                saveOrImportPresentatin: function(title,comments) {
+                    // this.importSavePresentationTags
+                    if (this.savePresentationShown) {
+                        // save
+                    } else {
+                        // import
+                    }
                 },
                 launchDiaporamaOnSlide: function(slideId) {
                     for (var i = 0; i < this.diaporamaSlides.length; i++) {
@@ -432,6 +474,18 @@
 
                         this.diaporamaSlides[0].tags = this.diaporamaSlides[0].tags.filter(x => x != tag);
                   });
+                },
+                removeTagFromImportSavePresentation: function(tag) {
+                  console.log('removetagtoimportsavepres',tag)  
+                    
+                        this.importSavePresentationTags = this.importSavePresentationTags.filter(x => x != tag);
+                },
+                addTagToImportSavePresentation: function(tag) {
+                  console.log('addtagtoimportsavepres',tag)  
+                     this.importSavePresentationTags.push(tag);
+                },
+                saveOrImportPresentation: function(title,comment) {
+                  console.log('title',title,'comment',comment,'..et tags stored local')  
                 },
                 goToPresentation: function(id) {
                     API.getPresentationInfo(id).then((res) => {
@@ -501,10 +555,11 @@
                     }).catch(this._catchFn)
                 },
                 signUp: function(lastname,firstname,email,password,password_confirm) {
-                    console.log(lastname,firstname,email,password,password_confirm)
                     
+                    if (password!=password_confirm)
+                        return alert('Les mots de passe ne sont pas les mêmes');
                     API.signUp(lastname,firstname,email,password,password_confirm).then((res) => {
-                        console.log('(VUE) API RESPONSE :',res)
+                        console.log('(VUE) sign up API RESPONSE :',res)
                         this.account.loggedIn = true;
                         this.signUpShown = false;
                     }).catch(this.logOut)
@@ -523,31 +578,37 @@
                     })
                 },
                 search: function (q) {
-                    this.page = "search";
-                    this.searchTab = "all";
-                    this.searchQuery = q;
-                    this.searchResults = [
-                        {
-                            presentationTitle: "Slide prez",
-                            type: "slide",
-                            previewUrl: "https://www.placecage.com/200/130"
-                        },
-                        {
-                            presentationTitle: "Slide prez",
-                            type: "slide",
-                            previewUrl: "https://www.placecage.com/200/130"
-                        },
-                        {
-                            presentationTitle: "Slide prez",
-                            type: "slide",
-                            previewUrl: "https://www.placecage.com/200/130"
-                        },
-                        {
-                            title: "Presentation",
-                            type: "presentation",
-                            previewUrl: "https://www.placecage.com/200/130"
-                        }
-                    ];
+                    API.search(q).then((res) => {
+                        
+                        console.log('search res',res)
+                        this.searchResults = res.map((e) => {
+                            if (e.presentation)
+                                e.presentationTitle = e.presentation.title;
+                            
+                            e.type = 'slide';
+                            
+                            e.tags = e.tags.map(e => e.value)
+                            
+                            e.previewUrl = e.thumbnail_url;  
+                            return e;
+                        })
+                        
+                        this.diaporamaSlides = this.searchResults.filter((e) => e.type == 'slide');
+                    }).then(API.searchP(q).then((res) => {
+                        console.log('searchp res',res)
+                        
+                        res.forEach((x) => {
+                            x.type = 'presentation';
+                            this.searchResults.insert(Math.floor(Math.random()*this.searchResults.length),x);
+                        });
+                          
+                        
+                        
+                        
+                        this.page = "search";
+                        this.searchTab = "all";
+                        this.searchQuery = q;
+                    }));
                 }
             }
         })
@@ -565,17 +626,58 @@
             }
             console.log('hash upd');
             var hash = window.location.hash.substr(1);
-            if (hash == 'hello')
-                {
-                    console.log('HELLO')
-                    skip = true;
-                    window.location.hash='';
-                }
+            if (hash.length)
+            {
+                app.signUpShown = true;
+                skip = true;
+                window.location.hash='';
+            }
         }
 
         window.onhashchange = hashChanged;
         hashChanged();
+        
+        
+        
+        Math.almostRandom = (function() {
+	var seed = 0x2F6E2B1;
+	return function() {
+		// Robert Jenkins’ 32 bit integer hash function
+		seed = ((seed + 0x7ED55D16) + (seed << 12))  & 0xFFFFFFFF;
+		seed = ((seed ^ 0xC761C23C) ^ (seed >>> 19)) & 0xFFFFFFFF;
+		seed = ((seed + 0x165667B1) + (seed << 5))   & 0xFFFFFFFF;
+		seed = ((seed + 0xD3A2646C) ^ (seed << 9))   & 0xFFFFFFFF;
+		seed = ((seed + 0xFD7046C5) + (seed << 3))   & 0xFFFFFFFF;
+		seed = ((seed ^ 0xB55A4F09) ^ (seed >>> 16)) & 0xFFFFFFFF;
+		return (seed & 0xFFFFFFF) / 0x10000000;
+	};
+}());
+        
+          
+                           function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
 
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.almostRandom() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+        
+        Array.prototype.insert = function (index, item) {
+  this.splice(index, 0, item);
+};
+                        
+        
     </script>
             
 

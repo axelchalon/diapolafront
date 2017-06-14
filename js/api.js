@@ -32,7 +32,10 @@ var API = {
         return Promise.resolve();
     },
     addCollaborator: function(email) {
-        return Promise.resolve();  
+        return this._fetch(HOST + '/users/invite', {method: 'POST',
+                            headers: {'Content-Type':'application/json'}, body: JSON.stringify({email: email})
+                                                        
+                                                        });
     },
     getPresentationInfo: function (id) {
         return this._fetch(HOST + '/presentations/'+id);  
@@ -45,6 +48,12 @@ var API = {
                             headers: {'Content-Type':'application/json'}, body: JSON.stringify({title: newname})
                                                         
                                                         });  
+    },
+    search: function(q) {
+        return this._fetch(HOST + '/slides/?q=' + encodeURIComponent(q));
+    },
+    searchP: function(q) {
+        return this._fetch(HOST + '/presentations/?q=' + encodeURIComponent(q));
     },
     getPresentations: function() {
         return this._fetch(HOST + '/presentations/');
@@ -66,16 +75,8 @@ var API = {
             headers: {'Content-Type':'application/json'}, body: JSON.stringify({action: 'delete', tag: tag})});
     },
     signUp: function (lastname, firstname, email, password, password_confirm) {
-        return this._fetch('http://echo.jsontest.com/key/value/one/two')
-            // simulate delay
-            .then((response) => {
-                return new Promise(function (resolve, reject) {
-                    setTimeout(() => {
-                        resolve(response);
-                    }, 2000)
-                })
-
-            })
+         return this._fetch(HOST + '/users/', { method: 'POST', 
+            headers: {'Content-Type':'application/json'}, body: JSON.stringify({first_name: firstname, last_name: lastname, username: email, password})});
     },
     logIn: function (email, password) {
         return this._fetch(HOST + '/api-token-auth/', {
