@@ -263,7 +263,6 @@ html {
 
     .iconsOnTheRight {
         @include width-colspan(2);
-        @include margin-right-colspan(0);
         display: inline-block;
         text-align: right;
         
@@ -1162,3 +1161,12 @@ input:focus {
 :focus::placeholder {
     color: transparent;
 }
+
+/* https://css-tricks.com/custom-scrollbars-in-webkit/ */
+::-webkit-scrollbar              { width: 12px; border-right: 3px solid transparent; }
+::-webkit-scrollbar-button       { /* 2 */ }
+::-webkit-scrollbar-track        { visibility: hidden; }
+::-webkit-scrollbar-track-piece  { /* 4 */ }
+::-webkit-scrollbar-thumb        { background: $disabled; border-radius: 3px; }
+::-webkit-scrollbar-corner       { /* 6 */ }
+::-webkit-resizer                { /* 7 */ }

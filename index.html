@@ -204,7 +204,7 @@
                     {{manageCollaboratorsToastMessage}}
                     
                     <div class="manageCollaborators_addCollaborator">
-                        <input placeholder="adresse@mail.fr">
+                        <input placeholder="adresse@mail.fr" @keyup.enter.prevent="$event.target.parentNode.querySelector('button').click();">
                         <button @click.prevent="addCollaborator($event.target.parentNode.querySelector('input').value); $event.target.parentNode.querySelector('input').value='';">+</button>
                     </div>
                     
@@ -312,8 +312,10 @@
                 </ul>
 
                 <div class="component_tags_addTag">
-                    <input placeholder="Ajouter un tag">
+<form>
+                    <input placeholder="Ajouter un tag" @keyup.enter.prevent="$event.target.parentNode.querySelector('button').click();" >
                     <button @click.prevent="onTagAddLol($event.target.parentNode.querySelector('input').value); $event.target.parentNode.querySelector('input').value='';">+</button>
+    </form>
                 </div>
             </div>`
         })
@@ -354,6 +356,15 @@
                 searchResultsPresentations: function() {
                     return this.searchResults.filter(x => x.type == "presentation");
                 }  
+            },
+            created: function() {
+                window.addEventListener('keyup', (e) => {
+                    if (e.keyCode == 27) {
+                        this.diaporamaMode = false;
+                        this.presentationKeywordsShown = false;
+                        this.manageCollaboratorsShown = false;
+                    }
+                })
             },
             methods: {
                 _catchFn: function(err) {        console.error('ERR',err); // this.logOut();

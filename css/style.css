@@ -89,7 +89,6 @@ html {
         background-image: url("../img/icon_search_blue.png"); }
   .topBar .iconsOnTheRight {
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
-    margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px);
     display: inline-block;
     text-align: right; }
     .topBar .iconsOnTheRight a.showManageCollaborators {
@@ -1059,5 +1058,29 @@ input:focus {
 
 :focus::placeholder {
   color: transparent; }
+
+/* https://css-tricks.com/custom-scrollbars-in-webkit/ */
+::-webkit-scrollbar {
+  width: 12px;
+  border-right: 3px solid transparent; }
+
+::-webkit-scrollbar-button {
+  /* 2 */ }
+
+::-webkit-scrollbar-track {
+  visibility: hidden; }
+
+::-webkit-scrollbar-track-piece {
+  /* 4 */ }
+
+::-webkit-scrollbar-thumb {
+  background: #cfd0d5;
+  border-radius: 3px; }
+
+::-webkit-scrollbar-corner {
+  /* 6 */ }
+
+::-webkit-resizer {
+  /* 7 */ }
 
 /*# sourceMappingURL=style.css.map */
