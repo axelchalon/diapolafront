@@ -92,7 +92,7 @@ html {
     margin-right: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px);
     display: inline-block;
     text-align: right; }
-    .topBar .iconsOnTheRight a.manageCollaborators {
+    .topBar .iconsOnTheRight a.showManageCollaborators {
       width: 42px;
       height: 42px;
       border-radius: 50%;
@@ -100,7 +100,7 @@ html {
       display: block;
       margin: auto;
       display: inline-block; }
-      .topBar .iconsOnTheRight a.manageCollaborators:hover {
+      .topBar .iconsOnTheRight a.showManageCollaborators:hover {
         background-color: #5688dc; }
     .topBar .iconsOnTheRight .myProfile {
       display: inline-block;
@@ -499,6 +499,73 @@ html {
         .bottomBar .bottomBar_listOfSlides li .bottomBar_listOfSlides_slide_remove:hover {
           background-color: #5688dc; }
 
+.manageCollaborators {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2017; }
+  .manageCollaborators .manageCollaborators_modal {
+    background: white;
+    width: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    padding: 20px 40px 40px 40px;
+    position: relative;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px 0 rgba(171, 171, 171, 0.24); }
+    .manageCollaborators .manageCollaborators_modal h3 {
+      font-weight: 500;
+      margin-bottom: 30px; }
+    .manageCollaborators .manageCollaborators_modal .manageCollaborators_modal_close {
+      position: absolute;
+      right: 5px;
+      top: 5px; }
+    .manageCollaborators .manageCollaborators_modal .manageCollaborators_addCollaborator {
+      position: relative;
+      margin: auto;
+      height: 3.5rem;
+      width: 50%;
+      margin-top: 1rem; }
+      .manageCollaborators .manageCollaborators_modal .manageCollaborators_addCollaborator input {
+        background: transparent;
+        padding-left: 23px;
+        line-height: 3.5rem;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        border-radius: 4px;
+        padding-right: 20%;
+        border: solid 1px #cfd0d5;
+        box-sizing: border-box; }
+        .manageCollaborators .manageCollaborators_modal .manageCollaborators_addCollaborator input:focus, .manageCollaborators .manageCollaborators_modal .manageCollaborators_addCollaborator input:focus + button {
+          border-color: #77b0ff;
+          color: #77b0ff; }
+      .manageCollaborators .manageCollaborators_modal .manageCollaborators_addCollaborator button {
+        border-left: solid 1px #cfd0d5;
+        border-radius: 4px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 20%;
+        text-align: center;
+        font-size: 2rem;
+        color: #cfd0d5;
+        outline: none; }
+        .manageCollaborators .manageCollaborators_modal .manageCollaborators_addCollaborator button:hover {
+          background: #77b0ff;
+          color: white !important; }
+
 .presentationKeywords {
   position: fixed;
   top: 0;
@@ -602,6 +669,8 @@ html {
     font-size: 5rem;
     color: white;
     text-align: right; }
+    .diaporama .diaporama_exit:hover {
+      color: #EEE; }
   .diaporama .diaporama_addToGeneratedPresentation {
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
     line-height: 2.76rem;
@@ -915,8 +984,6 @@ html {
     .component_tags .component_tags_tag .component_tags_tag_close:hover {
       background-color: #5688dc; }
 .component_tags .component_tags_addTag {
-  border-radius: 4px;
-  border: solid 1px #cfd0d5;
   position: relative;
   margin: auto;
   height: 3.5rem;
@@ -930,9 +997,19 @@ html {
     top: 0;
     bottom: 0;
     left: 0;
-    width: 80%; }
+    width: 100%;
+    border-radius: 4px;
+    padding-right: 20%;
+    border: solid 1px #cfd0d5;
+    box-sizing: border-box; }
+    .component_tags .component_tags_addTag input:focus, .component_tags .component_tags_addTag input:focus + button {
+      border-color: #77b0ff;
+      color: #77b0ff; }
   .component_tags .component_tags_addTag button {
     border-left: solid 1px #cfd0d5;
+    border-radius: 4px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -944,7 +1021,7 @@ html {
     outline: none; }
     .component_tags .component_tags_addTag button:hover {
       background: #77b0ff;
-      color: white; }
+      color: white !important; }
 
 input:focus {
   border-color: #77b0ff !important;

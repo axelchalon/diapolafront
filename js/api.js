@@ -31,6 +31,9 @@ var API = {
         this.jwtToken = undefined;
         return Promise.resolve();
     },
+    addCollaborator: function(email) {
+        return Promise.resolve();  
+    },
     getPresentationInfo: function (id) {
         return this._fetch(HOST + '/presentations/'+id);  
     },
