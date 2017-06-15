@@ -10,7 +10,7 @@
 html {
   font-size: 13px;
   font-family: Montserrat, Arial, sans-serif;
-  color: #727272; }
+  color: #333; }
 
 @media screen and (max-height: 850px) {
   html div.app {
@@ -138,7 +138,7 @@ html {
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
     line-height: 2.76rem;
     border-radius: 4px;
-    border: 1px solid #727272;
+    border: 1px solid #333;
     font-weight: 500;
     background: #ffa277;
     border-color: #ffa277;
@@ -260,7 +260,7 @@ html {
         width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
         line-height: 2.76rem;
         border-radius: 4px;
-        border: 1px solid #727272;
+        border: 1px solid #333;
         font-weight: 500;
         background: transparent;
         border-color: #77b0ff;
@@ -409,7 +409,7 @@ html {
         width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
         line-height: 2.76rem;
         border-radius: 4px;
-        border: 1px solid #727272;
+        border: 1px solid #333;
         font-weight: 500;
         background: #ffa277;
         border-color: #ffa277;
@@ -421,7 +421,7 @@ html {
         width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
         line-height: 2.76rem;
         border-radius: 4px;
-        border: 1px solid #727272;
+        border: 1px solid #333;
         font-weight: 500;
         color: #cfd0d5;
         border-color: #cfd0d5;
@@ -434,7 +434,7 @@ html {
         width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
         line-height: 2.76rem;
         border-radius: 4px;
-        border: 1px solid #727272;
+        border: 1px solid #333;
         font-weight: 500;
         background: transparent;
         border-color: #77b0ff;
@@ -447,7 +447,7 @@ html {
         width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
         line-height: 2.76rem;
         border-radius: 4px;
-        border: 1px solid #727272;
+        border: 1px solid #333;
         font-weight: 500;
         color: #cfd0d5;
         border-color: #cfd0d5;
@@ -460,7 +460,7 @@ html {
         width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
         line-height: 2.76rem;
         border-radius: 4px;
-        border: 1px solid #727272;
+        border: 1px solid #333;
         font-weight: 500;
         background: transparent;
         border-color: #77b0ff;
@@ -473,7 +473,7 @@ html {
         width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
         line-height: 2.76rem;
         border-radius: 4px;
-        border: 1px solid #727272;
+        border: 1px solid #333;
         font-weight: 500;
         color: #cfd0d5;
         border-color: #cfd0d5;
@@ -705,7 +705,7 @@ html {
       width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
       line-height: 2.76rem;
       border-radius: 4px;
-      border: 1px solid #727272;
+      border: 1px solid #333;
       font-weight: 500;
       background: #ffa277;
       border-color: #ffa277;
@@ -718,7 +718,7 @@ html {
       width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
       line-height: 2.76rem;
       border-radius: 4px;
-      border: 1px solid #727272;
+      border: 1px solid #333;
       font-weight: 500;
       background: transparent;
       border-color: #77b0ff;
@@ -757,7 +757,7 @@ html {
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
     line-height: 2.76rem;
     border-radius: 4px;
-    border: 1px solid #727272;
+    border: 1px solid #333;
     font-weight: 500;
     background: #ffa277;
     border-color: #ffa277;
@@ -897,7 +897,7 @@ html {
       width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
       line-height: 2.76rem;
       border-radius: 4px;
-      border: 1px solid #727272;
+      border: 1px solid #333;
       font-weight: 500;
       background: #ffa277;
       border-color: #ffa277;
@@ -962,7 +962,7 @@ html {
       width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
       line-height: 2.76rem;
       border-radius: 4px;
-      border: 1px solid #727272;
+      border: 1px solid #333;
       font-weight: 500;
       background: #ffa277;
       border-color: #ffa277;
@@ -1064,7 +1064,7 @@ html {
       width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
       line-height: 2.76rem;
       border-radius: 4px;
-      border: 1px solid #727272;
+      border: 1px solid #333;
       font-weight: 500;
       background: #ffa277;
       border-color: #ffa277;
@@ -1077,7 +1077,7 @@ html {
       width: calc((100vw - 2*50px - 11 * 30px) / 12 * 2 + 30px * 1);
       line-height: 2.76rem;
       border-radius: 4px;
-      border: 1px solid #727272;
+      border: 1px solid #333;
       font-weight: 500;
       background: transparent;
       border-color: #77b0ff;

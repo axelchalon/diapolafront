@@ -287,7 +287,7 @@
                     <a class="diaporama_gotoNextSlide" href="#" v-if="diaporamaCurrentSlideIndex < diaporamaSlides.length-1" @click.prevent="diaporamaCurrentSlideIndex++"></a>
                 </div>
                 
-                <a href="#" class="diaporama_addToGeneratedPresentation">Ajouter à la collection</a>
+                <a href="#" class="diaporama_addToGeneratedPresentation" @click.prevent="addSlideToGeneratedPresentation(diaporamaSlides[diaporamaCurrentSlideIndex].id,999); diaporamaMode = false;">Ajouter à la collection</a>
 
             </div>
         </div>
@@ -513,9 +513,7 @@
                         
                     }
                     
-                    setTimeout(() => {
-                        this.importSavePresentationTags = [];
-                    },500)
+                    //    this.importSavePresentationTags = [];
                 },
                 downloadGeneratedPresentation: function () {
                  
