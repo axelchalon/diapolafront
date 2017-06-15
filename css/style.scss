@@ -278,6 +278,7 @@ html {
         @include width-colspan(2);
         display: inline-block;
         text-align: right;
+        float: right;
         
         a.showManageCollaborators {
             width: 42px; height: 42px;
