@@ -513,6 +513,40 @@
                 },
                 downloadGeneratedPresentation: function () {
                   console.log('download',this.generatedPresentationSlides)  
+                     API.downloadGeneratedPresentation(this.generatedPresentationSlides).then((res) => {
+                        console.log('VUE download res',res)
+                       
+                         
+                         
+                         
+                         
+                           var dodo = () => {
+                             
+                             console.log('dodo')
+                             
+                             API.getPresentationInfo(res.id).then((xres) => {
+                                 
+                                 console.log('dodo réponse')
+                                 if (xres.is_locked) {
+                                  console.log('continuer dodo')   
+                                     setTimeout(dodo,1000)
+                                 }
+                                 else {
+                                     console.log('sauter de la fenêtre')
+                                     window.location.href = HOST+xres.relative_url;
+                                 }
+                             });
+                                                                            }
+                        
+                     
+                         
+                         
+                         
+                         setTimeout(dodo,1000);
+                         
+                
+                        }).catch(this._catchFn);
+                        
                 },
                 goToPresentation: function(id) {
                     console.log('gotopresentation',id)

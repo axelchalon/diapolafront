@@ -109,6 +109,20 @@ var API = {
         });
 
     },
+    downloadGeneratedPresentation: function (slides) {
+        console.log('dl prez',slides)
+        return this._fetch(HOST + '/composition/download', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                slides: slides.map(slide => slide.slideId || slide.id),
+                title: '',
+                description: ''
+            })
+        });
+    },
     savePresentation: function (title, comment, tags, slides) {
         console.log('save prez',title,comment,tags,slides)
         return this._fetch(HOST + '/composition/save', {
@@ -130,7 +144,7 @@ var API = {
             console.log('tagpromises',tagPromises)
             
             return Promise.all(tagPromises);
-        });;
+        });
     },
     addTagToPresentation: function (tag, id) {
         return this._fetch(HOST + '/presentations/' + id + '/tags', {
