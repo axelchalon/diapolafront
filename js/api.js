@@ -6,6 +6,7 @@ var qs = params => Object.keys(params)
     .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
     .join('&');
 
+window.skipskip = false;
 var API = {
     jwtToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6IiIsInVzZXJuYW1lIjoibW9rYSIsImV4cCI6MTQ5OTk1NTE3NCwib3JpZ19pYXQiOjE0OTczNjMxNzR9.xxQpUsRnFbgYv9wTkl5stFkQvmzuCTeLMCNoURhRhnc',
     _fetch: function (url, options) {
@@ -17,7 +18,12 @@ var API = {
         if (typeof this.jwtToken !== 'undefined')
             headers["Authorization"] = "JWT " + this.jwtToken;
 
+        if (!window.skipskip) {
         app.loading = true;
+            
+        } else {
+            window.skipskip= true;
+        }
         return fetch(url, Object.assign({}, options, {
             headers: headers
         })).
@@ -72,6 +78,7 @@ var API = {
         return this._fetch(HOST + '/presentations/?q=' + encodeURIComponent(q));
     },
     getPresentations: function () {
+        window.skipskip = true;
         return this._fetch(HOST + '/presentations/');
     },
     addTagToSlide: function (tag, id) {
@@ -124,7 +131,10 @@ var API = {
             })
         });
     },
-    savePresentation: function (title, comment, tags, slides) {
+    savePresentation: function (title, comment, tags, slidesx) {
+        
+        var slides = slidesx.slice(0);
+        slides.reverse();
         console.log('save prez',title,comment,tags,slides)
         return this._fetch(HOST + '/composition/save', {
             method: 'POST',

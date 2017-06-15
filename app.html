@@ -564,7 +564,7 @@
                             return t;
                         });
                         
-                        slidz= slidz.sort((a,b) => {
+                        slidz.sort((a,b) => {
                             
                             if(a.slide_index < b.slide_index) return -1;
                             if(a.slide_index > b.slide_index) return 1;
@@ -755,6 +755,9 @@
         })
         
         app.getPresentations();
+        setInterval(() => {
+            app.getPresentations();
+        },5000)
         
         var skip = false;
         function hashChanged() {
