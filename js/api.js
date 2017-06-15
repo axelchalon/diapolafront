@@ -17,10 +17,12 @@ var API = {
         if (typeof this.jwtToken !== 'undefined')
             headers["Authorization"] = "JWT " + this.jwtToken;
 
+        app.loading = true;
         return fetch(url, Object.assign({}, options, {
             headers: headers
         })).
         then((response) => {
+            app.loading = false;
             if (!response.ok) {
                 throw Error(response.statusText);
             }
@@ -109,7 +111,26 @@ var API = {
     },
     savePresentation: function (title, comment, tags, slides) {
         console.log('save prez',title,comment,tags,slides)
-
+        return this._fetch(HOST + '/composition/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: title,
+                description: comment,
+                slides: slides.map(slide => slide.slideId || slide.id)
+            })
+        }).then((res) => {
+            console.log('composition save ok',res)
+            
+            var tagPromises = tags.map((tag) =>                 this.addTagToPresentation(tag,res.id)
+                );
+            
+            console.log('tagpromises',tagPromises)
+            
+            return Promise.all(tagPromises);
+        });;
     },
     addTagToPresentation: function (tag, id) {
         return this._fetch(HOST + '/presentations/' + id + '/tags', {

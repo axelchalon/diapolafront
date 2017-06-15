@@ -1,0 +1,859 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="js/prefixfree.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Diapolama</title>
+</head>
+
+<body>
+    
+    
+    <div class="gridtest grid">
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+        <div class="gridtest a"></div>
+    </div>
+    
+    <div id="app">
+        
+        <div class="signUp" v-if="signUpShown">
+            <div class="signUp_modal">
+                <h3>S'inscrire</h3>
+                
+                <form>
+                    
+                    <div class="signUp_modal_left">
+                        <label for="signUp_lastname">Nom</label><br>
+                        <input type="email" id="signUp_lastname"><br>
+                    </div>
+                    <div class="signUp_modal_right">
+                        <label for="signUp_firstname">Prénom</label><br>
+                        <input type="email" id="signUp_firstname"><br>
+                    </div>
+                    <div style="clear:both;"></div>
+                    
+                    <label for="signUp_email">Adresse mail</label><br>
+                    <input type="email" id="signUp_email"><br>
+                    
+                    <!-- <div class="signUp_modal_left"> -->
+                        <label for="signUp_password">Mot de passe</label><br>
+                        <input type="password" id="signUp_password"><br><!--
+                    </div>
+                    <div class="signUp_modal_right">
+                        <label for="signUp_password_confirm">Mot de passe</label><br>
+                        <input type="password" id="signUp_password_confirm"><br>
+                    </div>-->
+                    <div style="clear:both;"></div>
+                    
+                    
+                    <button type="submit" @click.prevent="signUp($event.target.parentNode.querySelector('#signUp_lastname').value, $event.target.parentNode.querySelector('#signUp_firstname').value, $event.target.parentNode.querySelector('#signUp_email').value, $event.target.parentNode.querySelector('#signUp_password').value, $event.target.parentNode.querySelector('#signUp_password').value)">Créer mon compte</button>
+                    
+                    <small>Déjà un compte ? <a href="#" @click.prevent="signUpShown = false">Se connecter</a></small>
+                </form>
+            </div>
+        </div>
+        
+        <div class="login" v-if="!account.loggedIn && !signUpShown">
+            <div class="login_modal">
+                <h3>S'identifier</h3>
+                
+                <form>
+                    <label for="login_email">Adresse mail</label><br>
+                    <input type="email" id="login_email"><br>
+                    
+                    
+                    <label for="login_password">Mot de passe</label><br>
+                    <input type="password" id="login_password"><br>
+                    
+                    
+                    <button type="submit" @click.prevent="logIn($event.target.parentNode.querySelector('#login_email').value, $event.target.parentNode.querySelector('#login_password').value)">Se connecter</button>
+                    
+                    <small>Pas encore de compte ? <a href="#" @click.prevent="signUpShown = true">S'inscrire</a></small>
+                </form>
+            </div>
+        </div>
+        
+        <div class="app" v-if="account.loggedIn">
+            <div class="topBar">
+                <div class="logo" :class="{loading: loading}"><img src="img/logo.png"></div>
+
+                <div class="search">
+                    <input type="search" placeholder="Rechercher dans vos présentations" @keyup.enter="search($event.target.value); $event.target.value=''; ">
+                </div>
+                    
+                <div class="iconsOnTheRight">
+                    <a href="#" class="showManageCollaborators" @click.prevent="manageCollaboratorsShown = true; manageCollaboratorsToastMessage = '';"></a>
+                    
+                    <div class="myProfile">
+                        <a href="#" :style='{"background-image": "url(" + account.avatarPreviewUrl + ")"}' onclick="this.parentNode.querySelector('.component_burger_toggle').click()"></a>
+                        <burger align="right" :items="[{text: 'Déconnexion', callback: logOut}]"></burger>
+                    </div>
+                </div>
+
+                <div style="clear: both;"></div>
+                <!-- ---- -->
+                <div class="topBar_innerSeparator"></div>
+
+                <button class="importPresentation" href="#" @click.prevent="importPresentationSelect">Importer une présentation</button>
+
+                <div class="breadcrumbs" v-if="page == 'presentation'">
+                    <a class="breadcrumbs_breadcrumb breadcrumbs_breadcrumb-active" href="#" >{{ presentationTitle }}</a>
+                    <burger align="left" :items="[{text: 'Mots-clés', callback: presentationShowKeywords}, {text: 'Renommer', callback: presentationRename}, {text: 'Supprimer', callback: presentationShowConfirmDelete}]"></burger>
+                </div>
+            </div>
+
+            <div class="page">
+
+                <div class="page_left" :class="{'page_left-big': !bottomBarActive, 'page_left-small': bottomBarActive}">
+                    <ul>
+                        <li v-for="presentation in presentations"><a href="#" @click.prevent="!presentation.is_locked && goToPresentation(presentation.id)">{{presentation.title}}<span v-if="presentation.is_locked"> (en cours de traitement)</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="page_right" :class="{'page_right-big': !bottomBarActive, 'page_right-small': bottomBarActive}">
+                    <div class="page_right_topBar page_right_topBar-presentation" v-if="page == 'presentation'">
+                        <button class="downloadPresentation" >Télécharger la présentation</button>
+                        <!--<button class="downloadSelectedSlides downloadSelectedSlides-disabled">Télécharger la sélection</button>-->
+
+                        <div class="presentationComment">
+                            <h3>Commentaire</h3> <a href="#" class="presentationComment-edit" style="display: none !important">Modifier</a><br>
+                            <p>{{presentationComment}}</p>
+                        </div>
+                    </div>
+
+                    <div v-if="page == 'search'" class="page_right_topBar page_right_topBar-search">
+                        <h2>{{searchResults.length}} résultats trouvés pour &ldquo;{{searchQuery}}&rdquo;</h2>
+
+                        <ul>
+                            <li :class="{active: searchTab == 'all'}"><a href="#" @click.prevent="searchTab = 'all'">Tout ({{searchResults.length}})</a></li>
+                            <li :class="{active: searchTab == 'slides'}"><a href="#" @click.prevent="searchTab = 'slides'">Slides ({{searchResultsSlides.length}})</a></li>
+                            <li :class="{active: searchTab == 'presentations'}" @click.prevent="searchTab = 'presentations'"><a href="#">Présentations ({{searchResultsPresentations.length}})</a></li>
+                        </ul>
+                    </div>
+
+                    <div v-if="page == 'search'" class="page_right_page">
+                        <a v-for="searchResult in (searchTab == 'all' ? searchResults : searchTab == 'slides' ? searchResultsSlides : searchResultsPresentations)"  :style='{"background-image": "url(" + searchResult.previewUrl + ")"}' href="#" @click.prevent="searchResult.type == 'slide' ? launchDiaporamaOnSlide(searchResult.id) : goToPresentation(searchResult.id)"
+                            :class="{page_right_page_slide: searchResult.type == 'slide', page_right_page_presentation: searchResult.type == 'presentation', }"
+                           
+                           :draggable="searchResult.type == 'slide' ? true : null"
+                           
+                        :data-slideindex="searchResult.id"
+                           >
+
+                            <p 
+                               :class="{page_right_page_slide_presentationTitle: searchResult.type == 'slide', page_right_page_presentation_presentationTitle: searchResult.type == 'presentation'}">{{searchResult.presentationTitle || searchResult.title}}</p>
+                        </a>
+                    </div>
+
+                    <div v-if="page == 'presentation'" class="page_right_page">
+                        <a v-for="presentationSlide in presentationSlides" class="page_right_page_slide" href="#" 
+                           :style='{"background-image": "url(" + presentationSlide.previewUrl + ")"}' @click.prevent="launchDiaporamaOnSlide(presentationSlide.id)"
+                           draggable
+                           :data-slideindex="presentationSlide.id"
+                           >
+                        </a>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="bottomBar" :class='{"bottomBar-active": bottomBarActive}'>
+                <a class="bottomBar_toggler" href="#" @click.prevent="bottomBarActive = !bottomBarActive"></a>
+                
+                <div class="bottomBar_top">
+                    <button class="downloadGeneratedPresentation" href="#" :class="{'downloadGeneratedPresentation-disabled': generatedPresentationSlides.length == 0}" @click.prevent="downloadGeneratedPresentation">Télécharger</button>
+                    <button class="saveGeneratedPresentation" href="#" @click.prevent="savePresentationShown = true; importSavePresentationTags= [];" :class="{'saveGeneratedPresentation-disabled': generatedPresentationSlides.length == 0}">Sauvegarder</button>
+                    <a class="clearGeneratedPresentation" href="#" @click.prevent="generatedPresentationSlides = []" :class="{'clearGeneratedPresentation-disabled': generatedPresentationSlides.length == 0}"><span class="clearGeneratedPresentation_icon" ></span>Tout effacer</a>
+                </div>
+                
+                <div style="clear:both;"></div>
+
+                <div class="bottomBar_delineator"></div>
+
+                <ul class="bottomBar_listOfSlides">
+                    <li v-for="(generatedPresentationSlide, index) in generatedPresentationSlides" class="bottomBar_listOfSlides_slide" draggable="true" 
+                        :data-slideindex="index"
+                        >
+                        <div class="bottomBar_listOfSlides_slide_image" :style='{"background-image": "url(" + generatedPresentationSlide.previewUrl + ")"}'></div>
+                        <p class="bottomBar_listOfSlides_slide_title">{{generatedPresentationSlide.title}}</p>
+                        <a class="bottomBar_listOfSlides_slide_remove" href="#" v-on:click.prevent="removeGeneratedPresentationSlide(index)">
+                            &times;
+                        </a>
+                    </li>
+
+                    <li class="bottomBar_listOfSlides_placeholder" data-slideindex="999"></li>
+                </ul>
+            </div>
+            
+            <div v-show="manageCollaboratorsShown" class="manageCollaborators">
+                <div class="manageCollaborators_modal">
+                    <a href="#" class="manageCollaborators_modal_close" @click.prevent="manageCollaboratorsShown = false">&times;</a>
+                    <h3>Ajouter un nouveau collaborateur</h3>
+                    
+                    {{manageCollaboratorsToastMessage}}
+                    
+                    <div class="manageCollaborators_addCollaborator">
+                        <input placeholder="adresse@mail.fr" @keyup.enter.prevent="$event.target.parentNode.querySelector('button').click();">
+                        <button @click.prevent="addCollaborator($event.target.parentNode.querySelector('input').value); $event.target.parentNode.querySelector('input').value='';">+</button>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div v-show="presentationKeywordsShown" class="presentationKeywords">
+                <div class="presentationKeywords_modal">
+                    <a href="#" class="presentationKeywords_modal_close" @click.prevent="presentationKeywordsShown = false">&times;</a>
+                    <h3>Mots-clés de la présentation</h3>
+                    <tags :tags="presentationTags" :on-tag-add="addTagToPresentation" :second="-1" :on-tag-remove="removeTagFromPresentation"></tags>
+                </div>
+            </div>
+
+            <div v-show="presentationConfirmDeleteShown" class="presentationShowConfirmDelete">
+                <div class="presentationShowConfirmDelete_modal">
+                    <a href="#" class="presentationShowConfirmDelete_modal_close" @click.prevent="presentationConfirmDeleteShown = false">&times;</a>
+                    <h3>Êtes-vous sûr de vouloir supprimer la présentation ?</h3>
+                    <button class="presentationShowConfirmDelete_modal_yes" @click.href="deletePresentation">Oui</button>
+                    <button class="presentationShowConfirmDelete_modal_no" @click.href="presentationConfirmDeleteShown = false">Non</button>
+                </div>
+            </div>
+            
+            <div v-show="savePresentationShown || importPresentationShown" class="saveOrImportPresentation">
+                <div class="saveOrImportPresentation_modal">
+                    <h3 v-if="savePresentationShown">Sauvegarder la nouvelle présentation</h3>
+                    <h3 v-if="importPresentationShown">Importer une présentation</h3>
+                    
+                    <form>
+                        <div class="saveOrImportPresentation_modal_left">
+                            <label for="saveOrImportPresentation_title">Titre</label><br>
+                            <input type="text" id="saveOrImportPresentation_title"><br><br>
+                            <label for="saveOrImportPresentation_comment">Commentaire</label><br>
+                            <textarea type="email" id="saveOrImportPresentation_comment"></textarea><br>
+                        </div>
+                        <div class="saveOrImportPresentation_modal_right">
+                            <label for="">Mots-clés</label><br>
+                            <tags :tags="importSavePresentationTags" :on-tag-add="addTagToImportSavePresentation" :second="-1" :on-tag-remove="removeTagFromImportSavePresentation"></tags>
+                        </div>
+                        
+                        <div style="clear: both;"></div>
+
+                        <button type="submit" @click.prevent="saveOrImportPresentation($event.target.parentNode.querySelector('#saveOrImportPresentation_title').value, $event.target.parentNode.querySelector('#saveOrImportPresentation_comment').value)">Sauvegarder</button>
+                        <button class="saveOrImportPresentation_modal_cancel" @click.prevent="savePresentationShown = false; importPresentationShown = false;">Annuler</button>
+
+                    </form>
+                </div>
+            </div>
+
+            <div v-if="diaporamaMode" class="diaporama">
+
+                <a href="#" @click.prevent="diaporamaMode = false" class="diaporama_exit">&times;</a>
+
+                <div class="diaporama_previousSlide" v-if="diaporamaCurrentSlideIndex > 0" :style='{"background-image": "url(" + diaporamaSlides[diaporamaCurrentSlideIndex-1].viewUrl + ")"}' @click.prevent="diaporamaCurrentSlideIndex--"></div>
+                <div class="diaporama_nextSlide" v-if="diaporamaCurrentSlideIndex < diaporamaSlides.length-1" :style='{"background-image": "url(" + diaporamaSlides[diaporamaCurrentSlideIndex+1].viewUrl + ")"}' @click.prevent="diaporamaCurrentSlideIndex++"></div>
+
+                <div class="diaporama_currentSlide" :style='{"background-image": "url(" + diaporamaSlides[diaporamaCurrentSlideIndex].viewUrl + ")"}'></div>
+                <div class="diaporama_currentSlideInformation">
+                    <div class="diaporama_currentSlideInformation_tags">
+                        <h3>Mots-clés</h3>
+                        <tags :tags="diaporamaSlides[diaporamaCurrentSlideIndex].tags" :on-tag-add="addTagToSlide" :second="diaporamaSlides[diaporamaCurrentSlideIndex].id" :on-tag-remove="removeTagFromSlide"></tags>
+                    </div>
+                    <div class="diaporama_currentSlideInformation_comment">
+                        <h3>Commentaire de diapositive</h3>
+                        <p>{{diaporamaSlides[diaporamaCurrentSlideIndex].comment}}</p>
+                    </div>
+                </div>
+
+                <div class="diaporama_banner">
+                    <div class="diaporama_banner_text">
+                        <h3>{{diaporamaPresentationTitle}}</h3>
+                        <small>{{diaporamaCurrentSlideIndex+1}}/{{diaporamaSlides.length}}</small>
+                    </div>
+
+                    <a class="diaporama_gotoPreviousSlide" href="#" v-if="diaporamaCurrentSlideIndex > 0" @click.prevent="diaporamaCurrentSlideIndex--"></a>
+                    <a class="diaporama_gotoNextSlide" href="#" v-if="diaporamaCurrentSlideIndex < diaporamaSlides.length-1" @click.prevent="diaporamaCurrentSlideIndex++"></a>
+                </div>
+                
+                <a href="#" class="diaporama_addToGeneratedPresentation">Ajouter à la collection</a>
+
+            </div>
+        </div>
+    </div>
+    
+    
+    <form enctype="multipart/form-data" action="http://ec2-13-58-190-26.us-east-2.compute.amazonaws.com" method="post" id="uploadForm" class="uploadForm" style="display: none;">
+        <input type="text" name="title" id="uploadFormTitle">
+        <textarea name="title" id="uploadFormComment"></textarea>
+        
+        <input id="uploadFormPptx" type="file" />
+        
+        <input type="submit">
+    </form>
+
+    
+    <script src="js/api.js"></script>
+    <script>
+        
+        // register
+        Vue.component('burger', {
+          props: {
+              items: Array,
+              align: String
+          },
+          data: function() {
+              return {active: false};
+          },
+          template: `
+                <div class="component_burger" v-bind:class='{"component_burger-active": active, "component_burger-alignLeft": align == "left", "component_burger-alignRight": align == "right" }'>
+                    <a href="#" v-on:click.prevent="active = !active" class="component_burger_toggle">&#8226;&#8226;&#8226;</a>
+                    <ul>
+                        <li v-for="item in items"><a href="#" @click.prevent="item.callback(); active = false;">{{item.text}}</a></li>
+                    </ul>
+                </div>`
+        })
+        
+        Vue.component('tags', {
+          props: {
+              tags: Array,
+              onTagAdd: Function,
+              second: Number,
+              onTagRemove: Function,
+          },
+          methods: {
+            onTagAddLol: function(wooby,wb) {
+                if (!wooby.trim().length) return;
+                this.onTagAdd(wooby,this.second)
+            },
+            onTagRemoveLol: function(wooby,wb) {
+                this.onTagRemove(wooby,this.second)
+            }
+          },
+          template:
+            `<div class="component_tags">
+                <ul>
+                    <li class="component_tags_tag" v-for="tag in tags">
+                        <a class="component_tags_tag_close" href="#" @click.prevent="onTagRemoveLol(tag)">
+                            &times;
+                        </a>
+                        {{tag}}
+                    </li>
+                </ul>
+
+                <div class="component_tags_addTag">
+<form>
+                    <input placeholder="Ajouter un tag" @keyup.enter.prevent="$event.target.parentNode.querySelector('button').click();" >
+                    <button @click.prevent="onTagAddLol($event.target.parentNode.querySelector('input').value); $event.target.parentNode.querySelector('input').value='';">+</button>
+    </form>
+                </div>
+            </div>`
+        })
+        
+        var app = new Vue({
+            el: '#app',
+            data: {
+                account: {
+                  loggedIn: true,
+                  avatarPreviewUrl: "https://placecage.com/50/50"
+                },
+                loading: false,
+                signUpShown: false,
+                bottomBarActive: true,
+                page: "",
+                presentations: [],
+                manageCollaboratorsShown: false,
+                manageCollaboratorsToastMessage: '',
+                diaporamaMode: false,
+                diaporamaPresentationTitle: "Nom de la préz!",
+                diaporamaCurrentSlideIndex: 0,
+                diaporamaSlides: [{viewUrl: "https://www.placecage.com/1200/900", tags: ["onea","oneb","onec"], comment: "Lorem ipsum..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["twox","twoc","twod"], comment: "Lorem ipsum 2..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["threea","threeb","threec"], comment: "Lorem ipsum 3..."} ],
+                presentationId: -1,
+                presentationTitle: "",
+                presentationTags: ["", ""],
+                presentationSlides: [{},{},{},{},{},{},{}],
+                presentationComment: "Duis ultrices vestibulum lacus non luctus. Praesent aliquet, justo ut accumsan bibendum, sem erat sagittis nunc, a vulputate diam ulla nisi.",
+                presentationKeywordsShown: false,
+                presentationConfirmDeleteShown: false,
+                generatedPresentationSlides: [], /* [{title: "Nom de la présentation",previewUrl: "https://www.placecage.com/200/130"},{title: "Nom de la présentation 2",previewUrl: "https://www.placecage.com/200/135"}] */
+                searchTab: "all",
+                searchQuery: "",
+                searchResults: [],
+                savePresentationShown: false,
+                importPresentationShown: false,
+                importSavePresentationTags: []
+            },
+            computed: {
+                searchResultsSlides: function() {
+                    return this.searchResults.filter(x => x.type == "slide");
+                },
+                searchResultsPresentations: function() {
+                    return this.searchResults.filter(x => x.type == "presentation");
+                }  
+            },
+            created: function() {
+                window.addEventListener('keyup', (e) => {
+                    if (e.keyCode == 27) {
+                        this.diaporamaMode = false;
+                        this.presentationKeywordsShown = false;
+                        this.manageCollaboratorsShown = false;
+                    }
+                    else if (e.keyCode == 37) { // l
+                        if (this.diaporamaMode && this.diaporamaCurrentSlideIndex > 0)
+                            this.diaporamaCurrentSlideIndex = this.diaporamaCurrentSlideIndex-1;
+                    }
+                    else if (e.keyCode == 39) { // r
+                        
+                        if (this.diaporamaMode && this.diaporamaCurrentSlideIndex < this.diaporamaSlides.length-1)
+                            this.diaporamaCurrentSlideIndex = this.diaporamaCurrentSlideIndex+1;
+                    }
+                })
+            },
+            methods: {
+                _catchFn: function(err) {        console.error('ERR',err); // this.logOut();
+                                         this.loading = false;
+                },
+                addCollaborator: function(email) {
+                    if (email.trim() == '') return;
+                    
+                    API.addCollaborator(email).then(() => {
+                        console.log('ok')
+                        this.manageCollaboratorsToastMessage = email + ' a bien été invité !';
+                    }).catch(this._catchFn);
+                },
+                removeGeneratedPresentationSlide: function(index) {
+                    this.$delete(this.generatedPresentationSlides, index);
+                },
+                launchDiaporamaOnSlide: function(slideId) {
+                    for (var i = 0; i < this.diaporamaSlides.length; i++) {
+                        console.log('launchdiaporma o',slideId,'&this id',this.diaporamaSlides[i].id)
+                        if (slideId == this.diaporamaSlides[i].id) {
+                            this.diaporamaCurrentSlideIndex = i;
+                                break;
+                        }
+                    }
+                    this.diaporamaMode = true;
+                    // hydrate diaporamaPresentationTitle
+                    // hydrate diaporamaCurrentSlideIndex
+                    // diaporamaSlides
+                },
+                addTagToPresentation: function(tag) { API.addTagToPresentation(tag,this.presentationId).then((res) => {
+                        console.log('add ok',res)
+                        this.presentationTags.push(tag);
+                    })
+                },
+                removeTagFromPresentation: function (tag) {
+                 API.removeTagFromPresentation(tag,this.presentationId).then((res) => {
+                        
+                       console.log('wubba dubba dub dub',res) ;
+
+                        this.presentationTags = this.presentationTags.filter(x => x != tag);
+                  });
+                },
+                addTagToSlide: function(tag,slideId) {
+                    console.log('addtagtoslide',tag,slideId)
+                  // faire requête serveur pour update tags
+                    API.addTagToSlide(tag,slideId).then((res) => {
+                        
+                       console.log('res !!',res) ;
+                        
+                        this.diaporamaSlides[this.diaporamaCurrentSlideIndex].tags.push(tag);
+                    }).catch(this._catchFn)
+                },
+                removeTagFromSlide: function (tag,slideId) {
+                 console.log('removetagfromslide',tag,slideId) ;
+                    API.removeTagFromSlide(tag,slideId).then((res) => {
+                        
+                       console.log('res rem tag slide !!',res) ;
+
+                        this.diaporamaSlides[0].tags = this.diaporamaSlides[0].tags.filter(x => x != tag);
+                  });
+                },
+                removeTagFromImportSavePresentation: function(tag) {
+                  console.log('removetagtoimportsavepres',tag)  
+                    
+                        this.importSavePresentationTags = this.importSavePresentationTags.filter(x => x != tag);
+                },
+                addTagToImportSavePresentation: function(tag) {
+                  console.log('addtagtoimportsavepres',tag)  
+                     this.importSavePresentationTags.push(tag);
+                },
+                saveOrImportPresentation: function(title,comment) {
+                  console.log('title',title,'comment',comment,'..et tags stored local',this.importSavePresentationTags)  
+                    if (this.importPresentationShown) {
+                        
+                        
+                       console.log('import'); API.importPresentation(title,comment,this.importSavePresentationTags,uploadFormPptx.files[0]).then((res) => {console.log('VUE res res',res)}).then(this.getPresentations).then((rss) => {
+                            this.importPresentationShown = false;
+                            console.log('rss',rss)
+                            
+                        }).catch(this._catchFn);
+                        
+                        
+                    } else if (this.savePresentationShown) {
+                         console.log('save');
+                        API.savePresentation(title,comment,this.importSavePresentationTags,this.generatedPresentationSlides).then((res) => {console.log('VUE res res',res)}).then(this.getPresentations).then((rss) => {
+                            this.savePresentationShown = false;
+                            console.log('rss',rss)
+                            
+                        }).catch(this._catchFn);
+                        
+                    }
+                },
+                downloadGeneratedPresentation: function () {
+                  console.log('download',this.generatedPresentationSlides)  
+                },
+                goToPresentation: function(id) {
+                    console.log('gotopresentation',id)
+                    API.getPresentationInfo(id).then((res) => {
+                        console.log('woupi', res)
+                        console.log(res);
+                        var slidz = res.slides.map((t) => {
+                            t.previewUrl = HOST + t.thumbnail_url;
+                            t.viewUrl = HOST + t.picture_url;
+                            t.comment = t.description;
+                            t.tags = t.tags.map((x) => x.value);
+                            return t;
+                        });
+                        
+                        slidz= slidz.sort((a,b) => {
+                            
+                            if(a.slide_index < b.slide_index) return -1;
+                            if(a.slide_index > b.slide_index) return 1;
+                            return 0;
+                            
+                        });
+                        
+                        this.presentationSlides = slidz;
+                        
+                        this.presentationId = id;
+                        this.presentationTags = res.tags.map((x) => x.value);
+                        this.presentationComment = res.description;
+                        this.presentationTitle = res.title;
+                        this.diaporamaSlides = slidz;
+                          
+                        
+                        this.page="presentation";
+                    });
+                },
+                importPresentationSelect: function() {
+                    
+                    uploadFormPptx.value=""
+                    uploadFormPptx.click();
+                    
+                    window.releaseTheKraken = window.releaseTheKraken || ((x) => {
+                       if (x.target.value) {
+                            this.importPresentationShown = true; this.importSavePresentationTags= [];
+                            console.log('done') 
+                       }
+                    });
+                    uploadFormPptx.removeEventListener('change',window.releaseTheKraken);
+                    uploadFormPptx.addEventListener('change', window.releaseTheKraken);
+                },
+                goToPresentationForSlide: function(slide) {
+                    // faire requête serveur pour récup liste des slides de la présentation et infos présentation
+                    this.page = 'presentation';  
+                    // presentationTags...
+                },
+                presentationShowKeywords: function() {
+                  this.presentationKeywordsShown = true;
+                },
+                presentationRename: function() {
+                    var newname = prompt(':hap:') ;
+                    API.renamePresentation(newname,this.presentationId).then(res => {
+                        console.log('renamed',res);
+                        var oldname = this.presentationTitle;
+                        this.presentationTitle = newname;
+                        this.presentations = this.presentations.map(prez => {
+                            prez.title = prez.title == oldname ? newname : prez.title;
+                            return prez;
+                        }
+                        )
+                    })
+                },
+                presentationShowConfirmDelete: function() {
+                  this.presentationConfirmDeleteShown = true;
+                },
+                deletePresentation: function() {
+                    var id = this.presentationId;
+                    console.log('DEL');
+                    this.presentationConfirmDeleteShown = false;
+                    API.deletePresentation(id).then((res) => {
+                        // @todo redirect home
+                        console.log('del res',res)    
+                    }).catch(this._catchFn);
+                    
+                },
+                logIn: function(email,password) {
+                    console.log(email,password)
+                    API.logIn(email,password).then((res) => {
+                        console.log('(VUE) API RESPONSE :',res)
+                        this.account.loggedIn = true;
+                        
+                        this.getPresentations();
+                        
+                    }).catch(this._catchFn)
+                },
+                signUp: function(lastname,firstname,email,password,password_confirm) {
+                    
+                    if (password!=password_confirm)
+                        return alert('Les mots de passe ne sont pas les mêmes');
+                    API.signUp(lastname,firstname,email,password,password_confirm).then((res) => {
+                        console.log('(VUE) sign up API RESPONSE :',res)
+                        this.account.loggedIn = true;
+                        this.signUpShown = false;
+                    }).catch(this.logOut)
+                },
+                logOut: function () {
+                    
+                  API.logOut().then((res) => {
+                    console.log('log out');
+                    this.account.loggedIn = false;
+                  });
+                },
+                getPresentations: function() {
+                  API.getPresentations().then((res) => {
+                        console.log('(VUE) GET PRESENTATIONS',res)
+                        this.presentations = res.sort().filter(x => x.is_visible);
+                    })
+                },
+                generatedSwap: function(from,to){
+                    
+                    var newxx = this.generatedPresentationSlides.slice(0);
+                    
+                    newxx[from] = this.generatedPresentationSlides[to];
+                    newxx[to] = this.generatedPresentationSlides[from]; 
+                    
+                    this.generatedPresentationSlides = newxx;
+                },
+                addSlideToGeneratedPresentation: function (id,to) {
+                    var newxx = this.generatedPresentationSlides.slice(0);
+                    
+                    var item = false;
+                    
+                    if (this.page == 'search')
+                        {
+                            this.searchResults.forEach((s) => {
+                                if (s.type == 'slide' && s.id == id) {
+                                    console.log('FOUND',s)
+                                    item = s;
+                                    
+                                    item.title = s.presentation.title;
+                                }
+                                
+                            });
+                        } else if (this.page == 'presentation')
+                        {
+                            this.presentationSlides.forEach((s) => {
+                                if (s.id == id) {
+                                    console.log('FOUND!',s)
+                                    item = s;
+                                    item.title = this.presentationTitle;
+                                }
+                                
+                            });
+                        } else {
+                            console.log('??????')
+                        }
+                    
+                    newxx.splice(to, 0, item);
+                    this.generatedPresentationSlides = newxx;
+                },
+                search: function (q) {
+                    API.search(q).then((res) => {
+                        
+                        console.log('search res',res)
+                        this.searchResults = res.map((e) => {
+                            if (e.presentation) {
+                                e.presentationTitle = e.presentation.title;
+                                
+                                e.presentationId = e.presentation.id;
+                                
+                                
+                            }
+                            
+                            e.type = 'slide';
+                            
+                            e.tags = e.tags.map(e => e.value)
+                            
+                            e.previewUrl = HOST + e.thumbnail_url;  
+                            return e;
+                        })
+                        
+                        this.diaporamaSlides = this.searchResults.filter((e) => e.type == 'slide');
+                    }).then(API.searchP(q).then((res) => {
+                        console.log('searchp res',res)
+                        
+                        res.forEach((x) => {
+                            x.type = 'presentation';
+                           
+                            if (x.slides.length)
+                                    x.previewUrl = HOST+x.slides[0].thumbnail_url;
+                            
+                            
+                            
+                            this.searchResults.insert(Math.floor(Math.random()*this.searchResults.length),x);
+                        });
+                          
+                        
+                        
+                        
+                        this.page = "search";
+                        this.searchTab = "all";
+                        this.searchQuery = q;
+                    }));
+                }
+            }
+        })
+        
+        app.getPresentations();
+        
+        var skip = false;
+        function hashChanged() {
+            if (skip) {
+                console.log('skip');
+                setTimeout(() => {
+                    skip = false
+                }, 200);
+                return;
+            }
+            console.log('hash upd');
+            var hash = window.location.hash.substr(1);
+            if (hash.length)
+            {
+                app.signUpShown = true;
+                skip = true;
+                window.location.hash='';
+            }
+        }
+
+        window.onhashchange = hashChanged;
+        hashChanged();
+        
+        
+        
+        Math.almostRandom = (function() {
+	var seed = 0x2F6E2B1;
+	return function() {
+		// Robert Jenkins’ 32 bit integer hash function
+		seed = ((seed + 0x7ED55D16) + (seed << 12))  & 0xFFFFFFFF;
+		seed = ((seed ^ 0xC761C23C) ^ (seed >>> 19)) & 0xFFFFFFFF;
+		seed = ((seed + 0x165667B1) + (seed << 5))   & 0xFFFFFFFF;
+		seed = ((seed + 0xD3A2646C) ^ (seed << 9))   & 0xFFFFFFFF;
+		seed = ((seed + 0xFD7046C5) + (seed << 3))   & 0xFFFFFFFF;
+		seed = ((seed ^ 0xB55A4F09) ^ (seed >>> 16)) & 0xFFFFFFFF;
+		return (seed & 0xFFFFFFF) / 0x10000000;
+	};
+}());
+        
+          
+                           function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.almostRandom() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+        
+        Array.prototype.insert = function (index, item) {
+  this.splice(index, 0, item);
+};
+                       
+        
+        
+        var dragstartindex = -1;
+        var isreorder = false;
+        document.addEventListener("dragstart", function (e) {
+            console.log('ONDRAGSTART');
+            if (e.target.classList.contains('bottomBar_listOfSlides_slide')) {
+                console.log('DRAGSTART CONTAINS');
+                
+                dragstartindex = e.target.getAttribute('data-slideindex'); 
+                console.log('set drag start index !')
+                isreorder = true;
+            }
+            else if (e.target.classList.contains('page_right_page_slide')) {
+                console.log('DRAGSTART CONTAINS');
+                
+                dragstartindex = e.target.getAttribute('data-slideindex'); 
+                console.log('set drag start index !')
+                isreorder = false;
+                
+            }
+        });
+        
+        
+        document.addEventListener("dragend", function (e) {
+        console.log('ONDRAGEND');
+            dragstartindex = -1;
+        });
+        
+        document.addEventListener("dragover", function(e) {
+            console.log('WOUP DRAGOVER');
+            
+    event.preventDefault();
+});
+        
+        function findAncestor (el, cls) {
+    while ((el = el.parentElement) && !el.classList.contains(cls));
+    return el;
+}
+        
+        document.addEventListener("drop", function(event) {
+            var target = findAncestor(event.target,'bottomBar_listOfSlides_slide') || findAncestor(event.target,'bottomBar_listOfSlides_placeholder') || (event.target.classList.contains('bottomBar_listOfSlides_placeholder') && event.target);
+            
+            console.log('ONDROP');
+            
+            console.log('x',target,event.target);
+            if (target && dragstartindex !== -1) {
+                console.log('WOUP DROP',target);
+                var onindex = target.getAttribute('data-slideindex');
+                
+                if (isreorder) {
+                   
+                   
+                    if (parseInt(onindex) == 999) {
+                        event.preventDefault();
+                        return;
+                    }
+                        
+                        console.log('swap',dragstartindex,onindex)
+                    app.generatedSwap(dragstartindex,onindex);
+                } else {
+                     console.log('add',dragstartindex,onindex)
+                    app.addSlideToGeneratedPresentation(dragstartindex,onindex);
+                }
+            
+                event.preventDefault();
+            }
+        });
+   
+            
+    </script>
+            
+
+</body>
+
+</html>

@@ -171,6 +171,13 @@ $sectionpadding: 13px;
     }
 }
 
+@mixin button-primary-disabled {
+    @include button;
+    color: $disabled;
+    border-color: $disabled;
+    pointer-events: none;
+}
+
 @mixin button-secondary-enabled {
     @include button;
     background: transparent;
@@ -199,10 +206,10 @@ html {
 
 @media screen and (max-height: 850px) {
     html{
-        /*
+        
         div.app {
             zoom: 0.8;
-        }*/
+        }
         
         .iconsOnTheRight {
             float: right;
@@ -214,6 +221,12 @@ html {
 
 .gridtest.grid { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 999; @include grid; pointer-events: none; display: none; }
 .gridtest.a { display: inline-block; @include width-colspan(1); @include margin-right-colspan(0); background: blue; height: 20px; }
+
+@keyframes loading {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
 
 .topBar {
     @include grid;
@@ -232,10 +245,10 @@ html {
 
     .logo {
         @include width-colspan(1);
-        background: $dark;
         height: 20px;
         display: inline-block;
         @include margin-right-colspan(1);
+        &.loading { animation: loading 1s infinite; }
     }
 
     .search {
@@ -525,7 +538,8 @@ html {
                 border-radius: 4px;
                 background-color: #ffffff;
                 background-repeat: no-repeat;
-                background-size: cover;
+                background-size: contain;
+                background-position: center center;
                 @include modal-shadow;
                 &:hover {
                     @include modal-hover-shadow;
@@ -602,19 +616,41 @@ html {
         @include grid;
 
         .downloadGeneratedPresentation {
-            @include button-primary-enabled;
+            &:not(.downloadGeneratedPresentation-disabled) {
+                @include button-primary-enabled;        
+            }
+            &.downloadGeneratedPresentation-disabled {
+                @include button-primary-disabled;   
+                pointer-events: none;
+            }
+            
             float: left;
             @include margin-right-colspan(0);
         }
 
         .saveGeneratedPresentation {
-            @include button-secondary-enabled;
+            &:not(.saveGeneratedPresentation-disabled) {
+                @include button-secondary-enabled;
+            }
+            
+            &.saveGeneratedPresentation-disabled {
+                @include button-secondary-disabled;
+                pointer-events: none;
+            }
+                
             float: left;
             @include margin-right-colspan(0);
         }
 
         .clearGeneratedPresentation {
-            @include button-secondary-enabled;
+            &:not(.clearGeneratedPresentation-disabled) {
+                @include button-secondary-enabled;
+            }
+            &.clearGeneratedPresentation-disabled {
+                @include button-secondary-disabled;
+                span { filter: grayscale(1); }
+            }
+            
             float: right;
             text-align: center;
 
@@ -825,7 +861,7 @@ html {
         top: 100px;
         bottom: 250px;
         
-        background-size: cover;
+        background-size: contain;
         background-repeat: no-repeat;
         background-position: center center;
     }
@@ -1075,14 +1111,24 @@ html {
         
         .component_tags .component_tags_addTag { width: 100%; }
         
-        .saveOrImportPresentation_modal_left input, textarea {
+        .saveOrImportPresentation_modal_left input, .saveOrImportPresentation_modal_left textarea {
             display: block;
             border: solid 1px $disabled;
-            border-radius: 4px;
-            line-height: 3.5rem;
+            border-radius: 4px;            
             width: 100%;
             padding-left: 15px;
             margin-bottom: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .saveOrImportPresentation_modal_left input {
+            line-height: 3.5rem;
+        }
+        .saveOrImportPresentation_modal_left textarea {
+            font: inherit;
+            height: 150px;
+            padding: 1.5rem;
+            line-height: 1.5rem;
         }
         
         > button {
@@ -1274,4 +1320,5 @@ input:focus {
 ::-webkit-scrollbar-track-piece  { /* 4 */ }
 ::-webkit-scrollbar-thumb        { background: $disabled; border-radius: 3px; }
 ::-webkit-scrollbar-corner       { /* 6 */ }
-::-webkit-resizer                { /* 7 */ }
+::-webkit-resizer                { /* 7 */ 
+    }
