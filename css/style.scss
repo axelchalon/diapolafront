@@ -367,13 +367,20 @@ html {
     .page_left {
         @include grid;
         @include width-colspan(3);
-        height: 100vh;
         border-right: 1px solid $delineator;
         flex-shrink: 0;
         padding-top: $sectionpadding;
         padding-right: $gridgutter;
+        overflow: auto;
         
         position: fixed; top: calc(26px + 3.5rem + 2px + 30px + 2.76rem + 2px); left: 0; 
+        
+        &.page_left-big {
+            bottom: 43px;
+        }
+        &.page_left-small {
+            bottom: 315px;
+        }
         
         ul li a {
             display: block;
@@ -386,10 +393,27 @@ html {
                 color: white;
                 cursor: pointer;
             }
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 
     .page_right {
+        
+        
+        overflow: auto; overflow-x: hidden;
+        position: fixed; top: calc(26px + 3.5rem + 2px + 30px + 2.76rem + 2px);
+        
+        right: 0;
+        left: $gridoutermargin;
+        
+        &.page_right-big {
+            bottom: 43px;
+        }
+        &.page_right-small {
+            bottom: 315px;
+        }
+        
         /*flex-grow: 1;*/
         @include margin-left-colspan(3);
         
@@ -402,8 +426,8 @@ html {
             border-bottom: 1px solid $delineator;
             
             padding-right: $gridoutermargin;
-            position: fixed; top: calc(26px + 3.5rem + 2px + 30px + 2.76rem + 2px); @include left-colspan(3); right: 0;
-            transform: translateX(1px);
+            position: absolute; top: 0; /* @include left-colspan(3); */ right: 0;
+            transform: translateX(1px); left: 1px;
 
             .downloadPresentation {
                 @include button-secondary-enabled;

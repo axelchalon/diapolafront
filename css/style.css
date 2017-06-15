@@ -185,29 +185,45 @@ html {
     white-space: nowrap;
     font-size: 0;
     width: calc((100vw - 2*50px - 11 * 30px) / 12 * 3 + 30px * 2);
-    height: 100vh;
     border-right: 1px solid #e3eefe;
     flex-shrink: 0;
     padding-top: 13px;
     padding-right: 30px;
+    overflow: auto;
     position: fixed;
     top: calc(26px + 3.5rem + 2px + 30px + 2.76rem + 2px);
     left: 0; }
     .page .page_left > * {
       font-size: 1rem; }
+    .page .page_left.page_left-big {
+      bottom: 43px; }
+    .page .page_left.page_left-small {
+      bottom: 315px; }
     .page .page_left ul li a {
       display: block;
       line-height: 2rem;
       padding-left: 32px;
-      background: url("../img/icon_presentation_blue.png") no-repeat 10px center; }
+      background: url("../img/icon_presentation_blue.png") no-repeat 10px center;
+      overflow: hidden;
+      text-overflow: ellipsis; }
       .page .page_left ul li a:hover {
         background-color: #77b0ff;
         background-image: url("../img/icon_presentation_white.png");
         color: white;
         cursor: pointer; }
   .page .page_right {
+    overflow: auto;
+    overflow-x: hidden;
+    position: fixed;
+    top: calc(26px + 3.5rem + 2px + 30px + 2.76rem + 2px);
+    right: 0;
+    left: 50px;
     /*flex-grow: 1;*/
     margin-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 3); }
+    .page .page_right.page_right-big {
+      bottom: 43px; }
+    .page .page_right.page_right-small {
+      bottom: 315px; }
     .page .page_right .page_right_topBar-presentation {
       height: 50px;
       /* ARBITRARY */
@@ -217,11 +233,12 @@ html {
       padding-left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 0 + 30px);
       border-bottom: 1px solid #e3eefe;
       padding-right: 50px;
-      position: fixed;
-      top: calc(26px + 3.5rem + 2px + 30px + 2.76rem + 2px);
-      left: calc((((100vw - 2 * 50px - 11 * 30px) / 12) + 30px) * 3 + 50px);
+      position: absolute;
+      top: 0;
+      /* @include left-colspan(3); */
       right: 0;
       transform: translateX(1px);
+      left: 1px;
       /*
       .downloadSelectedSlides {
           float: left;

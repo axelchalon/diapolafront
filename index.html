@@ -107,7 +107,7 @@
                 <!-- ---- -->
                 <div class="topBar_innerSeparator"></div>
 
-                <button class="importPresentation" href="#" @click.prevent="importPresentationShown = true;  importSavePresentationTags= [];">Importer une présentation</button>
+                <button class="importPresentation" href="#" @click.prevent="importPresentationSelect">Importer une présentation</button>
 
                 <div class="breadcrumbs" v-if="page == 'presentation'">
                     <a class="breadcrumbs_breadcrumb breadcrumbs_breadcrumb-active" href="#" >{{ presentationTitle }}</a>
@@ -117,13 +117,13 @@
 
             <div class="page">
 
-                <div class="page_left">
+                <div class="page_left" :class="{'page_left-big': !bottomBarActive, 'page_left-small': bottomBarActive}">
                     <ul>
-                        <li v-for="presentation in presentations"><a href="#" @click.prevent="goToPresentation(presentation.id)">{{presentation.title}}</a></li>
+                        <li v-for="presentation in presentations"><a href="#" @click.prevent="!presentation.is_locked && goToPresentation(presentation.id)">{{presentation.title}}<span v-if="presentation.is_locked"> (en cours de traitement)</span></a></li>
                     </ul>
                 </div>
 
-                <div class="page_right">
+                <div class="page_right" :class="{'page_right-big': !bottomBarActive, 'page_right-small': bottomBarActive}">
                     <div class="page_right_topBar page_right_topBar-presentation" v-if="page == 'presentation'">
                         <button class="downloadPresentation">Télécharger la présentation</button>
                         <!--<button class="downloadSelectedSlides downloadSelectedSlides-disabled">Télécharger la sélection</button>-->
@@ -287,10 +287,16 @@
             </div>
         </div>
     </div>
-    <!--
-    <form enctype="multipart/form-data" action="/upload/image" method="post" id="uploadForm" class="uploadForm">
-        <input id="image-file" type="file" />
-    </form>-->
+    
+    
+    <form enctype="multipart/form-data" action="http://ec2-13-58-190-26.us-east-2.compute.amazonaws.com" method="post" id="uploadForm" class="uploadForm" style="display: none;">
+        <input type="text" name="title" id="uploadFormTitle">
+        <textarea name="title" id="uploadFormComment"></textarea>
+        
+        <input id="uploadFormPptx" type="file" />
+        
+        <input type="submit">
+    </form>
 
     
     <script src="js/api.js"></script>
@@ -485,7 +491,13 @@
                      this.importSavePresentationTags.push(tag);
                 },
                 saveOrImportPresentation: function(title,comment) {
-                  console.log('title',title,'comment',comment,'..et tags stored local')  
+                  console.log('title',title,'comment',comment,'..et tags stored local',this.importSavePresentationTags)  
+                    if (this.importPresentationShown) {
+                        
+                        
+                        API.importPresentation(title,comment,this.importSavePresentationTags,uploadFormPptx.files[0]).then((res) => {console.log('VUE res res',res)}).then(this.getPresentations).catch(this._catchFn);
+                        
+                    }
                 },
                 goToPresentation: function(id) {
                     console.log('gotopresentation',id)
@@ -510,6 +522,20 @@
                         
                         this.page="presentation";
                     });
+                },
+                importPresentationSelect: function() {
+                    
+                    uploadFormPptx.value=""
+                    uploadFormPptx.click();
+                    
+                    window.releaseTheKraken = window.releaseTheKraken || ((x) => {
+                       if (x.target.value) {
+                            this.importPresentationShown = true; this.importSavePresentationTags= [];
+                            console.log('done') 
+                       }
+                    });
+                    uploadFormPptx.removeEventListener('change',window.releaseTheKraken);
+                    uploadFormPptx.addEventListener('change', window.releaseTheKraken);
                 },
                 goToPresentationForSlide: function(slide) {
                     // faire requête serveur pour récup liste des slides de la présentation et infos présentation
@@ -575,7 +601,7 @@
                 getPresentations: function() {
                   API.getPresentations().then((res) => {
                         console.log('(VUE) GET PRESENTATIONS',res)
-                        this.presentations = res.sort();
+                        this.presentations = res.sort().filter(x => x.is_visible);
                     })
                 },
                 search: function (q) {
