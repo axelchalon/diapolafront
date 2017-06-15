@@ -85,6 +85,7 @@ var API = {
         });
     },
     importPresentation: function (title, comment, tags, file) {
+        console.log('wut',file)
         var data = new FormData()
         data.append('file', file);
         data.append('title', title);
@@ -94,14 +95,20 @@ var API = {
             method: 'POST',
             
             body: data
-        }).then(function(res) {
+        }).then((res) => {
             console.log('composition new ok',res)
             
             var tagPromises = tags.map((tag) =>                 this.addTagToPresentation(tag,res.id)
                 );
             
+            console.log('tagpromises',tagPromises)
+            
             return Promise.all(tagPromises);
         });
+
+    },
+    savePresentation: function (title, comment, tags, slides) {
+        console.log('save prez',title,comment,tags,slides)
 
     },
     addTagToPresentation: function (tag, id) {

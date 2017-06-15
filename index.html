@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <script src="https://unpkg.com/vue"></script>
     <script src="js/prefixfree.min.js"></script>
+    <script src="js/dragula.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -147,6 +148,10 @@
                     <div v-if="page == 'search'" class="page_right_page">
                         <a v-for="searchResult in (searchTab == 'all' ? searchResults : searchTab == 'slides' ? searchResultsSlides : searchResultsPresentations)"  :style='{"background-image": "url(" + searchResult.previewUrl + ")"}' href="#" @click.prevent="searchResult.type == 'slide' ? launchDiaporamaOnSlide(searchResult.id) : goToPresentation(searchResult.id)"
                             :class="{page_right_page_slide: searchResult.type == 'slide', page_right_page_presentation: searchResult.type == 'presentation', }"
+                           
+                           :draggable="searchResult.type == 'slide' ? true : null"
+                           
+                        :data-slideindex="searchResult.id"
                            >
 
                             <p 
@@ -178,7 +183,9 @@
                 <div class="bottomBar_delineator"></div>
 
                 <ul class="bottomBar_listOfSlides">
-                    <li v-for="(generatedPresentationSlide, index) in generatedPresentationSlides" class="bottomBar_listOfSlides_slide">
+                    <li v-for="(generatedPresentationSlide, index) in generatedPresentationSlides" class="bottomBar_listOfSlides_slide" draggable="true" 
+                        :data-slideindex="index"
+                        >
                         <div class="bottomBar_listOfSlides_slide_image" :style='{"background-image": "url(" + generatedPresentationSlide.previewUrl + ")"}'></div>
                         <p class="bottomBar_listOfSlides_slide_title">{{generatedPresentationSlide.title}}</p>
                         <a class="bottomBar_listOfSlides_slide_remove" href="#" v-on:click.prevent="removeGeneratedPresentationSlide(index)">
@@ -380,7 +387,7 @@
                 presentationComment: "Duis ultrices vestibulum lacus non luctus. Praesent aliquet, justo ut accumsan bibendum, sem erat sagittis nunc, a vulputate diam ulla nisi.",
                 presentationKeywordsShown: false,
                 presentationConfirmDeleteShown: false,
-                generatedPresentationSlides: [{title: "Nom de la présentation",previewUrl: "https://www.placecage.com/200/130"}],
+                generatedPresentationSlides: [], /* [{title: "Nom de la présentation",previewUrl: "https://www.placecage.com/200/130"},{title: "Nom de la présentation 2",previewUrl: "https://www.placecage.com/200/135"}] */
                 searchTab: "all",
                 searchQuery: "",
                 searchResults: [],
@@ -427,14 +434,6 @@
                 },
                 removeGeneratedPresentationSlide: function(index) {
                     this.$delete(this.generatedPresentationSlides, index);
-                },
-                saveOrImportPresentatin: function(title,comments) {
-                    // this.importSavePresentationTags
-                    if (this.savePresentationShown) {
-                        // save
-                    } else {
-                        // import
-                    }
                 },
                 launchDiaporamaOnSlide: function(slideId) {
                     for (var i = 0; i < this.diaporamaSlides.length; i++) {
@@ -495,7 +494,20 @@
                     if (this.importPresentationShown) {
                         
                         
-                        API.importPresentation(title,comment,this.importSavePresentationTags,uploadFormPptx.files[0]).then((res) => {console.log('VUE res res',res)}).then(this.getPresentations).catch(this._catchFn);
+                       console.log('import'); API.importPresentation(title,comment,this.importSavePresentationTags,uploadFormPptx.files[0]).then((res) => {console.log('VUE res res',res)}).then(this.getPresentations).then((rss) => {
+                            this.importPresentationShown = false;
+                            console.log('rss',rss)
+                            
+                        }).catch(this._catchFn);
+                        
+                        
+                    } else if (this.savePresentationShown) {
+                         console.log('save');
+                        API.savePresentation(title,comment,this.importSavePresentationTags,this.generatedPresentationSlides).then((res) => {console.log('VUE res res',res)}).then(this.getPresentations).then((rss) => {
+                            this.savePresentationShown = false;
+                            console.log('rss',rss)
+                            
+                        }).catch(this._catchFn);
                         
                     }
                 },
@@ -604,6 +616,48 @@
                         this.presentations = res.sort().filter(x => x.is_visible);
                     })
                 },
+                generatedSwap: function(from,to){
+                    
+                    var newxx = this.generatedPresentationSlides.slice(0);
+                    
+                    newxx[from] = this.generatedPresentationSlides[to];
+                    newxx[to] = this.generatedPresentationSlides[from]; 
+                    
+                    this.generatedPresentationSlides = newxx;
+                },
+                addSlideToGeneratedPresentation: function (id,to) {
+                    var newxx = this.generatedPresentationSlides.slice(0);
+                    
+                    var item = false;
+                    
+                    if (this.page == 'search')
+                        {
+                            this.searchResults.forEach((s) => {
+                                if (s.type == 'slide' && s.id == id) {
+                                    console.log('FOUND',s)
+                                    item = s;
+                                    
+                                    item.title = s.presentation.title;
+                                }
+                                
+                            });
+                        } else if (this.page == 'presentation')
+                        {
+                            this.presentationSlides.forEach((s) => {
+                                if (s.id == id) {
+                                    console.log('FOUND!',s)
+                                    item = s;
+                                    item.title = this.presentationTitle;
+                                }
+                                
+                            });
+                        } else {
+                            console.log('??????')
+                        }
+                    
+                    newxx.splice(to, 0, item);
+                    this.generatedPresentationSlides = newxx;
+                },
                 search: function (q) {
                     API.search(q).then((res) => {
                         
@@ -706,8 +760,70 @@
         Array.prototype.insert = function (index, item) {
   this.splice(index, 0, item);
 };
-                        
+                       
         
+        
+        var dragstartindex = -1;
+        var isreorder = false;
+        document.addEventListener("dragstart", function (e) {
+            console.log('ONDRAGSTART');
+            if (e.target.classList.contains('bottomBar_listOfSlides_slide')) {
+                console.log('DRAGSTART CONTAINS');
+                
+                dragstartindex = e.target.getAttribute('data-slideindex'); 
+                console.log('set drag start index !')
+                isreorder = true;
+            }
+            else if (e.target.classList.contains('page_right_page_slide')) {
+                console.log('DRAGSTART CONTAINS');
+                
+                dragstartindex = e.target.getAttribute('data-slideindex'); 
+                console.log('set drag start index !')
+                isreorder = false;
+                
+            }
+        });
+        
+        
+        document.addEventListener("dragend", function (e) {
+        console.log('ONDRAGEND');
+            dragstartindex = -1;
+        });
+        
+        document.addEventListener("dragover", function(e) {
+            console.log('WOUP DRAGOVER');
+            
+    event.preventDefault();
+});
+        
+        function findAncestor (el, cls) {
+    while ((el = el.parentElement) && !el.classList.contains(cls));
+    return el;
+}
+        
+        document.addEventListener("drop", function(event) {
+            var target = findAncestor(event.target,'bottomBar_listOfSlides_slide');
+            
+            console.log('ONDROP');
+            
+            console.log('x',target,event.target);
+            if (target && dragstartindex !== -1) {
+                console.log('WOUP DROP',target);
+                var onindex = target.getAttribute('data-slideindex');
+                
+                if (isreorder) {
+                    console.log('swap',dragstartindex,onindex)
+                    app.generatedSwap(dragstartindex,onindex);
+                } else {
+                     console.log('add',dragstartindex,onindex)
+                    app.addSlideToGeneratedPresentation(dragstartindex,onindex);
+                }
+            
+                event.preventDefault();
+            }
+        });
+   
+            
     </script>
             
 
