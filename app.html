@@ -126,7 +126,7 @@
 
                 <div class="page_right" :class="{'page_right-big': !bottomBarActive, 'page_right-small': bottomBarActive}">
                     <div class="page_right_topBar page_right_topBar-presentation" v-if="page == 'presentation'">
-                        <button class="downloadPresentation" id="yololololo">Télécharger la présentation</button>
+                        <button class="downloadPresentation" @click.prevent="downloadThisPresentation">Télécharger la présentation</button>
                         <!--<button class="downloadSelectedSlides downloadSelectedSlides-disabled">Télécharger la sélection</button>-->
 
                         <div class="presentationComment">
@@ -176,7 +176,7 @@
                 <a class="bottomBar_toggler" href="#" @click.prevent="bottomBarActive = !bottomBarActive"></a>
                 
                 <div class="bottomBar_top">
-                    <button class="downloadGeneratedPresentation" href="#" :class="{'downloadGeneratedPresentation-disabled': generatedPresentationSlides.length == 0}" @click.prevent="downloadGeneratedPresentation">Télécharger</button>
+                    <button class="downloadGeneratedPresentation" href="#" :class="{'downloadGeneratedPresentation-disabled': generatedPresentationSlides.length == 0}" @click.prevent="downloadGeneratedPresentation" id="yololololo">Télécharger</button>
                     <button class="saveGeneratedPresentation" href="#" @click.prevent="savePresentationShown = true; importSavePresentationTags= [];" :class="{'saveGeneratedPresentation-disabled': generatedPresentationSlides.length == 0}">Sauvegarder</button>
                     <a class="clearGeneratedPresentation" href="#" @click.prevent="generatedPresentationSlides = []" :class="{'clearGeneratedPresentation-disabled': generatedPresentationSlides.length == 0}"><span class="clearGeneratedPresentation_icon" ></span>Tout effacer</a>
                 </div>
@@ -381,6 +381,7 @@
                 diaporamaSlides: [{viewUrl: "https://www.placecage.com/1200/900", tags: ["onea","oneb","onec"], comment: "Lorem ipsum..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["twox","twoc","twod"], comment: "Lorem ipsum 2..."}, {viewUrl: "https://www.placecage.com/1200/900", tags: ["threea","threeb","threec"], comment: "Lorem ipsum 3..."} ],
                 presentationId: -1,
                 presentationTitle: "",
+                presentationRelUrl: "",
                 presentationTags: ["", ""],
                 presentationSlides: [{},{},{},{},{},{},{}],
                 presentationComment: "Duis ultrices vestibulum lacus non luctus. Praesent aliquet, justo ut accumsan bibendum, sem erat sagittis nunc, a vulputate diam ulla nisi.",
@@ -515,6 +516,9 @@
                     
                     //    this.importSavePresentationTags = [];
                 },
+                downloadThisPresentation: function() {
+                    window.location.href =  HOST+presentationRelUrl;
+                },
                 downloadGeneratedPresentation: function () {
                  
                     yololololo.style.pointerEvents = "none";
@@ -582,6 +586,7 @@
                         this.presentationTags = res.tags.map((x) => x.value);
                         this.presentationComment = res.description;
                         this.presentationTitle = res.title;
+                        this.presentationRelUrl = res.relative_url;
                         this.diaporamaSlides = slidz;
                           
                         
