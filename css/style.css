@@ -385,7 +385,7 @@ html {
   .bottomBar .bottomBar_toggler {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%) rotate(180deg);
+    transform: translateX(-50%);
     top: 5px;
     width: 20px;
     height: 20px;
@@ -394,7 +394,7 @@ html {
     .bottomBar .bottomBar_toggler:hover {
       background-image: url("../img/icon_chevron_hover.png"); }
   .bottomBar:not(.bottomBar-active) .bottomBar_toggler {
-    transform: translateX(-50%); }
+    transform: translateX(-50%) rotate(180deg); }
   .bottomBar .bottomBar_top {
     padding-left: 50px;
     padding-right: 50px;

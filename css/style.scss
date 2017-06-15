@@ -598,7 +598,7 @@ html {
      .bottomBar_toggler {
         position: absolute;
         left: 50%;
-        transform: translateX(-50%) rotate(180deg);
+        transform: translateX(-50%);
         top: 5px;
 
         width: 20px;
@@ -610,7 +610,7 @@ html {
         }
     }
     
-    &:not(.bottomBar-active) .bottomBar_toggler { transform: translateX(-50%); }
+    &:not(.bottomBar-active) .bottomBar_toggler { transform: translateX(-50%) rotate(180deg); }
     
     .bottomBar_top {
         
