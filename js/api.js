@@ -109,8 +109,9 @@ var API = {
         });
 
     },
-    downloadGeneratedPresentation: function (slides) {
-        console.log('dl prez',slides)
+    downloadGeneratedPresentation: function (slidesx) {
+        var slides = slidesx.slice(0);
+        slides.reverse();
         return this._fetch(HOST + '/composition/download', {
             method: 'POST',
             headers: {

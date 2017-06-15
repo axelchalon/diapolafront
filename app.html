@@ -126,7 +126,7 @@
 
                 <div class="page_right" :class="{'page_right-big': !bottomBarActive, 'page_right-small': bottomBarActive}">
                     <div class="page_right_topBar page_right_topBar-presentation" v-if="page == 'presentation'">
-                        <button class="downloadPresentation" >Télécharger la présentation</button>
+                        <button class="downloadPresentation" id="yololololo">Télécharger la présentation</button>
                         <!--<button class="downloadSelectedSlides downloadSelectedSlides-disabled">Télécharger la sélection</button>-->
 
                         <div class="presentationComment">
@@ -512,7 +512,9 @@
                     }
                 },
                 downloadGeneratedPresentation: function () {
-                  console.log('download',this.generatedPresentationSlides)  
+                 
+                    yololololo.style.pointerEvents = "none";
+                    console.log('download',this.generatedPresentationSlides)  
                      API.downloadGeneratedPresentation(this.generatedPresentationSlides).then((res) => {
                         console.log('VUE download res',res)
                        
@@ -532,6 +534,7 @@
                                      setTimeout(dodo,1000)
                                  }
                                  else {
+                                     yololololo.style.pointerEvents = "auto";
                                      console.log('sauter de la fenêtre')
                                      window.location.href = HOST+xres.relative_url;
                                  }
