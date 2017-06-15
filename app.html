@@ -494,8 +494,8 @@
                     if (this.importPresentationShown) {
                         
                         
-                       console.log('import'); API.importPresentation(title,comment,this.importSavePresentationTags,uploadFormPptx.files[0]).then((res) => {console.log('VUE res res',res)}).then(this.getPresentations).then((rss) => {
                             this.importPresentationShown = false;
+                       console.log('import'); API.importPresentation(title,comment,this.importSavePresentationTags,uploadFormPptx.files[0]).then((res) => {console.log('VUE res res',res)}).then(this.getPresentations).then((rss) => {
                             console.log('rss',rss)
                             
                         }).catch(this._catchFn);
@@ -503,13 +503,19 @@
                         
                     } else if (this.savePresentationShown) {
                          console.log('save');
-                        API.savePresentation(title,comment,this.importSavePresentationTags,this.generatedPresentationSlides).then((res) => {console.log('VUE res res',res)}).then(this.getPresentations).then((rss) => {
+                       
+                        
                             this.savePresentationShown = false;
+                        API.savePresentation(title,comment,this.importSavePresentationTags,this.generatedPresentationSlides).then((res) => {console.log('VUE res res',res)}).then(this.getPresentations).then((rss) => {
                             console.log('rss',rss)
                             
                         }).catch(this._catchFn);
                         
                     }
+                    
+                    setTimeout(() => {
+                        this.importSavePresentationTags = [];
+                    },500)
                 },
                 downloadGeneratedPresentation: function () {
                  
