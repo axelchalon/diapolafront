@@ -748,7 +748,7 @@
                             
                             e.viewUrl = HOST + e.picture_url;  
                             return e;
-                        })
+                        }).filter(e => e.presentation.is_visible);
                         
                         this.diaporamaSlides = this.searchResults.filter((e) => e.type == 'slide');
                     }).then(API.searchP(q).then((res) => {
@@ -792,8 +792,9 @@
         
         app.getPresentations();
         setInterval(() => {
-            app.getPresentations();
-        },5000)
+            if (app.account.loggedIn)
+                app.getPresentations();
+        },7000)
         
         var skip = false;
         function hashChanged() {
