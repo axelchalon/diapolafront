@@ -112,7 +112,7 @@
 
                 <div class="breadcrumbs" v-if="page == 'presentation'">
                     <a class="breadcrumbs_breadcrumb breadcrumbs_breadcrumb-active" href="#" >{{ presentationTitle }}</a>
-                    <burger align="left" :items="[{text: 'Mots-clés', callback: presentationShowKeywords}, {text: 'Renommer', callback: presentationRename}, {text: 'Supprimer', callback: presentationShowConfirmDelete}]"></burger>
+                    <burger align="left" :items="[{text: 'Mots-clés', callback: presentationShowKeywords}, {text: 'Supprimer', callback: presentationShowConfirmDelete}]"></burger>
                 </div>
             </div>
 
@@ -625,6 +625,7 @@
                   this.presentationKeywordsShown = true;
                 },
                 presentationRename: function() {
+                    return;
                     var newname = prompt(':hap:') ;
                     API.renamePresentation(newname,this.presentationId).then(res => {
                         console.log('renamed',res);
