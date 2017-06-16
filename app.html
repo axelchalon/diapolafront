@@ -108,7 +108,7 @@
                 <!-- ---- -->
                 <div class="topBar_innerSeparator"></div>
 
-                <button class="importPresentation" href="#" @click.prevent="importPresentationSelect">Importer une présentation</button>
+                <button class="importPresentation" href="#" @click.prevent="importPresentationSelect">{{importText.length ? importText : 'Importer une présentation'}}</button>
 
                 <div class="breadcrumbs" v-if="page == 'presentation'">
                     <a class="breadcrumbs_breadcrumb breadcrumbs_breadcrumb-active" href="#" >{{ presentationTitle }}</a>
@@ -130,7 +130,7 @@
                         <!--<button class="downloadSelectedSlides downloadSelectedSlides-disabled">Télécharger la sélection</button>-->
 
                         <div class="presentationComment">
-                            <h3>Commentaire</h3> <a href="#" class="presentationComment-edit" style="display: none !important">Modifier</a><br>
+                            <h3 v-show="presentationComment.trim().length">Commentaire</h3> <a href="#" class="presentationComment-edit" style="display: none !important">Modifier</a><br>
                             <p>{{presentationComment}}</p>
                         </div>
                     </div>
@@ -176,8 +176,8 @@
                 <a class="bottomBar_toggler" href="#" @click.prevent="bottomBarActive = !bottomBarActive"></a>
                 
                 <div class="bottomBar_top">
-                    <button class="downloadGeneratedPresentation" href="#" :class="{'downloadGeneratedPresentation-disabled': generatedPresentationSlides.length == 0}" @click.prevent="downloadGeneratedPresentation" id="yololololo">Télécharger</button>
-                    <button class="saveGeneratedPresentation" href="#" @click.prevent="savePresentationShown = true; importSavePresentationTags= [];" :class="{'saveGeneratedPresentation-disabled': generatedPresentationSlides.length == 0}">Sauvegarder</button>
+                    <button class="downloadGeneratedPresentation" href="#" :class="{'downloadGeneratedPresentation-disabled': generatedPresentationSlides.length == 0}" @click.prevent="downloadGeneratedPresentation" id="yololololo">{{downloadText.length ? downloadText : 'Télécharger'}}</button>
+                    <button class="saveGeneratedPresentation" href="#" @click.prevent="savePresentationShown = true; importSavePresentationTags= [];" :class="{'saveGeneratedPresentation-disabled': generatedPresentationSlides.length == 0}">{{saveText.length ? saveText : 'Sauvegarder'}}</button>
                     <a class="clearGeneratedPresentation" href="#" @click.prevent="generatedPresentationSlides = []" :class="{'clearGeneratedPresentation-disabled': generatedPresentationSlides.length == 0}"><span class="clearGeneratedPresentation_icon" ></span>Tout effacer</a>
                 </div>
                 
@@ -393,7 +393,10 @@
                 searchResults: [],
                 savePresentationShown: false,
                 importPresentationShown: false,
-                importSavePresentationTags: []
+                importSavePresentationTags: [],
+                downloadText: '',
+                saveText: '',
+                importText: '',
             },
             computed: {
                 searchResultsSlides: function() {
@@ -493,10 +496,10 @@
                 saveOrImportPresentation: function(title,comment) {
                   console.log('title',title,'comment',comment,'..et tags stored local',this.importSavePresentationTags)  
                     if (this.importPresentationShown) {
-                        
+                        this.importText = 'En cours...';
                         
                             this.importPresentationShown = false;
-                       console.log('import'); API.importPresentation(title,comment,this.importSavePresentationTags,uploadFormPptx.files[0]).then((res) => {console.log('VUE res res',res)}).then(this.getPresentations).then((rss) => {
+                       console.log('import'); API.importPresentation(title,comment,this.importSavePresentationTags,uploadFormPptx.files[0]).then((res) => {console.log('VUE res res',res); this.importText = '';}).then(this.getPresentations).then((rss) => {
                             console.log('rss',rss)
                             
                         }).catch(this._catchFn);
@@ -507,7 +510,7 @@
                        
                         
                             this.savePresentationShown = false;
-                        API.savePresentation(title,comment,this.importSavePresentationTags,this.generatedPresentationSlides).then((res) => {console.log('VUE res res',res)}).then(this.getPresentations).then((rss) => {
+                       this.saveText = 'En cours...'; API.savePresentation(title,comment,this.importSavePresentationTags,this.generatedPresentationSlides).then((res) => {console.log('VUE res res',res); this.saveText = ''; }).then(this.getPresentations).then((rss) => {
                             console.log('rss',rss)
                             
                         }).catch(this._catchFn);
@@ -517,16 +520,18 @@
                     //    this.importSavePresentationTags = [];
                 },
                 downloadThisPresentation: function() {
-                    window.location.href =  HOST+presentationRelUrl;
+                    window.location.href =  HOST+this.presentationRelUrl;
                 },
                 downloadGeneratedPresentation: function () {
                  
                     yololololo.style.pointerEvents = "none";
-                    console.log('download',this.generatedPresentationSlides)  
+                   
+                   this.downloadText= "En cours...";
+                       console.log('download',this.generatedPresentationSlides)  
                      API.downloadGeneratedPresentation(this.generatedPresentationSlides).then((res) => {
                         console.log('VUE download res',res)
                        
-                         
+                         this.downloadText= "Traitement...";
                          
                          
                          
@@ -544,6 +549,7 @@
                                  else {
                                      yololololo.style.pointerEvents = "auto";
                                      console.log('sauter de la fenêtre')
+                                     this.downloadText= "";
                                      window.location.href = HOST+xres.relative_url;
                                  }
                              });
