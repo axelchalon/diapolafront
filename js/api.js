@@ -8,7 +8,7 @@ var qs = params => Object.keys(params)
 
 window.skipskip = false;
 var API = {
-    jwtToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6IiIsInVzZXJuYW1lIjoibW9rYSIsImV4cCI6MTQ5OTk1NTE3NCwib3JpZ19pYXQiOjE0OTczNjMxNzR9.xxQpUsRnFbgYv9wTkl5stFkQvmzuCTeLMCNoURhRhnc',
+    jwtToken: undefined,
     _fetch: function (url, options) {
         if (options && options.headers)
             var headers = options.headers;

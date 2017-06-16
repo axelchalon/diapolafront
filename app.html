@@ -365,7 +365,7 @@
             el: '#app',
             data: {
                 account: {
-                  loggedIn: true,
+                  loggedIn: false,
                   avatarPreviewUrl: "https://placecage.com/50/50"
                 },
                 loading: false,
@@ -806,6 +806,7 @@
             if (hash.length)
             {
                 app.signUpShown = true;
+                app.account.loggedIn = false;
                 skip = true;
                 window.location.hash='';
             }
