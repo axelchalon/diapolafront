@@ -517,7 +517,9 @@
                         
                     }
                     
-                    //    this.importSavePresentationTags = [];
+                    this.importSavePresentationTags = [];
+                    saveOrImportPresentation_title.value = "";
+                    saveOrImportPresentation_comment.value = "";
                 },
                 downloadThisPresentation: function() {
                     window.location.href =  HOST+this.presentationRelUrl;
@@ -550,6 +552,7 @@
                                      yololololo.style.pointerEvents = "auto";
                                      console.log('sauter de la fenêtre')
                                      this.downloadText= "";
+                                     
                                      window.location.href = HOST+xres.relative_url;
                                  }
                              });
