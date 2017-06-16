@@ -754,7 +754,21 @@
                             x.type = 'presentation';
                            
                             if (x.slides.length)
-                                    x.previewUrl = HOST+x.slides[0].thumbnail_url;
+                                var sorted = x.slides.slice(0);
+                             
+                            
+                             
+                                sorted.sort((a,b) => {
+
+                                    if(a.slide_index < b.slide_index) return -1;
+                                    if(a.slide_index > b.slide_index) return 1;
+                                    return 0;
+
+                                });
+
+
+                                
+                                    x.previewUrl = HOST+sorted[0].thumbnail_url;
                             
                             
                             
